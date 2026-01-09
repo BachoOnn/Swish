@@ -5,7 +5,7 @@
 //  Created by Bacho on 31.12.25.
 //
 
-import Foundation
+import UIKit
 
 protocol AuthCoordinatorProtocol: AnyObject {
     @MainActor func start()

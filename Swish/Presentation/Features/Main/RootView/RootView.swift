@@ -10,35 +10,50 @@ import SwiftUI
 struct RootView: View {
     
     @StateObject var viewModel: RootViewModel
+    @ObservedObject var coordinator: MainCoordinator
+    
+    init(viewModel: RootViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        _coordinator = ObservedObject(wrappedValue: viewModel.coordinator)
+    }
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            TabView(selection: $viewModel.selectedTab) {
+        NavigationStack(path: $coordinator.navigationPath) {
+            ZStack(alignment: .bottom) {
+                TabView(selection: $viewModel.selectedTab) {
+                    
+                    HomeView(viewModel: viewModel.homeViewModel)
+                        .tag(Tabs.home)
+                        .toolbarBackground(.hidden, for: .tabBar)
+                    
+                    GamesView()
+                        .tag(Tabs.games)
+                        .toolbarBackground(.hidden, for: .tabBar)
+                    
+                    SearchView()
+                        .tag(Tabs.search)
+                        .toolbarBackground(.hidden, for: .tabBar)
+                    
+                    DiscoverView()
+                        .tag(Tabs.discover)
+                        .toolbarBackground(.hidden, for: .tabBar)
+                }
                 
-                HomeView(viewModel: viewModel.homeViewModel)
-                    .tag(Tabs.home)
-                    .toolbarBackground(.hidden, for: .tabBar)
-                
-                GamesView()
-                    .tag(Tabs.games)
-                    .toolbarBackground(.hidden, for: .tabBar)
-                
-                SearchView()
-                    .tag(Tabs.search)
-                    .toolbarBackground(.hidden, for: .tabBar)
-                
-                DiscoverView()
-                    .tag(Tabs.discover)
-                    .toolbarBackground(.hidden, for: .tabBar)
+                CustomTabBar(selectedTab: $viewModel.selectedTab)
+                    .frame(height: 110)
             }
-            
-            CustomTabBar(selectedTab: $viewModel.selectedTab)
-                .frame(height: 110)
+            .navigationDestination(for: AppRoute.self) { route in
+                switch route {
+                case .profile:
+                    ProfileView(viewModel: viewModel.makeProfileViewModel())
+                }
+            }
+            .ignoresSafeArea()
         }
-        .ignoresSafeArea()
     }
 }
 
 #Preview {
-    RootView(viewModel: RootViewModel(homeViewModel: HomeViewModel()))
+    let container = MainDIContainer()
+    return RootView(viewModel: container.makeRootViewModel())
 }

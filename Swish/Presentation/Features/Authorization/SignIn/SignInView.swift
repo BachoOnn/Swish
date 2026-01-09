@@ -11,18 +11,13 @@ struct SignInView: View {
     
     @State private var email = ""
     @State private var password = ""
-    @FocusState var state
-    
     @StateObject var viewModel: SignInViewModel
     
     var body: some View {
-        
         ZStack {
-            
             GradientBackground()
             
             VStack(spacing: 16) {
-                                
                 VStack(spacing: 12) {
                     Text("It's Game Time")
                         .font(.system(size: 32, weight: .bold))
@@ -37,32 +32,40 @@ struct SignInView: View {
                     GlassPasswordField(password: $password, text: "Password")
                     
                     Button {
-                        viewModel.signIn()
+                        Task {
+                            await viewModel.signIn(email: email, password: password)
+                        }
                     } label: {
                         HStack {
-                            Text("Sign In")
-                                .font(.system(size: 17, weight: .semibold))
-                                .foregroundColor(Color(.systemBackground))
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 30)
-                                .padding()
-                                .background(Color(.label))
-                                .roundedCorners(16)
-                                .overlay(alignment: .center) {
-                                    Image(systemName: "basketball")
-                                        .padding(.leading, 100)
-                                        .tint(Color(.systemBackground))
-                                        .font(.system(size: 20))
-                                }
-                                .padding(.top, 20)
-                            
+                            if viewModel.isLoading {
+                                ProgressView()
+                                    .tint(Color(.systemBackground))
+                            } else {
+                                Text("Sign In")
+                                    .font(.system(size: 17, weight: .semibold))
+                            }
                         }
+                        .foregroundColor(Color(.systemBackground))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 30)
+                        .padding()
+                        .background(Color(.label))
+                        .roundedCorners(16)
+                        .overlay(alignment: .center) {
+                            if !viewModel.isLoading {
+                                Image(systemName: "basketball")
+                                    .padding(.leading, 100)
+                                    .tint(Color(.systemBackground))
+                                    .font(.system(size: 20))
+                            }
+                        }
+                        .padding(.top, 20)
                     }
+                    .disabled(viewModel.isLoading)
                 }
                 .padding()
                 
-                HStack (spacing: 5) {
-                    
+                HStack(spacing: 5) {
                     Text("Don't have an account?")
                         .font(.system(size: 14))
                         .tint(.primary)
@@ -76,8 +79,7 @@ struct SignInView: View {
                     }
                 }
                 
-                
-                HStack (spacing: 16) {
+                HStack(spacing: 16) {
                     Rectangle()
                         .fill(Color.gray.opacity(0.5))
                         .frame(width: 150, height: 1)
@@ -88,12 +90,13 @@ struct SignInView: View {
                     Rectangle()
                         .fill(Color.gray.opacity(0.5))
                         .frame(width: 150, height: 1)
-                    
                 }
                 .padding(.top, 50)
                 
                 Button {
-                    
+                    Task {
+                        await viewModel.signInWithGoogle()
+                    }
                 } label: {
                     HStack {
                         Text("Continue with Google")
@@ -114,20 +117,15 @@ struct SignInView: View {
                     .padding(.horizontal)
                     .padding(.top)
                 }
-                
             }
-            
         }
-        
         .onTapGesture {
             hideKeyboard()
         }
-
-        
+        .sheetAlert(
+            isPresented: $viewModel.showError,
+            title: "Authentication Failed",
+            message: viewModel.errorMessage
+        )
     }
-    
-}
-
-#Preview {
-    SignInView(viewModel: SignInViewModel(coordinator: AuthCoordinator(navigationController: UINavigationController(), diContainer: AuthDIContainer())))
 }

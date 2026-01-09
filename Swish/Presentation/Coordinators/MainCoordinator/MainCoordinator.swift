@@ -2,60 +2,38 @@
 //  MainCoordinator.swift
 //  Auth
 //
-//  Created by Bacho on 01.01.26.
+//  Created by Bacho on 06.01.26.
 //
 
 import UIKit
-import SwiftUI
+import Combine
 
-@MainActor
-final class MainCoordinator {
-    let navigationController: UINavigationController
-    private let appDIContainer: AppDIContainer
-    private var authCoordinator: AuthCoordinator?
+final class MainCoordinator: MainCoordinatorProtocol {
     
-    init(navigationController: UINavigationController, appDIContainer: AppDIContainer) {
-        self.navigationController = navigationController
-        self.appDIContainer = appDIContainer
-        navigationController.setNavigationBarHidden(true, animated: false)
+    @Published var navigationPath: [AppRoute] = []
+    
+    var onSignOut: (() -> Void)?
+    
+    func navigateToProfile() {
+        navigationPath.append(.profile)
     }
     
-    func start() {
-        showLaunchScreen()
+    
+    init() {
+        print("MainCoordinator created")
+    }
+    deinit {
+        print("MainCoordinator destroyed")
     }
     
-    func showLaunchScreen() {
-        let launchView = LaunchView { [weak self] in
-            self?.showAuth()
+    func navigateBack() {
+        if !navigationPath.isEmpty {
+            navigationPath.removeLast()
         }
-        let hostingController = UIHostingController(rootView: launchView)
-        navigationController.setViewControllers([hostingController], animated: false)
     }
     
-    func showAuth() {
-        let authCoordinator = AuthCoordinator(
-            navigationController: navigationController,
-            diContainer: appDIContainer.authDIContainer
-        )
-        authCoordinator.onAuthSuccess = { [weak self] in
-            self?.showMainApp()
-        }
-        self.authCoordinator = authCoordinator
-        authCoordinator.start()
-    }
-    
-    func showMainApp() {
-        authCoordinator = nil
-        
-        let rootViewModel = appDIContainer.mainDIContainer.makeRootViewModel()
-        
-        rootViewModel.homeViewModel.onSignOut = { [weak self] in
-            self?.showAuth()
-        }
-        
-        let rootView = RootView(viewModel: rootViewModel)
-        let hostingController = UIHostingController(rootView: rootView)
-        
-        navigationController.setViewControllers([hostingController], animated: true)
+    func signOut() {
+        navigationPath.removeAll()
+        onSignOut?()
     }
 }
