@@ -1,6 +1,6 @@
 //
-//  LaunchView.swift
-//  Swish
+//  ContentView.swift
+//  RickNMorty
 //
 //  Created by Bacho on 05.12.25.
 //
