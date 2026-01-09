@@ -46,19 +46,33 @@ struct SignUpView: View {
                         GlassPasswordField(password: $confirmPassword, text: "Confirm Password")
                         
                         Button {
-                            // Sign up action
+                            Task {
+                                await viewModel.signUp(
+                                    email: email,
+                                    password: password,
+                                    confirmPassword: confirmPassword,
+                                    firstName: firstName,
+                                    lastName: lastName
+                                )
+                            }
                         } label: {
                             HStack {
-                                Text("Create Account")
-                                    .font(.system(size: 17, weight: .semibold))
-                                    .foregroundColor(Color(.systemBackground))
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 30)
-                                    .padding()
-                                    .background(Color(.label))
-                                    .roundedCorners(16)
+                                if viewModel.isLoading {
+                                    ProgressView()
+                                        .tint(Color(.systemBackground))
+                                } else {
+                                    Text("Create Account")
+                                        .font(.system(size: 17, weight: .semibold))
+                                }
                             }
+                            .foregroundColor(Color(.systemBackground))
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 30)
+                            .padding()
+                            .background(Color(.label))
+                            .roundedCorners(16)
                         }
+                        .disabled(viewModel.isLoading)
                     }
                     .padding()
                     
@@ -87,9 +101,11 @@ struct SignUpView: View {
         .onTapGesture {
             hideKeyboard()
         }
+        
+        .sheetAlert(
+            isPresented: $viewModel.showError,
+            title: "Sign Up Failed",
+            message: viewModel.errorMessage
+        )
     }
-}
-
-#Preview {
-    SignUpView(viewModel: SignUpViewModel(coordinator: AuthCoordinator(navigationController: UINavigationController(), diContainer: AuthDIContainer())))
 }

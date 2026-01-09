@@ -10,39 +10,40 @@ import Foundation
 @MainActor
 final class MainDIContainer {
     
-    // MARK: - Dependencies (Add when implementing Clean Architecture)
-    // private let playerRepository: PlayerRepositoryProtocol
-    // private let teamRepository: TeamRepositoryProtocol
-    // private let gameRepository: GameRepositoryProtocol
+    // MARK: - Coordinator
+    let coordinator: MainCoordinator
+    
+    init() {
+        self.coordinator = MainCoordinator()
+    }
     
     // MARK: - ViewModels
+    
     func makeRootViewModel() -> RootViewModel {
         let homeViewModel = makeHomeViewModel()
-        return RootViewModel(homeViewModel: homeViewModel)
+        return RootViewModel(
+            homeViewModel: homeViewModel,
+            coordinator: coordinator
+        )
     }
     
     func makeHomeViewModel() -> HomeViewModel {
-        HomeViewModel()
+        HomeViewModel(coordinator: coordinator)
     }
-//    
-//    func makeGamesViewModel() -> GamesViewModel {
-//        GamesViewModel()
-//    }
-//    
-//    func makeSearchViewModel() -> SearchViewModel {
-//        SearchViewModel()
-//    }
-//    
-//    func makeDiscoverViewModel() -> DiscoverViewModel {
-//        DiscoverViewModel()
+    
+//    func makeProfileViewModel() -> ProfileViewModel {
+//        ProfileViewModel(coordinator: coordinator)
 //    }
     
-    // MARK: - Future Clean Architecture Dependencies
-    // func makeFetchPlayersUseCase() -> FetchPlayersUseCase {
-    //     FetchPlayersUseCaseImpl(repository: playerRepository)
-    // }
+    //    func makeGamesViewModel() -> GamesViewModel {
+    //        GamesViewModel()
+    //    }
     //
-    // func makeFetchTeamsUseCase() -> FetchTeamsUseCase {
-    //     FetchTeamsUseCaseImpl(repository: teamRepository)
-    // }
+    //    func makeSearchViewModel() -> SearchViewModel {
+    //        SearchViewModel()
+    //    }
+    //
+    //    func makeDiscoverViewModel() -> DiscoverViewModel {
+    //        DiscoverViewModel()
+    //    }
 }

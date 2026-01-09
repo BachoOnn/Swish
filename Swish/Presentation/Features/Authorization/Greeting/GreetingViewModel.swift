@@ -15,7 +15,7 @@ final class GreetingViewModel {
         self.coordinator = coordinator
     }
     
-    // delete this
+    // delete this laterrr
     deinit {
         print("🗑️ GreetingViewModel deallocated")
     }

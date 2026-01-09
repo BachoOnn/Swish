@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9DB77F5C2F116F0D0059CF6B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9DB77F5B2F116F0D0059CF6B /* FirebaseAuth */; };
+		9DB77F5E2F116F0D0059CF6B /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9DB77F5D2F116F0D0059CF6B /* FirebaseCore */; };
+		9DB77F612F116F5A0059CF6B /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 9DB77F602F116F5A0059CF6B /* GoogleSignIn */; };
+		9DB77F632F116F5A0059CF6B /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9DB77F622F116F5A0059CF6B /* GoogleSignInSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		9D8F48582F0E87000014AB14 /* Swish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +43,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DB77F5E2F116F0D0059CF6B /* FirebaseCore in Frameworks */,
+				9DB77F5C2F116F0D0059CF6B /* FirebaseAuth in Frameworks */,
+				9DB77F612F116F5A0059CF6B /* GoogleSignIn in Frameworks */,
+				9DB77F632F116F5A0059CF6B /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +89,10 @@
 			);
 			name = Swish;
 			packageProductDependencies = (
+				9DB77F5B2F116F0D0059CF6B /* FirebaseAuth */,
+				9DB77F5D2F116F0D0059CF6B /* FirebaseCore */,
+				9DB77F602F116F5A0059CF6B /* GoogleSignIn */,
+				9DB77F622F116F5A0059CF6B /* GoogleSignInSwift */,
 			);
 			productName = Swish;
 			productReference = 9D8F48582F0E87000014AB14 /* Swish.app */;
@@ -107,6 +122,10 @@
 			);
 			mainGroup = 9D8F484F2F0E87000014AB14;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9DB77F5A2F116F0D0059CF6B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				9DB77F5F2F116F5A0059CF6B /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9D8F48592F0E87000014AB14 /* Products */;
 			projectDirPath = "";
@@ -331,6 +350,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9DB77F5A2F116F0D0059CF6B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.7.0;
+			};
+		};
+		9DB77F5F2F116F5A0059CF6B /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9DB77F5B2F116F0D0059CF6B /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9DB77F5A2F116F0D0059CF6B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		9DB77F5D2F116F0D0059CF6B /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9DB77F5A2F116F0D0059CF6B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		9DB77F602F116F5A0059CF6B /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9DB77F5F2F116F5A0059CF6B /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		9DB77F622F116F5A0059CF6B /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9DB77F5F2F116F5A0059CF6B /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9D8F48502F0E87000014AB14 /* Project object */;
 }

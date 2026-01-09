@@ -16,23 +16,20 @@ struct HomeView: View {
         ZStack {
             GradientBackground()
             
-            ScrollView(showsIndicators: false) {
+            VStack(spacing: 0) {
+                HeaderView(action: {
+                    viewModel.navigateToProfile()
+                })
+                .ignoresSafeArea()
+                .frame(height: 60)
                 
-                VStack(spacing: 20) {
-                    Text("Home")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    
-                    Button("Sign Out") {
-                        viewModel.signOut()
-                    }
-                    
-                }
+                Spacer()
             }
         }
     }
+    
 }
 
 #Preview {
-    HomeView(viewModel: HomeViewModel())
+    HomeView(viewModel: HomeViewModel(coordinator: MainCoordinator()))
 }

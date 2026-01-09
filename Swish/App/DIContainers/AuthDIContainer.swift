@@ -10,8 +10,12 @@ import Foundation
 @MainActor
 final class AuthDIContainer {
     
-    // MARK: - Dependencies (Add when implementing Clean Architecture)
-    // private let authService: AuthServiceProtocol
+    // MARK: - Dependencies
+    private let authService: AuthServiceProtocol
+    
+    init(authService: AuthServiceProtocol) {
+        self.authService = authService
+    }
     
     // MARK: - ViewModels
     func makeGreetingViewModel(coordinator: AuthCoordinatorProtocol) -> GreetingViewModel {
@@ -19,19 +23,12 @@ final class AuthDIContainer {
     }
     
     func makeSignInViewModel(coordinator: AuthCoordinatorProtocol) -> SignInViewModel {
-        SignInViewModel(coordinator: coordinator)
+        SignInViewModel(coordinator: coordinator, authService: authService)
     }
     
     func makeSignUpViewModel(coordinator: AuthCoordinatorProtocol) -> SignUpViewModel {
-        SignUpViewModel(coordinator: coordinator)
+        SignUpViewModel(coordinator: coordinator, authService: authService)
     }
     
-    // MARK: - Future Clean Architecture Dependencies
-    // func makeSignInUseCase() -> SignInUseCase {
-    //     SignInUseCaseImpl(authRepository: authRepository)
-    // }
-    //
-    // func makeSignUpUseCase() -> SignUpUseCase {
-    //     SignUpUseCaseImpl(authRepository: authRepository)
-    // }
+    #warning("Create Repositories Here!!")
 }

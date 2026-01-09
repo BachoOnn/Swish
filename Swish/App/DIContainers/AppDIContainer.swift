@@ -10,11 +10,14 @@ import Foundation
 @MainActor
 final class AppDIContainer {
     
-    // MARK: - Sub-Containers
-    lazy var authDIContainer = AuthDIContainer()
-    lazy var mainDIContainer = MainDIContainer()
+    let authService: AuthServiceProtocol
+    let authDIContainer: AuthDIContainer
+    let mainDIContainer: MainDIContainer
     
-    // MARK: - Services (Add later when implementing Firebase)
-    // lazy var authService: AuthServiceProtocol = FirebaseAuthService()
-    // lazy var playerRepository: PlayerRepositoryProtocol = DefaultPlayerRepository()
+    init() {
+        let googleService = GoogleSignInService()
+        self.authService = FirebaseAuthService(googleSignInService: googleService)
+        self.authDIContainer = AuthDIContainer(authService: authService)
+        self.mainDIContainer = MainDIContainer()
+    }
 }

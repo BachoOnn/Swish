@@ -11,14 +11,14 @@ import UIKit
 final class AppCoordinator {
     let window: UIWindow
     let appDIContainer: AppDIContainer
-    let mainCoordinator: MainCoordinator
+    let initialCoordinator: InitialCoordinator
     
     init(window: UIWindow) {
         self.window = window
         self.appDIContainer = AppDIContainer()
         
         let navigationController = UINavigationController()
-        self.mainCoordinator = MainCoordinator(
+        self.initialCoordinator = InitialCoordinator(
             navigationController: navigationController,
             appDIContainer: appDIContainer
         )
@@ -27,7 +27,11 @@ final class AppCoordinator {
         window.makeKeyAndVisible()
     }
     
+    deinit {
+        print("AppCoordinator deallocated")
+    }
+    
     func start() {
-        mainCoordinator.start()
+        initialCoordinator.start()
     }
 }

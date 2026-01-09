@@ -9,9 +9,23 @@ import Combine
 
 @MainActor
 final class HomeViewModel: ObservableObject {
-    var onSignOut: (() -> Void)?
+    
+    private weak var coordinator: MainCoordinator?
+    
+    
+    init(coordinator: MainCoordinator) {
+        self.coordinator = coordinator
+    }
+    
+    deinit {
+        print("HomeViewModel destroyed")
+    }
+    
+    func navigateToProfile() {
+        coordinator?.navigateToProfile()
+    }
     
     func signOut() {
-        onSignOut?()
+        coordinator?.signOut()
     }
 }

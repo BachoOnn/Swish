@@ -19,17 +19,19 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         self.navigationController = navigationController
         self.diContainer = diContainer
         self.navigationController.navigationBar.isHidden = true
+        print("AuthCoordinator created")
     }
     
-    // delete this 
+    // delete thisss laterr
     deinit {
         print("🗑️ AuthCoordinator deallocated")
     }
     
+    
     func start() {
         let viewModel = diContainer.makeGreetingViewModel(coordinator: self)
         let greetingVC = GreetingViewController(viewModel: viewModel)
-        navigationController.setViewControllers([greetingVC], animated: true)
+        navigationController.setViewControllers([greetingVC], animated: false)
     }
     
     func showSignUp() {
