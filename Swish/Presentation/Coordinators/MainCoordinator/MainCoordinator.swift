@@ -1,6 +1,6 @@
 //
 //  MainCoordinator.swift
-//  Auth
+//  Swish
 //
 //  Created by Bacho on 06.01.26.
 //

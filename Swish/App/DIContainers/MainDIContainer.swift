@@ -1,6 +1,6 @@
 //
 //  MainDIContainer.swift
-//  Auth
+//  Swish
 //
 //  Created by Bacho on 04.01.26.
 //

@@ -1,11 +1,11 @@
 //
 //  AuthServiceProtocol.swift
-//  Auth
+//  Swish
 //
 //  Created by Bacho on 04.01.26.
 //
 
-protocol AuthServiceProtocol {
+protocol AuthRepositoryProtocol {
     func signIn(email: String, password: String) async throws -> User
     func signUp(email: String, password: String) async throws -> User
     func signInWithGoogle() async throws -> User

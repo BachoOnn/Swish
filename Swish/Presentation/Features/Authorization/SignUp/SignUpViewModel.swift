@@ -1,6 +1,6 @@
 //
 //  SignUpViewModel.swift
-//  Auth
+//  Swish
 //
 //  Created by Bacho on 31.12.25.
 //
@@ -16,8 +16,8 @@ final class SignUpViewModel: ObservableObject {
     @Published var errorMessage = ""
     
     // MARK: - Dependencies
+    private let signUpUseCase: DefaultSignUpUseCase
     private weak var coordinator: AuthCoordinatorProtocol?
-    private let authService: AuthServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Computed Properties
@@ -29,9 +29,9 @@ final class SignUpViewModel: ObservableObject {
     }
     
     // MARK: - Initialization
-    init(coordinator: AuthCoordinatorProtocol, authService: AuthServiceProtocol) {
+    init(coordinator: AuthCoordinatorProtocol, signUpUseCase: DefaultSignUpUseCase) {
         self.coordinator = coordinator
-        self.authService = authService
+        self.signUpUseCase = signUpUseCase
         observeState()
     }
     
@@ -57,25 +57,16 @@ final class SignUpViewModel: ObservableObject {
     }
     
     func signUp(email: String, password: String, confirmPassword: String, firstName: String, lastName: String) async {
-        guard !email.isEmpty, !password.isEmpty, !firstName.isEmpty, !lastName.isEmpty else {
-            state = .error("Please fill in all fields")
-            return
-        }
-        
-        guard password == confirmPassword else {
-            state = .error("Passwords don't match")
-            return
-        }
-        
-        guard password.count >= 6 else {
-            state = .error("Password must be at least 6 characters")
-            return
-        }
-        
         state = .loading
         
         do {
-            let user = try await authService.signUp(email: email, password: password)
+            let user = try await signUpUseCase.execute(
+                email: email,
+                password: password,
+                confirmPassword: confirmPassword,
+                firstName: firstName,
+                lastName: lastName
+            )
             print("✅ Signed up: \(user.email)")
             state = .success
             coordinator?.didSignIn()

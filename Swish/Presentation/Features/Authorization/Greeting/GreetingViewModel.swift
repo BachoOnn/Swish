@@ -1,6 +1,6 @@
 //
 //  GreetingViewModel.swift
-//  Auth
+//  Swish
 //
 //  Created by Bacho on 31.12.25.
 //

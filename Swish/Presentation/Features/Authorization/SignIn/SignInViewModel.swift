@@ -1,6 +1,6 @@
 //
 //  SignInViewModel.swift
-//  Auth
+//  Swish
 //
 //  Created by Bacho on 31.12.25.
 //
@@ -16,8 +16,9 @@ final class SignInViewModel: ObservableObject {
     @Published var errorMessage = ""
     
     // MARK: - Dependencies
+    private let signInUseCase: DefaultSignInUseCase
+    private let googleSignInUseCase: DefaultGoogleSignInUseCase
     private weak var coordinator: AuthCoordinatorProtocol?
-    private let authService: AuthServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Computed Properties
@@ -29,9 +30,10 @@ final class SignInViewModel: ObservableObject {
     }
     
     // MARK: - Initialization
-    init(coordinator: AuthCoordinatorProtocol, authService: AuthServiceProtocol) {
+    init(coordinator: AuthCoordinatorProtocol, signInUseCase: DefaultSignInUseCase, googleSignInUseCase: DefaultGoogleSignInUseCase) {
         self.coordinator = coordinator
-        self.authService = authService
+        self.signInUseCase = signInUseCase
+        self.googleSignInUseCase = googleSignInUseCase
         observeState()
     }
     
@@ -57,15 +59,10 @@ final class SignInViewModel: ObservableObject {
     }
     
     func signIn(email: String, password: String) async {
-        guard !email.isEmpty, !password.isEmpty else {
-            state = .error("Please enter email and password")
-            return
-        }
-        
         state = .loading
         
         do {
-            let user = try await authService.signIn(email: email, password: password)
+            let user = try await signInUseCase.execute(email: email, password: password)
             print("✅ Signed in: \(user.email)")
             state = .success
             coordinator?.didSignIn()
@@ -78,7 +75,7 @@ final class SignInViewModel: ObservableObject {
         state = .loading
         
         do {
-            let user = try await authService.signInWithGoogle()
+            let user = try await googleSignInUseCase.execute()
             print("✅ Signed in with Google: \(user.email)")
             state = .success
             coordinator?.didSignIn()

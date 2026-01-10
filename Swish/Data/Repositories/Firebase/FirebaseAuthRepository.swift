@@ -1,6 +1,6 @@
 //
 //  FirebaseAuthService.swift
-//  Auth
+//  Swish
 //
 //  Created by Bacho on 04.01.26.
 //
@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseAuth
 
-final class FirebaseAuthService: AuthServiceProtocol {
+final class FirebaseAuthRepository: AuthRepositoryProtocol {
     
     private let googleSignInService: GoogleSignInService
     

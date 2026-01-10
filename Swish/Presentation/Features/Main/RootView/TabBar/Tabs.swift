@@ -1,6 +1,6 @@
 //
 //  Tabs.swift
-//  RickNMorty
+//  Swish
 //
 //  Created by Bacho on 03.12.25.
 //

@@ -1,6 +1,6 @@
 //
 //  BackButton.swift
-//  RickNMorty
+//  Swish
 //
 //  Created by Bacho on 05.12.25.
 //

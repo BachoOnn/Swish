@@ -1,6 +1,6 @@
 //
 //  ScreenSize.swift
-//  Auth
+//  Swish
 //
 //  Created by Bacho on 01.01.26.
 //

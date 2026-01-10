@@ -1,6 +1,6 @@
 //
 //  CustomPageIndicator.swift
-//  Auth
+//  Swish
 //
 //  Created by Bacho on 09.01.26.
 //

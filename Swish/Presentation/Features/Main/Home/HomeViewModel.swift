@@ -12,6 +12,7 @@ final class HomeViewModel: ObservableObject {
     
     private weak var coordinator: MainCoordinator?
     
+    private(set) var games = MockGameData.upcomingGames
     
     init(coordinator: MainCoordinator) {
         self.coordinator = coordinator
