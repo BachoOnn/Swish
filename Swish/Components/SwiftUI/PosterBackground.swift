@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct PosterBackground: View {
+    
+    let poster: String
+    
     var body: some View {
         ZStack {
-            Image("poster")
+            Image(poster)
                 .resizable()
                 .scaledToFill()
             
@@ -18,8 +21,4 @@ struct PosterBackground: View {
         }
         .ignoresSafeArea()
     }
-}
-
-#Preview {
-    PosterBackground()
 }

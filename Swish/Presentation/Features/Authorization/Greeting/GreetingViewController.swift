@@ -86,7 +86,7 @@ final class GreetingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addSwiftUIBackground(PosterBackground())
+        addSwiftUIBackground(PosterBackground(poster: "poster"))
         setupUI()
         setupConstraints()
         setupActions()

@@ -1,15 +1,14 @@
-//
 //  Game.swift
 //  Auth
 //
 //  Created by Bacho on 09.01.26.
 //
 
-
 import Foundation
 
 // MARK: - Game Model
-struct Game: Codable, Identifiable {
+struct Game: Codable, Identifiable, Hashable {
+    
     let id: Int
     let date: String
     let season: Int
@@ -22,12 +21,32 @@ struct Game: Codable, Identifiable {
     let visitorTeam: Team
     let visitorTeamScore: Int
     
+    let homeTeamQ1Score: Int?
+    let homeTeamQ2Score: Int?
+    let homeTeamQ3Score: Int?
+    let homeTeamQ4Score: Int?
+    
+    let visitorTeamQ1Score: Int?
+    let visitorTeamQ2Score: Int?
+    let visitorTeamQ3Score: Int?
+    let visitorTeamQ4Score: Int?
+    
     enum CodingKeys: String, CodingKey {
         case id, date, season, status, period, time, postseason
         case homeTeam = "home_team"
         case homeTeamScore = "home_team_score"
         case visitorTeam = "visitor_team"
         case visitorTeamScore = "visitor_team_score"
+        
+        case homeTeamQ1Score = "home_team_score_q1"
+        case homeTeamQ2Score = "home_team_score_q2"
+        case homeTeamQ3Score = "home_team_score_q3"
+        case homeTeamQ4Score = "home_team_score_q4"
+        
+        case visitorTeamQ1Score = "visitor_team_score_q1"
+        case visitorTeamQ2Score = "visitor_team_score_q2"
+        case visitorTeamQ3Score = "visitor_team_score_q3"
+        case visitorTeamQ4Score = "visitor_team_score_q4"
     }
 }
 
@@ -105,12 +124,33 @@ extension Game {
     var isFinished: Bool {
         return status == "Final" || status == "Finished"
     }
-}
-
-// MARK: - Team Extensions
-extension Team {
-    /// Team logo URL (you'll need to implement or use a third-party source)
-    var logoURL: String {
-        return "https://cdn.nba.com/logos/nba/\(id)/global/L/logo.svg"
+    
+    /// Get home team quarter scores as array - returns [0,0,0,0] if no data
+    var homeTeamQuarterScores: [Int] {
+        return [
+            homeTeamQ1Score ?? 0,
+            homeTeamQ2Score ?? 0,
+            homeTeamQ3Score ?? 0,
+            homeTeamQ4Score ?? 0
+        ]
+    }
+    
+    /// Get visitor team quarter scores as array - returns [0,0,0,0] if no data
+    var visitorTeamQuarterScores: [Int] {
+        return [
+            visitorTeamQ1Score ?? 0,
+            visitorTeamQ2Score ?? 0,
+            visitorTeamQ3Score ?? 0,
+            visitorTeamQ4Score ?? 0
+        ]
+    }
+    
+    
+    static func == (lhs: Game, rhs: Game) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

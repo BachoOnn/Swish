@@ -11,6 +11,7 @@ protocol MainCoordinatorProtocol: ObservableObject {
     var navigationPath: [AppRoute] { get set }
     
     func navigateToProfile()
+    func navigateToGameDetails(game: Game)
     func navigateBack()
     func signOut()
 }

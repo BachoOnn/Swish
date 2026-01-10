@@ -46,6 +46,11 @@ struct RootView: View {
                 switch route {
                 case .profile:
                     ProfileView(viewModel: viewModel.makeProfileViewModel())
+                case .gameDetails(let game):
+                    GameDetailsViewControllerWrapper(game: game)
+                        .navigationBarHidden(true)
+                        .navigationBarBackButtonHidden(true)
+                        .ignoresSafeArea()
                 }
             }
             .ignoresSafeArea()

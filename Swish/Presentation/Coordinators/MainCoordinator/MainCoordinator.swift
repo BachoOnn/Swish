@@ -1,4 +1,3 @@
-//
 //  MainCoordinator.swift
 //  Swish
 //
@@ -18,10 +17,14 @@ final class MainCoordinator: MainCoordinatorProtocol {
         navigationPath.append(.profile)
     }
     
+    func navigateToGameDetails(game: Game) {
+        navigationPath.append(.gameDetails(game))
+    }
     
     init() {
         print("MainCoordinator created")
     }
+    
     deinit {
         print("MainCoordinator destroyed")
     }

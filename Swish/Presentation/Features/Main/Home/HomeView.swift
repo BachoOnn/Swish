@@ -1,4 +1,3 @@
-//
 //  HomeView.swift
 //  Auth
 //
@@ -22,7 +21,7 @@ struct HomeView: View {
                 })
                 .ignoresSafeArea()
                 .frame(height: 60)
-    
+                
                 ScrollView {
                     VStack(alignment: .leading, spacing: 50) {
                         gameCardSection
@@ -34,7 +33,6 @@ struct HomeView: View {
             }
         }
     }
-    
 }
 
 #Preview {
@@ -59,11 +57,10 @@ extension HomeView {
                             content
                                 .opacity(phase.isIdentity ? 1.0 : 0.6)
                                 .scaleEffect(phase.isIdentity ? 1.0 : 0.9)
-                            
                         }
                         .id(index)
                         .onTapGesture {
-                            print("Tapped game: \(game.homeTeam.name) vs \(game.visitorTeam.name)")
+                            viewModel.navigateToGameDetails(game: game)
                         }
                     }
                 }
@@ -78,7 +75,6 @@ extension HomeView {
             )
         }
     }
-    
     
     private var newsSection: some View {
         VStack(alignment: .leading, spacing: 0) {

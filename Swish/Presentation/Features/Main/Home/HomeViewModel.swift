@@ -1,4 +1,3 @@
-//
 //  HomeViewModel.swift
 //  Auth
 //
@@ -12,7 +11,7 @@ final class HomeViewModel: ObservableObject {
     
     private weak var coordinator: MainCoordinator?
     
-    private(set) var games = MockGameData.upcomingGames
+    private(set) var games = MockGameData.finishedGames
     
     init(coordinator: MainCoordinator) {
         self.coordinator = coordinator
@@ -24,6 +23,10 @@ final class HomeViewModel: ObservableObject {
     
     func navigateToProfile() {
         coordinator?.navigateToProfile()
+    }
+    
+    func navigateToGameDetails(game: Game) {
+        coordinator?.navigateToGameDetails(game: game)
     }
     
     func signOut() {
