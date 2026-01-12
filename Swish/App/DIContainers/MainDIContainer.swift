@@ -20,30 +20,27 @@ final class MainDIContainer {
     // MARK: - ViewModels
     
     func makeRootViewModel() -> RootViewModel {
-        let homeViewModel = makeHomeViewModel()
-        return RootViewModel(
-            homeViewModel: homeViewModel,
-            coordinator: coordinator
-        )
+        RootViewModel() 
     }
     
     func makeHomeViewModel() -> HomeViewModel {
         HomeViewModel(coordinator: coordinator)
     }
     
-//    func makeProfileViewModel() -> ProfileViewModel {
-//        ProfileViewModel(coordinator: coordinator)
-//    }
+    func makeGamesViewModel() -> GamesViewModel {
+        GamesViewModel(coordinator: coordinator)
+    }
     
-    //    func makeGamesViewModel() -> GamesViewModel {
-    //        GamesViewModel()
-    //    }
-    //
+    func makeProfileViewModel() -> ProfileViewModel {
+        ProfileViewModel(coordinator: coordinator)
+    }
+    
+    // TODO: Add these when ready
     //    func makeSearchViewModel() -> SearchViewModel {
-    //        SearchViewModel()
+    //        SearchViewModel(coordinator: coordinator)
     //    }
     //
     //    func makeDiscoverViewModel() -> DiscoverViewModel {
-    //        DiscoverViewModel()
+    //        DiscoverViewModel(coordinator: coordinator)
     //    }
 }

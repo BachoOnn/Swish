@@ -12,31 +12,23 @@ struct RootView: View {
     @StateObject var viewModel: RootViewModel
     @ObservedObject var coordinator: MainCoordinator
     
-    init(viewModel: RootViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
-        _coordinator = ObservedObject(wrappedValue: viewModel.coordinator)
+    let container: MainDIContainer
+    
+    init(container: MainDIContainer) {
+        self.container = container
+        _coordinator = ObservedObject(wrappedValue: container.coordinator)
+        _viewModel = StateObject(wrappedValue: container.makeRootViewModel())
     }
     
     var body: some View {
         NavigationStack(path: $coordinator.navigationPath) {
             ZStack(alignment: .bottom) {
                 TabView(selection: $viewModel.selectedTab) {
-                    
-                    HomeView(viewModel: viewModel.homeViewModel)
-                        .tag(Tabs.home)
-                        .toolbarBackground(.hidden, for: .tabBar)
-                    
-                    GamesView()
-                        .tag(Tabs.games)
-                        .toolbarBackground(.hidden, for: .tabBar)
-                    
-                    SearchView()
-                        .tag(Tabs.search)
-                        .toolbarBackground(.hidden, for: .tabBar)
-                    
-                    DiscoverView()
-                        .tag(Tabs.discover)
-                        .toolbarBackground(.hidden, for: .tabBar)
+                
+                    homeTab
+                    gamesTab
+                    searchTab
+                    discoverTab
                 }
                 
                 CustomTabBar(selectedTab: $viewModel.selectedTab)
@@ -45,7 +37,7 @@ struct RootView: View {
             .navigationDestination(for: AppRoute.self) { route in
                 switch route {
                 case .profile:
-                    ProfileView(viewModel: viewModel.makeProfileViewModel())
+                    ProfileView(viewModel: container.makeProfileViewModel())
                 case .gameDetails(let game):
                     GameDetailsViewControllerWrapper(game: game)
                         .navigationBarHidden(true)
@@ -56,9 +48,39 @@ struct RootView: View {
             .ignoresSafeArea()
         }
     }
+    
+    // MARK: - Tab Views
+    
+    @ViewBuilder
+    private var homeTab: some View {
+        HomeView(viewModel: container.makeHomeViewModel())
+            .tag(Tabs.home)
+            .toolbarBackground(.hidden, for: .tabBar)
+    }
+    
+    @ViewBuilder
+    private var gamesTab: some View {
+        GamesView(viewModel: container.makeGamesViewModel())
+            .tag(Tabs.games)
+            .toolbarBackground(.hidden, for: .tabBar)
+    }
+    
+    @ViewBuilder
+    private var searchTab: some View {
+        SearchView()
+            .tag(Tabs.search)
+            .toolbarBackground(.hidden, for: .tabBar)
+    }
+    
+    @ViewBuilder
+    private var discoverTab: some View {
+        DiscoverView()
+            .tag(Tabs.discover)
+            .toolbarBackground(.hidden, for: .tabBar)
+    }
 }
 
 #Preview {
     let container = MainDIContainer()
-    return RootView(viewModel: container.makeRootViewModel())
+    return RootView(container: container)
 }

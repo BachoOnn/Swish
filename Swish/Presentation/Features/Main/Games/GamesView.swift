@@ -9,12 +9,13 @@ import SwiftUI
 
 struct GamesView: View {
     
-    @State var selection: Date?
+    @StateObject var viewModel: GamesViewModel
+    
+    @State var selection: Date? = .now
     @State var title: String = Calendar.monthAndYear(from: .now)
     @State var focusedWeek: Week = .current
     @State var calendarType: CalendarType = .week
     @State var isDragging: Bool = false
-    
     @State var dragProgress: CGFloat = .zero
     @State var initialDragOffset: CGFloat? = nil
     @State var verticalDragOffset: CGFloat = .zero
@@ -32,15 +33,21 @@ struct GamesView: View {
                 
                 calendarSection
                 
-                GamesCollectionView(selectedDate: selection)
+                GamesCollectionView(viewModel: viewModel)
                 
                 Spacer()
             }
         }
+        .onAppear {
+            viewModel.loadGames(for: selection)
+        }
+        .onChange(of: selection) { _, newValue in
+            viewModel.loadGames(for: newValue)
+        }
     }
 }
 
-
 #Preview {
-    GamesView()
+    let coordinator = MainCoordinator()
+    GamesView(viewModel: GamesViewModel(coordinator: coordinator))
 }

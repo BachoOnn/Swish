@@ -5,12 +5,11 @@
 //  Created by Bacho on 12.01.26.
 //
 
-
 import SwiftUI
 import UIKit
 
 struct GamesCollectionView: UIViewRepresentable {
-    var selectedDate: Date?
+    @ObservedObject var viewModel: GamesViewModel
     
     func makeUIView(context: Context) -> UICollectionView {
         let layout = context.coordinator.createLayout()
@@ -23,13 +22,12 @@ struct GamesCollectionView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UICollectionView, context: Context) {
-        context.coordinator.selectedDate = selectedDate
-        context.coordinator.loadGames()
+        context.coordinator.games = viewModel.games
         uiView.reloadData()
     }
     
     func makeCoordinator() -> Coordinator {
-        Coordinator()
+        Coordinator(viewModel: viewModel)
     }
 }
 
@@ -37,39 +35,10 @@ struct GamesCollectionView: UIViewRepresentable {
 extension GamesCollectionView {
     class Coordinator: NSObject, UICollectionViewDelegate, UICollectionViewDataSource {
         var games: [Game] = []
-        var selectedDate: Date?
+        let viewModel: GamesViewModel
         
-        func loadGames() {
-            guard let selectedDate = selectedDate else {
-                games = MockGameData.allGames
-                return
-            }
-            
-            let calendar = Calendar.current
-            
-            // Get date components for selected date (ignoring time)
-            let selectedComponents = calendar.dateComponents([.year, .month, .day], from: selectedDate)
-            
-            games = MockGameData.allGames.filter { game in
-                let formatter = ISO8601DateFormatter()
-                guard let gameDate = formatter.date(from: game.date) else {
-                    print("❌ Failed to parse date: \(game.date)")
-                    return false
-                }
-                
-                let gameComponents = calendar.dateComponents([.year, .month, .day], from: gameDate)
-                let isSameDay = selectedComponents.year == gameComponents.year &&
-                selectedComponents.month == gameComponents.month &&
-                selectedComponents.day == gameComponents.day
-                
-                if isSameDay {
-                    print("✅ Found game: \(game.homeTeam.abbreviation) vs \(game.visitorTeam.abbreviation) on \(game.formattedDate)")
-                }
-                
-                return isSameDay
-            }
-            
-            print("🏀 Total games found: \(games.count) for date: \(selectedDate)")
+        init(viewModel: GamesViewModel) {
+            self.viewModel = viewModel
         }
         
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -81,6 +50,11 @@ extension GamesCollectionView {
             let game = games[indexPath.item]
             cell.configure(with: game)
             return cell
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            let game = games[indexPath.item]
+            viewModel.navigateToGameDetails(game: game) 
         }
         
         // MARK: - Layout
