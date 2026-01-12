@@ -35,4 +35,10 @@ final class GameDetailsViewModel {
     var status: String {
         game.status
     }
+    
+    var topPerformers: [PlayerGameStats] {
+        let homeTop = currentGame.getTopHomePerformers(from: MockGameData.mockPlayerStats)
+        let visitorTop = currentGame.getTopVisitorPerformers(from: MockGameData.mockPlayerStats)
+        return homeTop + visitorTop
+    }
 }

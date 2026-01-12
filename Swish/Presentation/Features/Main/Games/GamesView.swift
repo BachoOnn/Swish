@@ -32,6 +32,8 @@ struct GamesView: View {
                 
                 calendarSection
                 
+                GamesCollectionView(selectedDate: selection)
+                
                 Spacer()
             }
         }
