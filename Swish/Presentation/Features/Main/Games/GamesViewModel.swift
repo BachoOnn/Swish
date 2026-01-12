@@ -51,11 +51,9 @@ final class GamesViewModel: ObservableObject {
             let gameComponents = calendar.dateComponents([.year, .month, .day], from: gameDate)
             
             return selectedComponents.year == gameComponents.year &&
-                   selectedComponents.month == gameComponents.month &&
-                   selectedComponents.day == gameComponents.day
+            selectedComponents.month == gameComponents.month &&
+            selectedComponents.day == gameComponents.day
         }
-        
-        print("🏀 Loaded \(games.count) games for \(date)")
     }
     
     func navigateToGameDetails(game: Game) {
