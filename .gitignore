@@ -122,7 +122,7 @@ Dependencies/
 
 
 ### SwiftPackageManager ###
-Packages
+# Packages
 xcuserdata
 # *.xcodeproj
 
