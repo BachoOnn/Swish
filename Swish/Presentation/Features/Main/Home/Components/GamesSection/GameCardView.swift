@@ -9,27 +9,22 @@ import SwiftUI
 
 struct GameCardView: View {
     
-    let homeTeam: String
-    let homeAbb: String
-    let visitorTeam: String
-    let visitorAbb: String
+    let game: Game
     
     var body: some View {
-        
         VStack(spacing: 0) {
             HStack(spacing: 0) {
                 Group {
-                    GameDayPhotoView(photo: homeAbb)
-                    GameDayPhotoView(photo: visitorAbb)
+                    GameDayPhotoView(photo: game.homeTeam.abbreviation)
+                    GameDayPhotoView(photo: game.visitorTeam.abbreviation)
                 }
                 .scaledToFit()
             }
             .overlay(alignment: .bottomLeading) {
-                
                 Color.black.opacity(0.4)
                     .frame(height: 30)
                 HStack {
-                    Text("\(homeTeam) @ \(visitorTeam)" .uppercased())
+                    Text("\(game.homeTeam.name) @ \(game.visitorTeam.name)".uppercased())
                         .font(.system(size: 23, weight: .semibold))
                         .foregroundStyle(.white)
                     Spacer()
@@ -41,19 +36,37 @@ struct GameCardView: View {
                 Color.game
                     .frame(height: 150)
                 
-                HStack (spacing: 60) {
-                    TeamSideView(team: homeTeam)
+                HStack(spacing: 50) {
+                    TeamSideView(team: game.homeTeam.name)
                     
                     VStack(spacing: 10) {
-                        Text("Fri, 9 January")
+                        Text(game.formattedDate)
                             .font(.system(size: 14))
                             .foregroundStyle(Color(.systemGray))
-                        Text("5:00")
-                            .font(.system(size: 30, weight: .bold))
+                        
+                        if game.isFinished {
+                            VStack (spacing: 20){
+                                Text("Final")
+                                    .font(.system(size: 20, weight: .bold))
+                            
+                                HStack(spacing: 20) {
+                                    Text("\(game.homeTeamScore)")
+                                        .font(.system(size: 20, weight: .bold))
+                                    
+                                    Text("-")
+                                        .font(.system(size: 25))
+
+                                    Text("\(game.visitorTeamScore)")
+                                        .font(.system(size: 20, weight: .bold))
+                                }
+                            }
+                        } else {
+                            Text(game.formattedTime)
+                                .font(.system(size: 25, weight: .bold))
+                        }
                     }
                     
-                    
-                    TeamSideView(team: visitorTeam)
+                    TeamSideView(team: game.visitorTeam.name)
                 }
                 .padding(.horizontal)
             }
@@ -63,5 +76,5 @@ struct GameCardView: View {
 }
 
 #Preview {
-    GameCardView(homeTeam: "Lakers", homeAbb: "LAL", visitorTeam: "Celtics", visitorAbb: "BOS")
+    GameCardView(game: MockGameData.recentGames[0])
 }

@@ -19,7 +19,6 @@ final class InitialCoordinator {
         self.appDIContainer = appDIContainer
         navigationController.setNavigationBarHidden(true, animated: false)
         print("InitialCoordinator created")
-
     }
     
     deinit {
@@ -58,10 +57,8 @@ final class InitialCoordinator {
             self?.showAuth()
         }
         
-        let rootViewModel = appDIContainer.mainDIContainer.makeRootViewModel()
-        let rootView = RootView(viewModel: rootViewModel)
+        let rootView = RootView(container: appDIContainer.mainDIContainer)
         let hostingController = UIHostingController(rootView: rootView)
-        
         
         navigationController.setViewControllers([hostingController], animated: true)
     }

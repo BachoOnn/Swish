@@ -45,23 +45,18 @@ extension HomeView {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 0) {
                     ForEach(Array(viewModel.games.enumerated()), id: \.element.id) { index, game in
-                        GameCardView(
-                            homeTeam: game.homeTeam.name,
-                            homeAbb: game.homeTeam.abbreviation,
-                            visitorTeam: game.visitorTeam.name,
-                            visitorAbb: game.visitorTeam.abbreviation
-                        )
-                        .padding(.horizontal, 10)
-                        .containerRelativeFrame(.horizontal)
-                        .scrollTransition(.animated, axis: .horizontal) { content, phase in
-                            content
-                                .opacity(phase.isIdentity ? 1.0 : 0.6)
-                                .scaleEffect(phase.isIdentity ? 1.0 : 0.9)
-                        }
-                        .id(index)
-                        .onTapGesture {
-                            viewModel.navigateToGameDetails(game: game)
-                        }
+                        GameCardView(game: game)
+                            .padding(.horizontal, 10)
+                            .containerRelativeFrame(.horizontal)
+                            .scrollTransition(.animated, axis: .horizontal) { content, phase in
+                                content
+                                    .opacity(phase.isIdentity ? 1.0 : 0.6)
+                                    .scaleEffect(phase.isIdentity ? 1.0 : 0.9)
+                            }
+                            .id(index)
+                            .onTapGesture {
+                                viewModel.navigateToGameDetails(game: game)
+                            }
                     }
                 }
                 .scrollTargetLayout()

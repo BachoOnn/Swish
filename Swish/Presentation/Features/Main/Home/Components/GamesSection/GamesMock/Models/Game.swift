@@ -90,26 +90,44 @@ struct Meta: Codable {
 
 // MARK: - Game Extensions
 extension Game {
-    /// Formatted date string (e.g., "Jan 7, 2026")
+    /// Formatted date string (e.g., "Sun, 12 January")
     var formattedDate: String {
-        let formatter = ISO8601DateFormatter()
-        guard let date = formatter.date(from: date) else { return "" }
-        
+        let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.formatOptions = [
+            .withInternetDateTime,
+            .withFractionalSeconds
+        ]
+        guard let parsedDate = isoFormatter.date(from: date) else {
+            return ""
+        }
         let displayFormatter = DateFormatter()
-        displayFormatter.dateFormat = "MMM d, yyyy"
-        return displayFormatter.string(from: date)
+        displayFormatter.dateFormat = "EEE, d MMMM"
+        displayFormatter.locale = Locale(identifier: "en_US_POSIX")
+        displayFormatter.timeZone = .current   // convert from UTC (Z)
+        
+        return displayFormatter.string(from: parsedDate)
     }
+
     
     /// Formatted time string (e.g., "7:30 PM")
     var formattedTime: String {
-        let formatter = ISO8601DateFormatter()
-        guard let date = formatter.date(from: date) else { return "" }
+        let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.formatOptions = [
+            .withInternetDateTime,
+            .withFractionalSeconds
+        ]
+        
+        guard let parsedDate = isoFormatter.date(from: date) else {
+            return ""
+        }
         
         let displayFormatter = DateFormatter()
         displayFormatter.dateFormat = "h:mm a"
-        return displayFormatter.string(from: date)
+        displayFormatter.locale = Locale(identifier: "en_US_POSIX")
+        displayFormatter.timeZone = .current   // convert from UTC (Z) to local time
+        
+        return displayFormatter.string(from: parsedDate)
     }
-    
     /// Check if game is upcoming (not started)
     var isUpcoming: Bool {
         return status == "Not Started" || status == "Scheduled"
@@ -125,7 +143,7 @@ extension Game {
         return status == "Final" || status == "Finished"
     }
     
-    /// Get home team quarter scores as array - returns [0,0,0,0] if no data
+    /// Get home team quarter scores as array
     var homeTeamQuarterScores: [Int] {
         return [
             homeTeamQ1Score ?? 0,
@@ -135,7 +153,7 @@ extension Game {
         ]
     }
     
-    /// Get visitor team quarter scores as array - returns [0,0,0,0] if no data
+    /// Get visitor team quarter scores as array
     var visitorTeamQuarterScores: [Int] {
         return [
             visitorTeamQ1Score ?? 0,
@@ -145,6 +163,23 @@ extension Game {
         ]
     }
     
+    /// Get top 1 performer from player stats (highest points scorer)
+    func getTopPerformers(from stats: [PlayerGameStats]) -> [PlayerGameStats] {
+        let gameStats = stats.filter { $0.game.id == self.id }
+        return gameStats.sorted { $0.pts > $1.pts }.prefix(1).map { $0 }
+    }
+    
+    /// Get top 1 home team performer
+    func getTopHomePerformers(from stats: [PlayerGameStats]) -> [PlayerGameStats] {
+        let gameStats = stats.filter { $0.game.id == self.id && $0.team.id == self.homeTeam.id }
+        return gameStats.sorted { $0.pts > $1.pts }.prefix(1).map { $0 }
+    }
+    
+    /// Get top 1 visitor team performer
+    func getTopVisitorPerformers(from stats: [PlayerGameStats]) -> [PlayerGameStats] {
+        let gameStats = stats.filter { $0.game.id == self.id && $0.team.id == self.visitorTeam.id }
+        return gameStats.sorted { $0.pts > $1.pts }.prefix(1).map { $0 }
+    }
     
     static func == (lhs: Game, rhs: Game) -> Bool {
         lhs.id == rhs.id
