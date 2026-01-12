@@ -128,8 +128,6 @@ extension Game {
         
         return displayFormatter.string(from: parsedDate)
     }
-
-    
     /// Check if game is upcoming (not started)
     var isUpcoming: Bool {
         return status == "Not Started" || status == "Scheduled"

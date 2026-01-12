@@ -17,7 +17,7 @@ final class GameCell: UICollectionViewCell {
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "game")
-        view.layer.cornerRadius = 16
+        view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -25,7 +25,7 @@ final class GameCell: UICollectionViewCell {
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .white
+        label.textColor = .label
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -33,8 +33,8 @@ final class GameCell: UICollectionViewCell {
     
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12, weight: .regular)
-        label.textColor = .systemGray
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .gray
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -43,8 +43,8 @@ final class GameCell: UICollectionViewCell {
     private let vsLabel: UILabel = {
         let label = UILabel()
         label.text = "VS"
-        label.font = .systemFont(ofSize: 10, weight: .semibold)
-        label.textColor = .systemGray
+        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.textColor = .label
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
