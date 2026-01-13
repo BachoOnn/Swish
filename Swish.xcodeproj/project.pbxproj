@@ -25,6 +25,13 @@
 			);
 			target = 9D8F48572F0E87000014AB14 /* Swish */;
 		};
+		9DE575252F15C60D0024E27A /* Exceptions for "Packages" folder in "Swish" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/Helpers,
+			);
+			target = 9D8F48572F0E87000014AB14 /* Swish */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -34,6 +41,14 @@
 				9DB780F82F1175BC0059CF6B /* Exceptions for "Swish" folder in "Swish" target */,
 			);
 			path = Swish;
+			sourceTree = "<group>";
+		};
+		9DE5751F2F15C5280024E27A /* Packages */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9DE575252F15C60D0024E27A /* Exceptions for "Packages" folder in "Swish" target */,
+			);
+			path = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -56,6 +71,7 @@
 		9D8F484F2F0E87000014AB14 = {
 			isa = PBXGroup;
 			children = (
+				9DE5751F2F15C5280024E27A /* Packages */,
 				9D8F485A2F0E87000014AB14 /* Swish */,
 				9D8F48592F0E87000014AB14 /* Products */,
 			);
@@ -86,6 +102,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				9D8F485A2F0E87000014AB14 /* Swish */,
+				9DE5751F2F15C5280024E27A /* Packages */,
 			);
 			name = Swish;
 			packageProductDependencies = (
