@@ -30,7 +30,10 @@
 			membershipExceptions = (
 				Core/Common,
 				Core/Helpers,
+				Data/APIService,
+				Data/FirebaseService,
 				Domain/AuthDomain,
+				Features/Authorization,
 			);
 			target = 9D8F48572F0E87000014AB14 /* Swish */;
 		};
