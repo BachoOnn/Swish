@@ -17,20 +17,20 @@ struct DayView: View {
             Text(Calendar.dayNumber(from: date))
                 .background{
                     if date == selectedDate{
-                        Circle()
-                            .foregroundStyle(.blue)
-                            .opacity(0.3)
-                            .frame(width: 40, height: 40)
+                        Image(systemName: "basketball.fill")
+                            .font(.system(size: 26))
+                            .foregroundStyle(.indigo)
+                            .opacity(0.7)
                     }else if Calendar.current.isDateInToday(date){
-                        Circle()
+                        Image(systemName: "basketball")
+                            .font(.system(size: 26))
                             .foregroundStyle(.gray)
-                            .opacity(0.3)
-                            .frame(width: 40, height: 40)
+                            .opacity(0.5)
                     }
                 }
         }
-        .foregroundStyle(selectedDate == date ? .blue : Color(.label))
-        .font(.system(.body, design: .rounded, weight: .medium))
+        .foregroundStyle(Color(.label))
+        .font(.system(.body, design: .rounded, weight: selectedDate == date ? .bold : .medium))
         .onTapGesture {
             withAnimation(.easeInOut) {
                 selectedDate = date
