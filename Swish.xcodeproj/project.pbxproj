@@ -28,6 +28,7 @@
 		9DE575252F15C60D0024E27A /* Exceptions for "Packages" folder in "Swish" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Core/Common,
 				Core/Helpers,
 			);
 			target = 9D8F48572F0E87000014AB14 /* Swish */;

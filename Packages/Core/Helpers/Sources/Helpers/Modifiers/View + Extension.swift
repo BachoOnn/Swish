@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Common
 
 extension View {
     func roundedCorners(_ cornerSize: CGFloat) -> some View {

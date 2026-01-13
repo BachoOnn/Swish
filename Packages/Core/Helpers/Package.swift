@@ -10,9 +10,13 @@ let package = Package(
             name: "Helpers",
             targets: ["Helpers"]),
     ],
+    dependencies: [
+        .package(path: "../Common")
+    ],
     targets: [
         .target(
-            name: "Helpers"),
-
+            name: "Helpers",
+            dependencies: ["Common"]
+        ),
     ]
 )
