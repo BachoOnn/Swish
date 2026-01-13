@@ -74,9 +74,10 @@ public struct RootView: View {
     
     @ViewBuilder
     private var discoverTab: some View {
-        DiscoverView()
+        DiscoverView(viewModel: container.makeDiscoverViewModel())
             .tag(Tabs.discover)
             .toolbarBackground(.hidden, for: .tabBar)
+            .edgesIgnoringSafeArea(.top)
     }
 }
 
