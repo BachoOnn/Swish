@@ -11,10 +11,10 @@ struct MockGameData {
     
     // MARK: - Upcoming Games
     static let upcomingGames: [Game] = [
-        // Sunday, 12 January 2026
+        // Monday, 13 January 2026 (TODAY)
         Game(
             id: 1001,
-            date: "2026-01-12T19:30:00.000Z",
+            date: "2026-01-13T19:30:00.000Z",
             season: 2025,
             status: "Not Started",
             period: 0,
@@ -50,7 +50,7 @@ struct MockGameData {
             visitorTeamQ4Score: nil
         ),
         
-        // Monday, 13 January 2026
+        // Monday, 13 January 2026 (TODAY)
         Game(
             id: 1002,
             date: "2026-01-13T20:00:00.000Z",
@@ -89,9 +89,48 @@ struct MockGameData {
             visitorTeamQ4Score: nil
         ),
         
-        // Tuesday, 14 January 2026
+        // Monday, 13 January 2026 (TODAY)
         Game(
             id: 1003,
+            date: "2026-01-13T22:30:00.000Z",
+            season: 2025,
+            status: "Not Started",
+            period: 0,
+            time: "",
+            postseason: false,
+            homeTeam: Team(
+                id: 14,
+                conference: "West",
+                division: "Pacific",
+                city: "Los Angeles",
+                name: "Clippers",
+                fullName: "Los Angeles Clippers",
+                abbreviation: "LAC"
+            ),
+            homeTeamScore: 0,
+            visitorTeam: Team(
+                id: 2,
+                conference: "East",
+                division: "Atlantic",
+                city: "Brooklyn",
+                name: "Nets",
+                fullName: "Brooklyn Nets",
+                abbreviation: "BKN"
+            ),
+            visitorTeamScore: 0,
+            homeTeamQ1Score: nil,
+            homeTeamQ2Score: nil,
+            homeTeamQ3Score: nil,
+            homeTeamQ4Score: nil,
+            visitorTeamQ1Score: nil,
+            visitorTeamQ2Score: nil,
+            visitorTeamQ3Score: nil,
+            visitorTeamQ4Score: nil
+        ),
+        
+        // Tuesday, 14 January 2026
+        Game(
+            id: 1004,
             date: "2026-01-14T18:30:00.000Z",
             season: 2025,
             status: "Not Started",
@@ -130,7 +169,7 @@ struct MockGameData {
         
         // Wednesday, 15 January 2026
         Game(
-            id: 1004,
+            id: 1005,
             date: "2026-01-15T19:00:00.000Z",
             season: 2025,
             status: "Not Started",
@@ -165,50 +204,50 @@ struct MockGameData {
             visitorTeamQ2Score: nil,
             visitorTeamQ3Score: nil,
             visitorTeamQ4Score: nil
-        ),
-        
-        // Thursday, 16 January 2026
-        Game(
-            id: 1005,
-            date: "2026-01-16T21:00:00.000Z",
-            season: 2025,
-            status: "Not Started",
-            period: 0,
-            time: "",
-            postseason: false,
-            homeTeam: Team(
-                id: 14,
-                conference: "West",
-                division: "Pacific",
-                city: "Los Angeles",
-                name: "Clippers",
-                fullName: "Los Angeles Clippers",
-                abbreviation: "LAC"
-            ),
-            homeTeamScore: 0,
-            visitorTeam: Team(
-                id: 2,
-                conference: "East",
-                division: "Atlantic",
-                city: "Brooklyn",
-                name: "Nets",
-                fullName: "Brooklyn Nets",
-                abbreviation: "BKN"
-            ),
-            visitorTeamScore: 0,
-            homeTeamQ1Score: nil,
-            homeTeamQ2Score: nil,
-            homeTeamQ3Score: nil,
-            homeTeamQ4Score: nil,
-            visitorTeamQ1Score: nil,
-            visitorTeamQ2Score: nil,
-            visitorTeamQ3Score: nil,
-            visitorTeamQ4Score: nil
         )
     ]
     
     // MARK: - Recent/Finished Games
     static let recentGames: [Game] = [
+        // Sunday, 12 January 2026
+        Game(
+            id: 2004,
+            date: "2026-01-12T18:00:00.000Z",
+            season: 2025,
+            status: "Final",
+            period: 4,
+            time: "",
+            postseason: false,
+            homeTeam: Team(
+                id: 20,
+                conference: "East",
+                division: "Atlantic",
+                city: "New York",
+                name: "Knicks",
+                fullName: "New York Knicks",
+                abbreviation: "NYK"
+            ),
+            homeTeamScore: 116,
+            visitorTeam: Team(
+                id: 4,
+                conference: "East",
+                division: "Central",
+                city: "Chicago",
+                name: "Bulls",
+                fullName: "Chicago Bulls",
+                abbreviation: "CHI"
+            ),
+            visitorTeamScore: 109,
+            homeTeamQ1Score: 30,
+            homeTeamQ2Score: 28,
+            homeTeamQ3Score: 31,
+            homeTeamQ4Score: 27,
+            visitorTeamQ1Score: 27,
+            visitorTeamQ2Score: 29,
+            visitorTeamQ3Score: 26,
+            visitorTeamQ4Score: 27
+        ),
+        
         // Saturday, 11 January 2026
         Game(
             id: 2001,
@@ -333,8 +372,253 @@ struct MockGameData {
     }
     
     // MARK: - Mock Player Stats
-    // MARK: - Mock Player Stats
     static let mockPlayerStats: [PlayerGameStats] = [
+        // ========================================
+        // GAME 2004: New York Knicks vs Chicago Bulls
+        // ========================================
+        
+        // New York Knicks players (Game 2004)
+        PlayerGameStats(
+            id: 19,
+            player: PlayerInfo(
+                id: 701,
+                firstName: "Jalen",
+                lastName: "Brunson",
+                position: "G",
+                jerseyNumber: "11"
+            ),
+            team: Team(
+                id: 20,
+                conference: "East",
+                division: "Atlantic",
+                city: "New York",
+                name: "Knicks",
+                fullName: "New York Knicks",
+                abbreviation: "NYK"
+            ),
+            game: GameInfo(
+                id: 2004,
+                date: "2026-01-12T18:00:00.000Z",
+                homeTeamId: 20,
+                visitorTeamId: 4,
+                season: 2025
+            ),
+            min: "37:45",
+            pts: 36,
+            reb: 5,
+            ast: 9,
+            stl: 2,
+            blk: 0,
+            turnover: 3,
+            fgm: 13,
+            fga: 24,
+            fg3m: 5,
+            fg3a: 10,
+            ftm: 5,
+            fta: 6
+        ),
+        
+        PlayerGameStats(
+            id: 20,
+            player: PlayerInfo(
+                id: 702,
+                firstName: "Julius",
+                lastName: "Randle",
+                position: "F",
+                jerseyNumber: "30"
+            ),
+            team: Team(
+                id: 20,
+                conference: "East",
+                division: "Atlantic",
+                city: "New York",
+                name: "Knicks",
+                fullName: "New York Knicks",
+                abbreviation: "NYK"
+            ),
+            game: GameInfo(
+                id: 2004,
+                date: "2026-01-12T18:00:00.000Z",
+                homeTeamId: 20,
+                visitorTeamId: 4,
+                season: 2025
+            ),
+            min: "35:30",
+            pts: 24,
+            reb: 10,
+            ast: 5,
+            stl: 1,
+            blk: 1,
+            turnover: 2,
+            fgm: 9,
+            fga: 18,
+            fg3m: 2,
+            fg3a: 6,
+            ftm: 4,
+            fta: 5
+        ),
+        
+        PlayerGameStats(
+            id: 21,
+            player: PlayerInfo(
+                id: 703,
+                firstName: "RJ",
+                lastName: "Barrett",
+                position: "G-F",
+                jerseyNumber: "9"
+            ),
+            team: Team(
+                id: 20,
+                conference: "East",
+                division: "Atlantic",
+                city: "New York",
+                name: "Knicks",
+                fullName: "New York Knicks",
+                abbreviation: "NYK"
+            ),
+            game: GameInfo(
+                id: 2004,
+                date: "2026-01-12T18:00:00.000Z",
+                homeTeamId: 20,
+                visitorTeamId: 4,
+                season: 2025
+            ),
+            min: "32:20",
+            pts: 18,
+            reb: 6,
+            ast: 3,
+            stl: 1,
+            blk: 0,
+            turnover: 1,
+            fgm: 7,
+            fga: 14,
+            fg3m: 2,
+            fg3a: 5,
+            ftm: 2,
+            fta: 3
+        ),
+        
+        // Chicago Bulls players (Game 2004)
+        PlayerGameStats(
+            id: 22,
+            player: PlayerInfo(
+                id: 801,
+                firstName: "Zach",
+                lastName: "LaVine",
+                position: "G-F",
+                jerseyNumber: "8"
+            ),
+            team: Team(
+                id: 4,
+                conference: "East",
+                division: "Central",
+                city: "Chicago",
+                name: "Bulls",
+                fullName: "Chicago Bulls",
+                abbreviation: "CHI"
+            ),
+            game: GameInfo(
+                id: 2004,
+                date: "2026-01-12T18:00:00.000Z",
+                homeTeamId: 20,
+                visitorTeamId: 4,
+                season: 2025
+            ),
+            min: "38:15",
+            pts: 31,
+            reb: 5,
+            ast: 6,
+            stl: 2,
+            blk: 1,
+            turnover: 3,
+            fgm: 11,
+            fga: 22,
+            fg3m: 4,
+            fg3a: 9,
+            ftm: 5,
+            fta: 6
+        ),
+        
+        PlayerGameStats(
+            id: 23,
+            player: PlayerInfo(
+                id: 802,
+                firstName: "DeMar",
+                lastName: "DeRozan",
+                position: "F",
+                jerseyNumber: "11"
+            ),
+            team: Team(
+                id: 4,
+                conference: "East",
+                division: "Central",
+                city: "Chicago",
+                name: "Bulls",
+                fullName: "Chicago Bulls",
+                abbreviation: "CHI"
+            ),
+            game: GameInfo(
+                id: 2004,
+                date: "2026-01-12T18:00:00.000Z",
+                homeTeamId: 20,
+                visitorTeamId: 4,
+                season: 2025
+            ),
+            min: "36:45",
+            pts: 26,
+            reb: 6,
+            ast: 7,
+            stl: 1,
+            blk: 0,
+            turnover: 2,
+            fgm: 10,
+            fga: 19,
+            fg3m: 1,
+            fg3a: 3,
+            ftm: 5,
+            fta: 7
+        ),
+        
+        PlayerGameStats(
+            id: 24,
+            player: PlayerInfo(
+                id: 803,
+                firstName: "Nikola",
+                lastName: "Vucevic",
+                position: "C",
+                jerseyNumber: "9"
+            ),
+            team: Team(
+                id: 4,
+                conference: "East",
+                division: "Central",
+                city: "Chicago",
+                name: "Bulls",
+                fullName: "Chicago Bulls",
+                abbreviation: "CHI"
+            ),
+            game: GameInfo(
+                id: 2004,
+                date: "2026-01-12T18:00:00.000Z",
+                homeTeamId: 20,
+                visitorTeamId: 4,
+                season: 2025
+            ),
+            min: "33:30",
+            pts: 32,
+            reb: 12,
+            ast: 4,
+            stl: 0,
+            blk: 2,
+            turnover: 1,
+            fgm: 8,
+            fga: 15,
+            fg3m: 2,
+            fg3a: 4,
+            ftm: 2,
+            fta: 2
+        ),
+        
         // ========================================
         // GAME 2001: Boston Celtics vs Golden State Warriors
         // ========================================

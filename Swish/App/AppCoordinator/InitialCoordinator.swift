@@ -47,7 +47,6 @@ final class InitialCoordinator {
     func showMainApp() {
         authCoordinator = nil
         
-        // Main package - self-contained
         let mainDIContainer = MainDIContainer()
         self.mainDIContainer = mainDIContainer
         
