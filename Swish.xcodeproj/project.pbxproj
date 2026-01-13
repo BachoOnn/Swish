@@ -30,6 +30,7 @@
 			membershipExceptions = (
 				Core/Common,
 				Core/Helpers,
+				Domain/AuthDomain,
 			);
 			target = 9D8F48572F0E87000014AB14 /* Swish */;
 		};
