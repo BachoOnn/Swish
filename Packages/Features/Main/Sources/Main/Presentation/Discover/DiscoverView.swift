@@ -8,15 +8,16 @@
 import SwiftUI
 import Common
 
-struct DiscoverView: View {
-    var body: some View {
-        ZStack {
-            GradientBackground()
-            Text("Discover Here")
-        }
-    }
-}
+struct DiscoverView: UIViewControllerRepresentable {
+    
+    let viewModel: DiscoverViewModel
 
-#Preview {
-    DiscoverView()
+    func makeUIViewController(context: Context) -> DiscoverViewController {
+        DiscoverViewController(viewModel: viewModel)
+    }
+    
+    func updateUIViewController(_ uiViewController: DiscoverViewController, context: Context) {
+    }
+    
+    typealias UIViewControllerType = DiscoverViewController
 }

@@ -34,4 +34,8 @@ public final class MainDIContainer {
     public func makeProfileViewModel() -> ProfileViewModel {
         ProfileViewModel(coordinator: coordinator)
     }
+    
+    public func makeDiscoverViewModel() -> DiscoverViewModel {
+        DiscoverViewModel()
+    }
 }
