@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Common
 
 final class TopPerformersView: UIView {
     
@@ -50,14 +51,14 @@ final class TopPerformersView: UIView {
     
     // MARK: - Setup
     private func setupUI() {
-        backgroundColor = .game
+        backgroundColor = UIColor(named: "game")
         layer.cornerRadius = 10
         clipsToBounds = true
         
         addSubview(containerStackView)
         
         let titleContainer = UIView()
-        titleContainer.backgroundColor = .game
+        titleContainer.backgroundColor = UIColor(named: "game")
         titleContainer.addSubview(titleLabel)
         
         NSLayoutConstraint.activate([

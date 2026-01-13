@@ -7,20 +7,20 @@
 
 import SwiftUI
 
-struct RootView: View {
+public struct RootView: View {
     
     @StateObject var viewModel: RootViewModel
     @ObservedObject var coordinator: MainCoordinator
     
     let container: MainDIContainer
     
-    init(container: MainDIContainer) {
+    public init(container: MainDIContainer) {
         self.container = container
         _coordinator = ObservedObject(wrappedValue: container.coordinator)
         _viewModel = StateObject(wrappedValue: container.makeRootViewModel())
     }
     
-    var body: some View {
+    public var body: some View {
         NavigationStack(path: $coordinator.navigationPath) {
             ZStack(alignment: .bottom) {
                 TabView(selection: $viewModel.selectedTab) {

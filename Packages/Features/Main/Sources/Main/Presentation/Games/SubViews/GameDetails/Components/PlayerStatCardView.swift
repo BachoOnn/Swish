@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import Common
 
 final class PlayerStatCardView: UIView {
     
     // MARK: - UI Components
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .game
+        view.backgroundColor = UIColor(named: "game")
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class GamesViewModel: ObservableObject {
+public final class GamesViewModel: ObservableObject {
     
     // MARK: - Published Properties
     @Published var games: [Game] = []
@@ -20,7 +20,7 @@ final class GamesViewModel: ObservableObject {
     private weak var coordinator: MainCoordinator?
     
     // MARK: - Init
-    init(coordinator: MainCoordinator) {
+    public init(coordinator: MainCoordinator) {
         self.coordinator = coordinator
     }
     

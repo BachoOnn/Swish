@@ -11,6 +11,8 @@ import FirebaseCore
 
 public final class GoogleSignInService {
     
+    public init() {}
+    
     @MainActor
     public func signIn() async throws -> (idToken: String, accessToken: String) {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {

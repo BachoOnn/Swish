@@ -5,7 +5,7 @@
 //  Created by Bacho on 06.01.26.
 //
 
-enum AppRoute: Hashable, Equatable {
+public enum AppRoute: Hashable, Equatable {
     case profile
     case gameDetails(Game)
 }

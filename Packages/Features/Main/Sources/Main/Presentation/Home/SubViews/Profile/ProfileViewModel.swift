@@ -8,13 +8,13 @@
 import Combine
 
 @MainActor
-final class ProfileViewModel: ObservableObject {
+public final class ProfileViewModel: ObservableObject {
     
     private weak var coordinator: MainCoordinator?
     
     @Published var userEmail: String = ""
     
-    init(coordinator: MainCoordinator) {
+    public init(coordinator: MainCoordinator) {
         self.coordinator = coordinator
         loadUserData()
     }

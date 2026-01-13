@@ -5,6 +5,8 @@
 //
 
 import UIKit
+import Common
+import Helpers
 
 final class GameDetailsViewController: UIViewController {
     

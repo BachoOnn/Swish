@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Calendar {
+public extension Calendar {
     static func nearestMonday(from date: Date = .now) -> Date {
         
         let calendar = Calendar.current

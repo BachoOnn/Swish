@@ -9,7 +9,7 @@ import UIKit
 
 public final class CustomElements {
     
-    static func createSeparator() -> UIView {
+    public static func createSeparator() -> UIView {
         let separator = UIView()
         separator.backgroundColor = .darkGray
         separator.translatesAutoresizingMaskIntoConstraints = false

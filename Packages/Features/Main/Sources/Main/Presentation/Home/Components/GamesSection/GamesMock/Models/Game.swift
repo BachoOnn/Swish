@@ -7,9 +7,9 @@
 import Foundation
 
 // MARK: - Game Model
-struct Game: Codable, Identifiable, Hashable {
+public struct Game: Codable, Identifiable, Hashable {
     
-    let id: Int
+    public let id: Int
     let date: String
     let season: Int
     let status: String
@@ -89,7 +89,7 @@ struct Meta: Codable {
 }
 
 // MARK: - Game Extensions
-extension Game {
+public extension Game {
     /// Formatted date string (e.g., "Sun, 12 January")
     var formattedDate: String {
         let isoFormatter = ISO8601DateFormatter()

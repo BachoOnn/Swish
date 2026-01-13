@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct ProfileView: View {
     
@@ -25,6 +26,7 @@ struct ProfileView: View {
                     favoritesSection
                 }
             }
+            .scrollIndicators(.hidden)
         }
         .toolbar(.hidden, for: .navigationBar)
     }

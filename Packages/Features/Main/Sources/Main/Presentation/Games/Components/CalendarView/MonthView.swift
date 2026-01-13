@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Foundation
+import Helpers
 
 struct MonthView: View {
     let month: Month
@@ -25,11 +27,3 @@ struct MonthView: View {
     }
 }
 
-#Preview {
-    MonthView(
-        month: .init(from: .now, order: .current),
-        dragProgress: 1,
-        focused: .constant(.current),
-        selectedDate: .constant(nil)
-    )
-}

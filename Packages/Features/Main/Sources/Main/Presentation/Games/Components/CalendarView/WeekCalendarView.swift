@@ -6,7 +6,10 @@
 //
 
 import SwiftUI
+import Foundation
+import Helpers
 
+@available(iOS 18.0, *)
 struct WeekCalendarView: View {
     let isDragging: Bool
     
@@ -89,6 +92,7 @@ struct WeekCalendarView: View {
     }
 }
 
+@available(iOS 18.0, *)
 extension WeekCalendarView {
     func loadWeek(from week: Week) {
         if week.order == .previous, weeks.first == week, let firstDay = week.days.first {
@@ -108,10 +112,13 @@ extension WeekCalendarView {
 }
 
 #Preview {
-    WeekCalendarView(
-        .constant(""),
-        selection: .constant(nil),
-        focused: .constant(.current),
-        isDragging: false
-    )
+    if #available(iOS 18.0, *) {
+        WeekCalendarView(
+            .constant(""),
+            selection: .constant(nil),
+            focused: .constant(.current),
+            isDragging: false
+        )
+    } else {
+    }
 }

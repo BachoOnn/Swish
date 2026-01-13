@@ -5,9 +5,11 @@
 //  Created by Bacho on 11.01.26.
 //
 
-
+import Foundation
 import SwiftUI
+import Helpers
 
+@available(iOS 18.0, *)
 struct MonthCalendarView: View {
     let isDragging: Bool
     let dragProgress: CGFloat
@@ -115,6 +117,7 @@ struct MonthCalendarView: View {
 }
 
 
+@available(iOS 18.0, *)
 extension MonthCalendarView {
     func loadMonth(from month: Month) {
         if month.order == .previous, months.first == month, let previousMonth = month.previousMonth {
@@ -136,11 +139,14 @@ extension MonthCalendarView {
 }
 
 #Preview {
-    MonthCalendarView(
-        .constant(""),
-        selection: .constant(nil),
-        focused: .constant(.current),
-        isDragging: false,
-        dragProgress: 1
-    )
+    if #available(iOS 18.0, *) {
+        MonthCalendarView(
+            .constant(""),
+            selection: .constant(nil),
+            focused: .constant(.current),
+            isDragging: false,
+            dragProgress: 1
+        )
+    } else {
+    }
 }

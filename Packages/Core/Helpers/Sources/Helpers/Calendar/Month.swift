@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct Month: Identifiable, Equatable {
-    let id: String
-    let weeks: [Week]
-    let order: Order
-    let initializedDate: Date
+public struct Month: Identifiable, Equatable {
+    public let id: String
+    public let weeks: [Week]
+    public let order: Order
+    public let initializedDate: Date
     
-    init(from date: Date, order: Order) {
+    public init(from date: Date, order: Order) {
         self.order = order
         
         var components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
@@ -81,7 +81,7 @@ struct Month: Identifiable, Equatable {
     }
 }
 
-extension Month {
+public extension Month {
     var previousMonth: Month? {
         guard let previousMonthDate = Calendar.current.date(byAdding: .month, value: -1, to: initializedDate) else { return nil }
         

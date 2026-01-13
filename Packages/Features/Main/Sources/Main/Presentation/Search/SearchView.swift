@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct SearchView: View {
     var body: some View {

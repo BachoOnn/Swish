@@ -19,7 +19,7 @@
 		9DB780F82F1175BC0059CF6B /* Exceptions for "Swish" folder in "Swish" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Resources/Info.plist,
+				App/Resources/Info.plist,
 			);
 			target = 9D8F48572F0E87000014AB14 /* Swish */;
 		};
@@ -189,7 +189,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3NF6TUF42D;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Swish/Resources/Info.plist;
+				INFOPLIST_FILE = Swish/App/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -217,7 +217,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3NF6TUF42D;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Swish/Resources/Info.plist;
+				INFOPLIST_FILE = Swish/App/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

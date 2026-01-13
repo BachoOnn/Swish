@@ -10,31 +10,34 @@ import SwiftUI
 
 @MainActor
 public final class AuthCoordinator: AuthCoordinatorProtocol {
-    private let navigationController: UINavigationController
+    private var navigationController: UINavigationController?
     private let diContainer: AuthDIContainer
     
     public var onAuthSuccess: (() -> Void)?
     
-    public init(navigationController: UINavigationController, diContainer: AuthDIContainer) {
-        self.navigationController = navigationController
-        self.diContainer = diContainer
-        self.navigationController.navigationBar.isHidden = true
+    public init() {
+        self.diContainer = AuthDIContainer()
         print("AuthCoordinator created")
     }
     
-    // delete thisss laterr
+    public func setNavigationController(_ navigationController: UINavigationController) {
+        self.navigationController = navigationController
+        navigationController.navigationBar.isHidden = true
+    }
+    
     deinit {
         print("🗑️ AuthCoordinator deallocated")
     }
     
-    
     public func start() {
+        guard let navigationController = navigationController else { return }
         let viewModel = diContainer.makeGreetingViewModel(coordinator: self)
         let greetingVC = GreetingViewController(viewModel: viewModel)
         navigationController.setViewControllers([greetingVC], animated: false)
     }
     
     public func showSignUp() {
+        guard let navigationController = navigationController else { return }
         let viewModel = diContainer.makeSignUpViewModel(coordinator: self)
         let signUpView = SignUpView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: signUpView)
@@ -42,6 +45,7 @@ public final class AuthCoordinator: AuthCoordinatorProtocol {
     }
     
     public func showSignIn() {
+        guard let navigationController = navigationController else { return }
         let viewModel = diContainer.makeSignInViewModel(coordinator: self)
         let signInView = SignInView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: signInView)
@@ -49,7 +53,7 @@ public final class AuthCoordinator: AuthCoordinatorProtocol {
     }
     
     public func pop() {
-        navigationController.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     public func didSignIn() {

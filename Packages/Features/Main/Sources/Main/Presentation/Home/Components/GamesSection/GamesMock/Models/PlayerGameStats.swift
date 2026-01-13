@@ -9,12 +9,12 @@
 import Foundation
 
 // MARK: - Stats Response
-struct StatsResponse: Codable {
+public struct StatsResponse: Codable {
     let data: [PlayerGameStats]
 }
 
 // MARK: - Player Game Stats
-struct PlayerGameStats: Codable {
+public struct PlayerGameStats: Codable {
     let id: Int
     let player: PlayerInfo
     let team: Team
@@ -43,7 +43,7 @@ struct PlayerGameStats: Codable {
 }
 
 // MARK: - Player Info
-struct PlayerInfo: Codable {
+public struct PlayerInfo: Codable {
     let id: Int
     let firstName: String
     let lastName: String
@@ -64,7 +64,7 @@ struct PlayerInfo: Codable {
 }
 
 // MARK: - Game Info
-struct GameInfo: Codable {
+public struct GameInfo: Codable {
     let id: Int
     let date: String
     let homeTeamId: Int
@@ -79,7 +79,7 @@ struct GameInfo: Codable {
 }
 
 
-extension PlayerGameStats {
+public extension PlayerGameStats {
     var displayNumber: String {
         player.jerseyNumber ?? "0"
     }

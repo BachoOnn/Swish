@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Common
 
 final class QuarterScoresView: UIView {
     
@@ -30,7 +31,7 @@ final class QuarterScoresView: UIView {
     
     // MARK: - Setup
     private func setupUI() {
-        backgroundColor = .game
+        backgroundColor = UIColor(named: "game")
         addSubview(containerStackView)
         
         NSLayoutConstraint.activate([

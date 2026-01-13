@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol MainCoordinatorProtocol: ObservableObject {
+public protocol MainCoordinatorProtocol: ObservableObject {
     var navigationPath: [AppRoute] { get set }
     
     func navigateToProfile()

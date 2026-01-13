@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Helpers
 
 struct CustomTabBar: View {
     

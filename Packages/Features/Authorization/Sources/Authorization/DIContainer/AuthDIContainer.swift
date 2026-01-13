@@ -12,15 +12,14 @@ import FirebaseService
 @MainActor
 public final class AuthDIContainer {
     
-    // MARK: - Dependencies
     private let authRepository: AuthRepositoryProtocol
     
-    public init(authService: AuthRepositoryProtocol) {
-        self.authRepository = authService
+    public init() {
+        let googleService = GoogleSignInService()
+        self.authRepository = FirebaseAuthRepository(googleSignInService: googleService)
     }
     
     // MARK: - Usecases
-    
     private func makeSignInUseCase() -> DefaultSignInUseCase {
         DefaultSignInUseCase(authRepository: authRepository)
     }
@@ -32,6 +31,7 @@ public final class AuthDIContainer {
     private func makeGoogleSignInUseCase() -> DefaultGoogleSignInUseCase {
         DefaultGoogleSignInUseCase(authRepository: authRepository)
     }
+    
     // MARK: - ViewModels
     public func makeGreetingViewModel(coordinator: AuthCoordinatorProtocol) -> GreetingViewModel {
         GreetingViewModel(coordinator: coordinator)

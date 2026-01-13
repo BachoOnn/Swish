@@ -7,13 +7,13 @@
 import Combine
 
 @MainActor
-final class HomeViewModel: ObservableObject {
+public final class HomeViewModel: ObservableObject {
     
     private weak var coordinator: MainCoordinator?
     
     private(set) var games = MockGameData.allGames
     
-    init(coordinator: MainCoordinator) {
+    public init(coordinator: MainCoordinator) {
         self.coordinator = coordinator
     }
     

@@ -8,11 +8,11 @@
 import Combine
 
 @MainActor
-final class RootViewModel: ObservableObject {
+public final class RootViewModel: ObservableObject {
     
     @Published var selectedTab: Tabs = .home
         
-    init() {}
+    public init() {}
     
     deinit {
         print("RootViewModel destroyed")

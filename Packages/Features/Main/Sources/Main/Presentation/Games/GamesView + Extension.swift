@@ -52,30 +52,39 @@ extension GamesView {
                 VStack {
                     switch calendarType {
                     case .week :
-                        WeekCalendarView(
-                            $title,
-                            selection: $selection,
-                            focused: $focusedWeek,
-                            isDragging: isDragging
-                        )
+                        if #available(iOS 18.0, *) {
+                            WeekCalendarView(
+                                $title,
+                                selection: $selection,
+                                focused: $focusedWeek,
+                                isDragging: isDragging
+                            )
+                        } else {
+                        }
                     case .month:
-                        MonthCalendarView(
-                            $title,
-                            selection: $selection,
-                            focused: $focusedWeek,
-                            isDragging: isDragging,
-                            dragProgress: dragProgress
-                        )
+                        if #available(iOS 18.0, *) {
+                            MonthCalendarView(
+                                $title,
+                                selection: $selection,
+                                focused: $focusedWeek,
+                                isDragging: isDragging,
+                                dragProgress: dragProgress
+                            )
+                        } else {
+                        }
                     }
                 }
                 
                 .frame(height: Constants.dayHeight + verticalDragOffset)
                 .clipped()
                 
-                Capsule()
-                    .fill(.gray.mix(with: .black, by: 0.6))
-                    .frame(width: 40, height: 4)
-                    .padding(.bottom, 6)
+                if #available(iOS 18.0, *) {
+                    Capsule()
+                        .fill(.gray.mix(with: .black, by: 0.6))
+                        .frame(width: 40, height: 4)
+                        .padding(.bottom, 6)
+                } else {
+                }
             }
             .background(
                 UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 26, bottomTrailing: 26))

@@ -8,39 +8,30 @@
 import Foundation
 
 @MainActor
-final class MainDIContainer {
+public final class MainDIContainer {
     
     // MARK: - Coordinator
-    let coordinator: MainCoordinator
+    public let coordinator: MainCoordinator
     
-    init() {
+    public init() {
         self.coordinator = MainCoordinator()
     }
     
     // MARK: - ViewModels
     
-    func makeRootViewModel() -> RootViewModel {
-        RootViewModel() 
+    public func makeRootViewModel() -> RootViewModel {
+        RootViewModel()
     }
     
-    func makeHomeViewModel() -> HomeViewModel {
+    public func makeHomeViewModel() -> HomeViewModel {
         HomeViewModel(coordinator: coordinator)
     }
     
-    func makeGamesViewModel() -> GamesViewModel {
+    public func makeGamesViewModel() -> GamesViewModel {
         GamesViewModel(coordinator: coordinator)
     }
     
-    func makeProfileViewModel() -> ProfileViewModel {
+    public func makeProfileViewModel() -> ProfileViewModel {
         ProfileViewModel(coordinator: coordinator)
     }
-    
-    // TODO: Add these when ready
-    //    func makeSearchViewModel() -> SearchViewModel {
-    //        SearchViewModel(coordinator: coordinator)
-    //    }
-    //
-    //    func makeDiscoverViewModel() -> DiscoverViewModel {
-    //        DiscoverViewModel(coordinator: coordinator)
-    //    }
 }

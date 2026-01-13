@@ -7,21 +7,13 @@
 import UIKit
 import Combine
 
-final class MainCoordinator: MainCoordinatorProtocol {
+public final class MainCoordinator: MainCoordinatorProtocol {
     
-    @Published var navigationPath: [AppRoute] = []
+    @Published public var navigationPath: [AppRoute] = []
     
-    var onSignOut: (() -> Void)?
+    public var onSignOut: (() -> Void)?
     
-    func navigateToProfile() {
-        navigationPath.append(.profile)
-    }
-    
-    func navigateToGameDetails(game: Game) {
-        navigationPath.append(.gameDetails(game))
-    }
-    
-    init() {
+    public init() {
         print("MainCoordinator created")
     }
     
@@ -29,13 +21,21 @@ final class MainCoordinator: MainCoordinatorProtocol {
         print("MainCoordinator destroyed")
     }
     
-    func navigateBack() {
+    public func navigateToProfile() {
+        navigationPath.append(.profile)
+    }
+    
+    public func navigateToGameDetails(game: Game) {
+        navigationPath.append(.gameDetails(game))
+    }
+    
+    public func navigateBack() {
         if !navigationPath.isEmpty {
             navigationPath.removeLast()
         }
     }
     
-    func signOut() {
+    public func signOut() {
         navigationPath.removeAll()
         onSignOut?()
     }

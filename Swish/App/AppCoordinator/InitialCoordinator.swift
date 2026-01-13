@@ -5,24 +5,21 @@
 //  Created by Bacho on 01.01.26.
 //
 
+
 import UIKit
 import SwiftUI
+import Authorization
+import Main 
 
 @MainActor
 final class InitialCoordinator {
     let navigationController: UINavigationController
-    private let appDIContainer: AppDIContainer
-    private var authCoordinator: AuthCoordinatorProtocol?
+    private var authCoordinator: AuthCoordinator?
+    private var mainDIContainer: MainDIContainer?
     
-    init(navigationController: UINavigationController, appDIContainer: AppDIContainer) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.appDIContainer = appDIContainer
         navigationController.setNavigationBarHidden(true, animated: false)
-        print("InitialCoordinator created")
-    }
-    
-    deinit {
-        print("InitialCoordinator deallocated")
     }
     
     func start() {
@@ -38,10 +35,8 @@ final class InitialCoordinator {
     }
     
     func showAuth() {
-        let authCoordinator = AuthCoordinator(
-            navigationController: navigationController,
-            diContainer: appDIContainer.authDIContainer
-        )
+        let authCoordinator = AuthCoordinator()
+        authCoordinator.setNavigationController(navigationController)
         authCoordinator.onAuthSuccess = { [weak self] in
             self?.showMainApp()
         }
@@ -52,12 +47,15 @@ final class InitialCoordinator {
     func showMainApp() {
         authCoordinator = nil
         
-        let mainCoordinator = appDIContainer.mainDIContainer.coordinator
-        mainCoordinator.onSignOut = { [weak self] in
+        // Main package - self-contained
+        let mainDIContainer = MainDIContainer()
+        self.mainDIContainer = mainDIContainer
+        
+        mainDIContainer.coordinator.onSignOut = { [weak self] in
             self?.showAuth()
         }
         
-        let rootView = RootView(container: appDIContainer.mainDIContainer)
+        let rootView = RootView(container: mainDIContainer)
         let hostingController = UIHostingController(rootView: rootView)
         
         navigationController.setViewControllers([hostingController], animated: true)

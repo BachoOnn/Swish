@@ -5,6 +5,8 @@
 //
 
 import SwiftUI
+import Common
+import Helpers
 
 struct HomeView: View {
     
@@ -29,6 +31,7 @@ struct HomeView: View {
                         newsSection
                     }
                 }
+                .scrollIndicators(.hidden)
                 .frame(maxWidth: .infinity)
             }
         }
