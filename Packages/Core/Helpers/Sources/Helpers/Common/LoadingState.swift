@@ -5,7 +5,7 @@
 //  Created by Bacho on 04.01.26.
 //
 
-enum LoadingState {
+public enum LoadingState {
     case idle
     case loading
     case success

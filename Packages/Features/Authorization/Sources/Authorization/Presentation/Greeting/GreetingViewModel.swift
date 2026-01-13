@@ -8,10 +8,10 @@
 import Foundation
 
 @MainActor
-final class GreetingViewModel {
+public final class GreetingViewModel {
     private weak var coordinator: AuthCoordinatorProtocol?
     
-    init(coordinator: AuthCoordinatorProtocol) {
+    public init(coordinator: AuthCoordinatorProtocol) {
         self.coordinator = coordinator
     }
     

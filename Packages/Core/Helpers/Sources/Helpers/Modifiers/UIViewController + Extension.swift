@@ -8,7 +8,7 @@
 import UIKit
 import SwiftUI
 
-extension UIViewController {
+public extension UIViewController {
     func addSwiftUIBackground<Content: View>(_ swiftUIView: Content) {
         let hostingController = UIHostingController(rootView: swiftUIView)
         

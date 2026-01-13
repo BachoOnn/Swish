@@ -9,11 +9,15 @@ import SwiftUI
 
 public struct PosterBackground: View {
     
-    public init() {}
+    let poster: String
+    
+    public init(poster: String) {
+        self.poster = poster
+    }
     
     public var body: some View {
         ZStack {
-            Image("poster", bundle: .module)
+            Image("\(poster)", bundle: .module)
                 .resizable()
                 .scaledToFill()
             

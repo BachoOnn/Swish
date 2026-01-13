@@ -8,7 +8,7 @@
 import SwiftUI
 import Common
 
-extension View {
+public extension View {
     func roundedCorners(_ cornerSize: CGFloat) -> some View {
         self
             .clipShape(RoundedRectangle(cornerRadius: cornerSize))

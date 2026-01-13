@@ -6,9 +6,11 @@
 //
 
 import Combine
+import Helpers
+import AuthDomain
 
 @MainActor
-final class SignInViewModel: ObservableObject {
+public final class SignInViewModel: ObservableObject {
     
     // MARK: - Published Properties
     @Published var state: LoadingState = .idle
@@ -30,7 +32,7 @@ final class SignInViewModel: ObservableObject {
     }
     
     // MARK: - Initialization
-    init(coordinator: AuthCoordinatorProtocol, signInUseCase: DefaultSignInUseCase, googleSignInUseCase: DefaultGoogleSignInUseCase) {
+    public init(coordinator: AuthCoordinatorProtocol, signInUseCase: DefaultSignInUseCase, googleSignInUseCase: DefaultGoogleSignInUseCase) {
         self.coordinator = coordinator
         self.signInUseCase = signInUseCase
         self.googleSignInUseCase = googleSignInUseCase

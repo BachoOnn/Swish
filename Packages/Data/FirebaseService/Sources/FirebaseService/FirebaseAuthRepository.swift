@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import AuthDomain
 
 public final class FirebaseAuthRepository: AuthRepositoryProtocol {
     
@@ -16,7 +17,7 @@ public final class FirebaseAuthRepository: AuthRepositoryProtocol {
         self.googleSignInService = googleSignInService
     }
     
-    public var currentUser: User? {
+    public var currentUser: AuthDomain.User? {
         guard let firebaseUser = Auth.auth().currentUser else { return nil }
         return User(
             id: firebaseUser.uid,
@@ -29,7 +30,7 @@ public final class FirebaseAuthRepository: AuthRepositoryProtocol {
         Auth.auth().currentUser != nil
     }
     
-    public func signIn(email: String, password: String) async throws -> User {
+    public func signIn(email: String, password: String) async throws -> AuthDomain.User {
         let result = try await Auth.auth().signIn(withEmail: email, password: password)
         return User(
             id: result.user.uid,
@@ -38,7 +39,7 @@ public final class FirebaseAuthRepository: AuthRepositoryProtocol {
         )
     }
     
-    public func signUp(email: String, password: String) async throws -> User {
+    public func signUp(email: String, password: String) async throws -> AuthDomain.User {
         let result = try await Auth.auth().createUser(withEmail: email, password: password)
         return User(
             id: result.user.uid,
@@ -47,7 +48,7 @@ public final class FirebaseAuthRepository: AuthRepositoryProtocol {
         )
     }
     
-    public func signInWithGoogle() async throws -> User {
+    public func signInWithGoogle() async throws -> AuthDomain.User {
         let (idToken, accessToken) = try await googleSignInService.signIn()
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
         let authResult = try await Auth.auth().signIn(with: credential)

@@ -6,9 +6,11 @@
 //
 
 import Combine
+import Helpers
+import AuthDomain
 
 @MainActor
-final class SignUpViewModel: ObservableObject {
+public final class SignUpViewModel: ObservableObject {
     
     // MARK: - Published Properties
     @Published var state: LoadingState = .idle
@@ -29,7 +31,7 @@ final class SignUpViewModel: ObservableObject {
     }
     
     // MARK: - Initialization
-    init(coordinator: AuthCoordinatorProtocol, signUpUseCase: DefaultSignUpUseCase) {
+    public init(coordinator: AuthCoordinatorProtocol, signUpUseCase: DefaultSignUpUseCase) {
         self.coordinator = coordinator
         self.signUpUseCase = signUpUseCase
         observeState()
