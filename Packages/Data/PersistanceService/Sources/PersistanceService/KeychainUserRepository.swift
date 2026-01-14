@@ -14,23 +14,25 @@ enum KeyName: String {
 }
 
 public final class KeychainUserRepository: UserPersistenceRepositoryProtocol {
+    private let keychainWrapper = KeychainWrapper()
+    
     public init() {}
     
     public func fetchUser() -> (email: String, name: String)? {
-        let email = UserDefaults.standard.string(forKey: KeyName.userEmail.rawValue)
-        let name = UserDefaults.standard.string(forKey: KeyName.userName.rawValue)
-        
-        guard let email, let name else { return nil }
+        guard let email = keychainWrapper.get(forKey: KeyName.userEmail.rawValue),
+              let name = keychainWrapper.get(forKey: KeyName.userName.rawValue) else {
+            return nil
+        }
         return (email, name)
     }
     
     public func saveUser(email: String, name: String) {
-        UserDefaults.standard.set(email, forKey: KeyName.userEmail.rawValue)
-        UserDefaults.standard.set(name, forKey: KeyName.userName.rawValue)
+        keychainWrapper.set(email, forKey: KeyName.userEmail.rawValue)
+        keychainWrapper.set(name, forKey: KeyName.userName.rawValue)
     }
     
     public func clear() {
-        UserDefaults.standard.removeObject(forKey: KeyName.userEmail.rawValue)
-        UserDefaults.standard.removeObject(forKey: KeyName.userName.rawValue)
+        keychainWrapper.delete(forKey: KeyName.userEmail.rawValue)
+        keychainWrapper.delete(forKey: KeyName.userName.rawValue)
     }
 }

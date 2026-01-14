@@ -10,21 +10,21 @@ protocol GetProfileUseCase {
 }
 
 public struct DefaultGetProfileUseCase: GetProfileUseCase {
-    private let authRepo: AuthRepositoryProtocol
-    private let persistenceRepo: UserPersistenceRepositoryProtocol
+    private let authRepository: AuthRepositoryProtocol
+    private let persistenceRepository: UserPersistenceRepositoryProtocol
     
-    public init(authRepo: AuthRepositoryProtocol, persistenceRepo: UserPersistenceRepositoryProtocol) {
-        self.authRepo = authRepo
-        self.persistenceRepo = persistenceRepo
+    public init(authRepository: AuthRepositoryProtocol, persistenceRepository: UserPersistenceRepositoryProtocol) {
+        self.authRepository = authRepository
+        self.persistenceRepository = persistenceRepository
     }
     
     public func execute() -> (email: String, name: String) {
-        if let savedUser = persistenceRepo.fetchUser() {
+        if let savedUser = persistenceRepository.fetchUser() {
             return savedUser
         }
         
-        let email = authRepo.currentUser?.email ?? "Guest"
-        let name = authRepo.currentUser?.name ?? "Anonymous"
+        let email = authRepository.currentUser?.email ?? "Guest"
+        let name = authRepository.currentUser?.name ?? "Anonymous"
         return (email: email, name: name)
     }
 }

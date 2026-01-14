@@ -44,8 +44,8 @@ public final class MainDIContainer {
     
     public func makeProfileViewModel() -> ProfileViewModel {
         let useCase = DefaultGetProfileUseCase(
-            authRepo: authRepository,
-            persistenceRepo: persistenceRepository
+            authRepository: authRepository,
+            persistenceRepository: persistenceRepository
         )
         return ProfileViewModel(coordinator: coordinator, getProfileUseCase: useCase)
     }
