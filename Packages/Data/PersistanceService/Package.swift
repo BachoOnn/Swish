@@ -3,27 +3,25 @@
 import PackageDescription
 
 let package = Package(
-    name: "Main",
+    name: "PersistanceService",
     platforms: [.iOS(.v17)],
     products: [
         .library(
-            name: "Main",
-            targets: ["Main"]
+            name: "PersistanceService",
+            targets: ["PersistanceService"]
         ),
     ],
+    
     dependencies: [
-        .package(path: "../../Core/Common"),
-        .package(path: "../../Core/Helpers"),
         .package(path: "../../Domain/AuthDomain")
     ],
     targets: [
         .target(
-            name: "Main",
+            name: "PersistanceService",
             dependencies: [
-                "Common",
-                "Helpers",
                 "AuthDomain"
             ]
         ),
+        
     ]
 )

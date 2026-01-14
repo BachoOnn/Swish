@@ -5,11 +5,12 @@
 //  Created by Bacho on 01.01.26.
 //
 
-
 import UIKit
 import SwiftUI
 import Authorization
-import Main 
+import Main
+import PersistanceService
+import FirebaseService
 
 @MainActor
 final class InitialCoordinator {
@@ -28,7 +29,13 @@ final class InitialCoordinator {
     
     func showLaunchScreen() {
         let launchView = LaunchView { [weak self] in
-            self?.showAuth()
+            let persistenceRepo = KeychainUserRepository()
+            
+            if persistenceRepo.fetchUser() != nil {
+                self?.showMainApp()
+            } else {
+                self?.showAuth()
+            }
         }
         let hostingController = UIHostingController(rootView: launchView)
         navigationController.setViewControllers([hostingController], animated: false)
@@ -36,8 +43,14 @@ final class InitialCoordinator {
     
     func showAuth() {
         let authCoordinator = AuthCoordinator()
+        let authRepository = FirebaseAuthRepository(googleSignInService: GoogleSignInService())
+        
         authCoordinator.setNavigationController(navigationController)
         authCoordinator.onAuthSuccess = { [weak self] in
+            if let user = authRepository.currentUser {
+                let persistence = KeychainUserRepository()
+                persistence.saveUser(email: user.email, name: user.name)
+            }
             self?.showMainApp()
         }
         self.authCoordinator = authCoordinator
@@ -47,16 +60,25 @@ final class InitialCoordinator {
     func showMainApp() {
         authCoordinator = nil
         
-        let mainDIContainer = MainDIContainer()
+        let authRepository = FirebaseAuthRepository(googleSignInService: GoogleSignInService())
+        let persistenceRepository = KeychainUserRepository()
+        
+        let mainDIContainer = MainDIContainer(
+            authRepository: authRepository,
+            persistenceRepository: persistenceRepository
+        )
+        
         self.mainDIContainer = mainDIContainer
         
         mainDIContainer.coordinator.onSignOut = { [weak self] in
+            persistenceRepository.clear()
+            try? authRepository.signOut()
             self?.showAuth()
         }
         
         let rootView = RootView(container: mainDIContainer)
         let hostingController = UIHostingController(rootView: rootView)
         
-        navigationController.setViewControllers([hostingController], animated: true)
+        navigationController.setViewControllers([hostingController], animated: false)
     }
 }

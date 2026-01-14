@@ -15,14 +15,21 @@ public final class FirebaseAuthRepository: AuthRepositoryProtocol {
     
     public init(googleSignInService: GoogleSignInService) {
         self.googleSignInService = googleSignInService
+        
+        print("name - \(Auth.auth().currentUser?.displayName ?? "no name")")
     }
     
     public var currentUser: AuthDomain.User? {
         guard let firebaseUser = Auth.auth().currentUser else { return nil }
+        
+        let fallbackName = firebaseUser.email?.components(separatedBy: "@").first ?? "Swisher"
+        let displayName = firebaseUser.displayName ?? fallbackName
+        
         return User(
             id: firebaseUser.uid,
             email: firebaseUser.email ?? "",
-            createdAt: firebaseUser.metadata.creationDate ?? Date()
+            createdAt: firebaseUser.metadata.creationDate ?? Date(),
+            name: displayName
         )
     }
     
@@ -35,7 +42,8 @@ public final class FirebaseAuthRepository: AuthRepositoryProtocol {
         return User(
             id: result.user.uid,
             email: result.user.email ?? email,
-            createdAt: result.user.metadata.creationDate ?? Date()
+            createdAt: result.user.metadata.creationDate ?? Date(),
+            name: result.user.displayName ?? ""
         )
     }
     
@@ -44,7 +52,8 @@ public final class FirebaseAuthRepository: AuthRepositoryProtocol {
         return User(
             id: result.user.uid,
             email: result.user.email ?? email,
-            createdAt: result.user.metadata.creationDate ?? Date()
+            createdAt: result.user.metadata.creationDate ?? Date(),
+            name: result.user.displayName ?? ""
         )
     }
     
@@ -56,7 +65,8 @@ public final class FirebaseAuthRepository: AuthRepositoryProtocol {
         return User(
             id: authResult.user.uid,
             email: authResult.user.email ?? "",
-            createdAt: authResult.user.metadata.creationDate ?? Date()
+            createdAt: authResult.user.metadata.creationDate ?? Date(),
+            name: authResult.user.displayName ?? ""
         )
     }
     

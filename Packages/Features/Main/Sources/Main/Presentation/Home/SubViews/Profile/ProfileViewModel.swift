@@ -6,16 +6,20 @@
 //
 
 import Combine
+import AuthDomain
 
 @MainActor
 public final class ProfileViewModel: ObservableObject {
     
     private weak var coordinator: MainCoordinator?
+    private let getProfileUseCase: DefaultGetProfileUseCase
     
     @Published var userEmail: String = ""
+    @Published var userName: String = ""
     
-    public init(coordinator: MainCoordinator) {
+    public init(coordinator: MainCoordinator, getProfileUseCase: DefaultGetProfileUseCase) {
         self.coordinator = coordinator
+        self.getProfileUseCase = getProfileUseCase
         loadUserData()
     }
     
@@ -51,9 +55,9 @@ public final class ProfileViewModel: ObservableObject {
     }
     
     // MARK: - Private Methods
-    
     private func loadUserData() {
-        // TODO: Load user data from firebase or usserDefaults
-        userEmail = "bacho@gmail.com"
+        let data = getProfileUseCase.execute()
+        self.userEmail = data.email
+        self.userName = data.name
     }
 }

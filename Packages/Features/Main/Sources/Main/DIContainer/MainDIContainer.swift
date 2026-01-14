@@ -6,15 +6,26 @@
 //
 
 import Foundation
+import AuthDomain
 
 @MainActor
 public final class MainDIContainer {
     
     // MARK: - Coordinator
     public let coordinator: MainCoordinator
+    private let persistenceRepository: UserPersistenceRepositoryProtocol
+    private let authRepository: AuthRepositoryProtocol
     
-    public init() {
+    public init(authRepository: AuthRepositoryProtocol,
+                persistenceRepository: UserPersistenceRepositoryProtocol) {
+        self.authRepository = authRepository
+        self.persistenceRepository = persistenceRepository
         self.coordinator = MainCoordinator()
+    }
+    
+    public func handleSignOut() {
+        try? authRepository.signOut()
+        persistenceRepository.clear()
     }
     
     // MARK: - ViewModels
@@ -32,7 +43,11 @@ public final class MainDIContainer {
     }
     
     public func makeProfileViewModel() -> ProfileViewModel {
-        ProfileViewModel(coordinator: coordinator)
+        let useCase = DefaultGetProfileUseCase(
+            authRepo: authRepository,
+            persistenceRepo: persistenceRepository
+        )
+        return ProfileViewModel(coordinator: coordinator, getProfileUseCase: useCase)
     }
     
     public func makeDiscoverViewModel() -> DiscoverViewModel {

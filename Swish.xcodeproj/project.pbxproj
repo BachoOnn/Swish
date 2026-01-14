@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D646F082F172CFE00A706B6 /* PersistanceService in Frameworks */ = {isa = PBXBuildFile; productRef = 9D646F072F172CFE00A706B6 /* PersistanceService */; };
 		9D9C92962F15E42E00D4E429 /* Authorization in Frameworks */ = {isa = PBXBuildFile; productRef = 9D9C92952F15E42E00D4E429 /* Authorization */; };
 		9D9C92992F15E81000D4E429 /* Main in Frameworks */ = {isa = PBXBuildFile; productRef = 9D9C92982F15E81000D4E429 /* Main */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 				Core/Helpers,
 				Data/APIService,
 				Data/FirebaseService,
+				Data/PersistanceService,
 				Domain/AuthDomain,
 				Features/Authorization,
 				Features/Main,
@@ -64,6 +66,7 @@
 			files = (
 				9D9C92962F15E42E00D4E429 /* Authorization in Frameworks */,
 				9D9C92992F15E81000D4E429 /* Main in Frameworks */,
+				9D646F082F172CFE00A706B6 /* PersistanceService in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +121,7 @@
 			packageProductDependencies = (
 				9D9C92952F15E42E00D4E429 /* Authorization */,
 				9D9C92982F15E81000D4E429 /* Main */,
+				9D646F072F172CFE00A706B6 /* PersistanceService */,
 			);
 			productName = Swish;
 			productReference = 9D8F48582F0E87000014AB14 /* Swish.app */;
@@ -379,6 +383,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9D646F072F172CFE00A706B6 /* PersistanceService */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PersistanceService;
+		};
 		9D9C92952F15E42E00D4E429 /* Authorization */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Authorization;

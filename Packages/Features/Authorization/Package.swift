@@ -15,7 +15,7 @@ let package = Package(
         .package(path: "../../Core/Common"),
         .package(path: "../../Core/Helpers"),
         .package(path: "../../Domain/AuthDomain"),
-            .package(path: "../../Data/FirebaseService")
+        .package(path: "../../Data/FirebaseService")
     ],
     targets: [
         .target(

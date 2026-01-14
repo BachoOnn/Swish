@@ -80,8 +80,3 @@ public struct RootView: View {
             .edgesIgnoringSafeArea(.top)
     }
 }
-
-#Preview {
-    let container = MainDIContainer()
-    return RootView(container: container)
-}
