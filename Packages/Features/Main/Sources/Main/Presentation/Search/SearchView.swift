@@ -9,14 +9,71 @@ import SwiftUI
 import Common
 
 struct SearchView: View {
+    
+    @StateObject var viewModel: SearchViewModel
+    
+    @State var searchText: String = ""
+    @FocusState var searchIsFocused: Bool
+    
     var body: some View {
         ZStack {
             GradientBackground()
-            Text("Search Here")
+            
+            VStack {
+                SearchBarView(
+                    searchText: $searchText,
+                    isKeyboardFocused: $searchIsFocused
+                )
+                
+                pickerSection
+                
+            }
+        }
+        .onTapGesture {
+            searchIsFocused = false
+        }
+    }
+}
+
+extension SearchView {
+    var pickerSection: some View {
+        VStack {
+            Picker("", selection: $viewModel.selectedSide) {
+                ForEach(SearchPickerSide.allCases, id: \.self) {
+                    Text($0.rawValue)
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.horizontal)
+            
+            switch viewModel.selectedSide {
+            case .Teams:
+                List {
+                    ForEach(0..<20, id: \.self) { _ in
+                        Text("Teams here")
+                            .listRowBackground(Color.clear)
+                    }
+                }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .scrollIndicators(.hidden)
+                
+            case .Players:
+                List {
+                    ForEach(0..<20, id: \.self) { _ in
+                        Text("Players here")
+                            .listRowBackground(Color.clear)
+                        
+                    }
+                }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .scrollIndicators(.hidden)
+            }
         }
     }
 }
 
 #Preview {
-    SearchView()
+    SearchView(viewModel: SearchViewModel())
 }

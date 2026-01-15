@@ -24,12 +24,11 @@ public struct CustomContainer<Content: View>: View {
     
     public var body: some View {
         content
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .frame(width: width, height: height)
             .background(.clear)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .clipShape(RoundedRectangle(cornerRadius: 5))
             .overlay(
-                RoundedRectangle(cornerRadius: 10)
+                RoundedRectangle(cornerRadius: 5)
                     .stroke(Color.primary, lineWidth: 1).opacity(0.7)
             )
     }

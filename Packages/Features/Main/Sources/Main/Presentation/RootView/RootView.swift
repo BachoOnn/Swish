@@ -67,7 +67,7 @@ public struct RootView: View {
     
     @ViewBuilder
     private var searchTab: some View {
-        SearchView()
+        SearchView(viewModel: container.makeSearchViewModel())
             .tag(Tabs.search)
             .toolbarBackground(.hidden, for: .tabBar)
     }

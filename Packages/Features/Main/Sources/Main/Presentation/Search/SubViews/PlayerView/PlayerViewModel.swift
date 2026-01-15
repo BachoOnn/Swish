@@ -10,7 +10,7 @@ import Combine
 final class PlayerViewModel: ObservableObject {
     
     @Published var isFavorite: Bool = false
-    @Published var selectedSide: PickerSide = .Profile
+    @Published var selectedSide: PlayerPickerSide = .Profile
     
     func toggleFavorite() {
         // TODO: add userdefaults service here than and check like this :

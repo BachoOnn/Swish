@@ -18,6 +18,7 @@ struct PlayerView: View {
             
             VStack {
                 headerSection
+                    .padding(.vertical)
                 
                 bioSection
                 
@@ -84,7 +85,7 @@ extension PlayerView {
     var pickerSection: some View {
         VStack {
             Picker("", selection: $viewModel.selectedSide) {
-                ForEach(PickerSide.allCases, id: \.self) {
+                ForEach(PlayerPickerSide.allCases, id: \.self) {
                     Text($0.rawValue)
                 }
             }
@@ -93,11 +94,7 @@ extension PlayerView {
             
             switch viewModel.selectedSide {
             case .Profile:
-                ScrollView {
-                    VStack {
-                        Text("Profile Here")
-                    }
-                }
+                    ProfileSectionView()
             case .Stats:
                 ScrollView {
                     VStack {
