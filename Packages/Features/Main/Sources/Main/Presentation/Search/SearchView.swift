@@ -12,12 +12,13 @@ struct SearchView: View {
     
     @StateObject var viewModel: SearchViewModel
     @State private var navigateToPlayer: Bool = false
+    @State private var navigateToTeam: Bool = false
     @State var selectedPlayer: PlayerSeasonAverages = .lebronMock
+    @State var selectedTeam: TeamSeasonAverages = .lakersMock
     @State var searchText: String = ""
     @FocusState var searchIsFocused: Bool
     
     var body: some View {
-        NavigationStack {
             ZStack {
                 GradientBackground()
                     .onTapGesture {
@@ -31,11 +32,13 @@ struct SearchView: View {
                     )
                     
                     pickerSection
-                    
-                }
+                
             }
             .navigationDestination(isPresented: $navigateToPlayer) {
                 PlayerView(viewModel: PlayerViewModel(player: selectedPlayer))
+            }
+            .navigationDestination(isPresented: $navigateToTeam) {
+                TeamView(viewModel: TeamViewModel(team: selectedTeam))
             }
         }
     }
@@ -59,7 +62,7 @@ extension SearchView {
                         Text("Teams here")
                             .listRowBackground(Color.clear)
                             .onTapGesture {
-                                navigateToPlayer = true
+                                navigateToTeam = true
                             }
                     }
                 }
