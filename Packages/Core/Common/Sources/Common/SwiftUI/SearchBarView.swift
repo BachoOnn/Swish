@@ -43,8 +43,7 @@ public struct SearchBarView: View {
                         .offset(x: 10)
                         .opacity(searchText.isEmpty ? 0 : 1)
                         .onTapGesture {
-                            searchText = ""
-                            isKeyboardFocused.wrappedValue = false
+                            searchText.removeAll()
                         }
                     , alignment: .trailing
                 )
