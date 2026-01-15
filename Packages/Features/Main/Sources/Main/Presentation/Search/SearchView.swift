@@ -11,26 +11,32 @@ import Common
 struct SearchView: View {
     
     @StateObject var viewModel: SearchViewModel
+    @State private var navigateToPlayer: Bool = false
     
     @State var searchText: String = ""
     @FocusState var searchIsFocused: Bool
     
     var body: some View {
-        ZStack {
-            GradientBackground()
-            
-            VStack {
-                SearchBarView(
-                    searchText: $searchText,
-                    isKeyboardFocused: $searchIsFocused
-                )
+        NavigationStack {
+            ZStack {
+                GradientBackground()
+                    .onTapGesture {
+                        searchIsFocused = false
+                    }
                 
-                pickerSection
-                
+                VStack {
+                    SearchBarView(
+                        searchText: $searchText,
+                        isKeyboardFocused: $searchIsFocused
+                    )
+                    
+                    pickerSection
+                    
+                }
             }
-        }
-        .onTapGesture {
-            searchIsFocused = false
+            .navigationDestination(isPresented: $navigateToPlayer) {
+                PlayerView(viewModel: PlayerViewModel())
+            }
         }
     }
 }
@@ -52,6 +58,9 @@ extension SearchView {
                     ForEach(0..<20, id: \.self) { _ in
                         Text("Teams here")
                             .listRowBackground(Color.clear)
+                            .onTapGesture {
+                                navigateToPlayer = true
+                            }
                     }
                 }
                 .listStyle(.plain)
@@ -63,7 +72,9 @@ extension SearchView {
                     ForEach(0..<20, id: \.self) { _ in
                         Text("Players here")
                             .listRowBackground(Color.clear)
-                        
+                            .onTapGesture {
+                                navigateToPlayer = true
+                            }
                     }
                 }
                 .listStyle(.plain)
