@@ -9,8 +9,9 @@ import SwiftUI
 import Common
 
 struct ProfileSectionView: View {
+    let playerData: PlayerSeasonAverages
+    
     var body: some View {
-        
         ScrollView(showsIndicators: false) {
             VStack {
                 HStack(spacing: 16) {
@@ -23,13 +24,12 @@ struct ProfileSectionView: View {
                                     .foregroundStyle(.gray)
                                 
                                 HStack(spacing: 20) {
-                                    Text("6-9".heightInCentimeters())
+                                    Text((playerData.player.height ?? "0-0").heightInCentimeters())
                                         .font(.system(size: 24, weight: .semibold))
                                     
-                                    Text("6-9".formattedHeight())
+                                    Text((playerData.player.height ?? "0-0").formattedHeight())
                                         .font(.system(size: 16))
                                         .offset(y: 2)
-                                    
                                 }
                             }
                         }
@@ -43,17 +43,15 @@ struct ProfileSectionView: View {
                                     .foregroundStyle(.gray)
                                 
                                 HStack(spacing: 20) {
-                                    Text("250".weightInKilograms())
+                                    Text((playerData.player.weight ?? "0").weightInKilograms())
                                         .font(.system(size: 24, weight: .semibold))
                                     
-                                    Text("250 lbs")
+                                    Text("\(playerData.player.weight ?? "0") lbs")
                                         .font(.system(size: 16))
                                         .offset(y: 2)
-                                    
                                 }
                             }
                         }
-                    
                 }
                 .padding(.vertical)
                 .padding(.horizontal, 5)
@@ -69,7 +67,7 @@ struct ProfileSectionView: View {
                                     .padding(.trailing, 80)
                                 
                                 HStack(spacing: 20) {
-                                    Text("USA")
+                                    Text(playerData.player.country ?? "N/A")
                                         .font(.system(size: 24, weight: .semibold))
                                 }
                             }
@@ -85,32 +83,108 @@ struct ProfileSectionView: View {
                                     .padding(.trailing, 80)
                                 
                                 HStack(spacing: 20) {
-                                    Text("F")
+                                    Text(playerData.player.position)
                                         .font(.system(size: 24, weight: .semibold))
                                 }
                             }
                         }
-                    
                 }
                 .padding(.horizontal, 5)
                 
-                VStack(spacing: 100) {
-                    Text("Some Bio here")
-                    Text("Some Bio here")
-                    Text("Some Bio here")
-                    Text("Some Bio here")
-                    Text("Some Bio here")
-                    Text("Some Bio here")
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Bio")
+                        .font(.system(size: 24, weight: .bold))
+                        .padding(.horizontal, 5)
+                    
+                    CustomContainer(
+                        width: 376,
+                        height: 70) {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("Jersey Number")
+                                        .font(.system(size: 16))
+                                        .foregroundStyle(.gray)
+                                    
+                                    Text("#\(playerData.player.jerseyNumber ?? "0")")
+                                        .font(.system(size: 24, weight: .semibold))
+                                }
+                                .padding(.horizontal)
+                                
+                                Spacer()
+                            }
+                        }
+                    
+                    CustomContainer(
+                        width: 376,
+                        height: 220) {
+                            VStack(alignment: .leading, spacing: 16) {
+                                HStack {
+                                    Text("College")
+                                        .font(.system(size: 16))
+                                        .foregroundStyle(.gray)
+                                        .frame(width: 100, alignment: .leading)
+                                    
+                                    Text(playerData.player.college ?? "N/A")
+                                        .font(.system(size: 18, weight: .medium))
+                                }
+                                
+                                Divider()
+                                
+                                HStack {
+                                    Text("Draft Year")
+                                        .font(.system(size: 16))
+                                        .foregroundStyle(.gray)
+                                        .frame(width: 100, alignment: .leading)
+                                    
+                                    Text("\(playerData.player.draftYear ?? 0)")
+                                        .font(.system(size: 18, weight: .medium))
+                                }
+                                
+                                Divider()
+                                
+                                HStack {
+                                    Text("Draft Pick")
+                                        .font(.system(size: 16))
+                                        .foregroundStyle(.gray)
+                                        .frame(width: 100, alignment: .leading)
+                                    
+                                    if let round = playerData.player.draftRound,
+                                       let pick = playerData.player.draftNumber {
+                                        Text("Round \(round), Pick \(pick)")
+                                            .font(.system(size: 18, weight: .medium))
+                                    } else {
+                                        Text("Undrafted")
+                                            .font(.system(size: 18, weight: .medium))
+                                    }
+                                }
+                                
+                                Divider()
+                                
+                                HStack {
+                                    Text("Experience")
+                                        .font(.system(size: 16))
+                                        .foregroundStyle(.gray)
+                                        .frame(width: 100, alignment: .leading)
+                                    
+                                    if let draftYear = playerData.player.draftYear {
+                                        Text("\(Calendar.current.component(.year, from: Date()) - draftYear) Seasons")
+                                            .font(.system(size: 18, weight: .medium))
+                                    } else {
+                                        Text("N/A")
+                                            .font(.system(size: 18, weight: .medium))
+                                    }
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
                 }
-                .padding()
-                
-                
-                Spacer()
+                .padding(.horizontal, 5)
+                .padding(.top, 24)
             }
         }
     }
 }
 
 #Preview {
-    ProfileSectionView()
+    ProfileSectionView(playerData: .lebronMock)
 }

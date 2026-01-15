@@ -7,11 +7,10 @@
 
 import Foundation
 
-// MARK: - Player Detail Response (matches API)
 
 public struct PlayerDetailResponse: Codable {
     let data: [PlayerDetail]
-    let meta: Meta
+    let meta: PlayerMeta
 }
 
 public struct PlayerDetail: Codable, Identifiable {
@@ -45,20 +44,11 @@ public struct PlayerDetail: Codable, Identifiable {
     public var fullName: String {
         "\(firstName) \(lastName)"
     }
-    
-    public var draftInfo: String {
-        guard let year = draftYear, let round = draftRound, let number = draftNumber else {
-            return "Undrafted"
-        }
-        return "Round \(round), Pick \(number) (\(year))"
-    }
 }
-
-// MARK: - Season Averages Response (matches API)
 
 public struct PlayerSeasonAveragesResponse: Codable {
     let data: [PlayerSeasonAverages]
-    let meta: Meta
+    let meta: PlayerMeta
 }
 
 public struct PlayerSeasonAverages: Codable {
@@ -102,44 +92,135 @@ public struct PlayerInSeasonStats: Codable {
 }
 
 public struct SeasonStats: Codable {
-    let gamesPlayed: Int
-    let min: Double
-    let fgm: Double
-    let fga: Double
-    let fg3m: Double
-    let fg3a: Double
-    let ftm: Double
-    let fta: Double
-    let oreb: Double
-    let dreb: Double
-    let reb: Double
-    let ast: Double
-    let stl: Double
-    let blk: Double
-    let turnover: Double
-    let pf: Double
-    let pts: Double
-    let fgPct: Double
-    let fg3Pct: Double
-    let ftPct: Double
+    // Basic Stats
+    let gp: Int           // Games Played
+    let min: Double       // Minutes Per Game
+    let pts: Double       // Points Per Game
+    let reb: Double       // Rebounds Per Game
+    let ast: Double       // Assists Per Game
+    let stl: Double       // Steals Per Game
+    let blk: Double       // Blocks Per Game
+    let tov: Double       // Turnovers Per Game
+    let pf: Double        // Personal Fouls Per Game
+    let fgm: Double       // Field Goals Made
+    let fga: Double       // Field Goals Attempted
+    let fgPct: Double     // Field Goal Percentage
+    let fg3m: Double      // 3-Point Field Goals Made
+    let fg3a: Double      // 3-Point Field Goals Attempted
+    let fg3Pct: Double    // 3-Point Percentage
+    let ftm: Double       // Free Throws Made
+    let fta: Double       // Free Throws Attempted
+    let ftPct: Double     // Free Throw Percentage
+    let oreb: Double      // Offensive Rebounds
+    let dreb: Double      // Defensive Rebounds
+    let w: Int?           // Wins
+    let l: Int?           // Losses
+    let age: Int?         // Player age
+    let dd2: Int?         // Double-doubles
+    let td3: Int?         // Triple-doubles
+    let plusMinus: Double // Plus/Minus
+    let pfd: Double?      // Personal Fouls Drawn
+    let blka: Double?     // Blocks Against
+    let wPct: Double?     // Win Percentage
+    let teamCount: Int?   // Number of teams played for
+    let nbaFantasyPts: Double? // NBA Fantasy Points
+    
+    // Rankings
+    let gpRank: Int?
+    let ptsRank: Int?
+    let rebRank: Int?
+    let astRank: Int?
+    let stlRank: Int?
+    let blkRank: Int?
+    let tovRank: Int?
+    let pfRank: Int?
+    let fgmRank: Int?
+    let fgaRank: Int?
+    let fgPctRank: Int?
+    let fg3mRank: Int?
+    let fg3aRank: Int?
+    let fg3PctRank: Int?
+    let ftmRank: Int?
+    let ftaRank: Int?
+    let ftPctRank: Int?
+    let orebRank: Int?
+    let drebRank: Int?
+    let minRank: Int?
+    let wRank: Int?
+    let lRank: Int?
+    let dd2Rank: Int?
+    let td3Rank: Int?
+    let plusMinusRank: Int?
+    let pfdRank: Int?
+    let blkaRank: Int?
+    let wPctRank: Int?
+    let nbaFantasyPtsRank: Int?
     
     enum CodingKeys: String, CodingKey {
-        case gamesPlayed = "games_played"
-        case min, fgm, fga
-        case fg3m = "fg3_m"
-        case fg3a = "fg3_a"
-        case ftm, fta, oreb, dreb, reb, ast, stl, blk, turnover, pf, pts
+        case gp, min, pts, reb, ast, stl, blk, tov, pf, fgm, fga
         case fgPct = "fg_pct"
+        case fg3m, fg3a
         case fg3Pct = "fg3_pct"
+        case ftm, fta
         case ftPct = "ft_pct"
+        case oreb, dreb
+        case w, l, age, dd2, td3
+        case plusMinus = "plus_minus"
+        case pfd, blka
+        case wPct = "w_pct"
+        case teamCount = "team_count"
+        case nbaFantasyPts = "nba_fantasy_pts"
+        
+        // Rankings
+        case gpRank = "gp_rank"
+        case ptsRank = "pts_rank"
+        case rebRank = "reb_rank"
+        case astRank = "ast_rank"
+        case stlRank = "stl_rank"
+        case blkRank = "blk_rank"
+        case tovRank = "tov_rank"
+        case pfRank = "pf_rank"
+        case fgmRank = "fgm_rank"
+        case fgaRank = "fga_rank"
+        case fgPctRank = "fg_pct_rank"
+        case fg3mRank = "fg3m_rank"
+        case fg3aRank = "fg3a_rank"
+        case fg3PctRank = "fg3_pct_rank"
+        case ftmRank = "ftm_rank"
+        case ftaRank = "fta_rank"
+        case ftPctRank = "ft_pct_rank"
+        case orebRank = "oreb_rank"
+        case drebRank = "dreb_rank"
+        case minRank = "min_rank"
+        case wRank = "w_rank"
+        case lRank = "l_rank"
+        case dd2Rank = "dd2_rank"
+        case td3Rank = "td3_rank"
+        case plusMinusRank = "plus_minus_rank"
+        case pfdRank = "pfd_rank"
+        case blkaRank = "blka_rank"
+        case wPctRank = "w_pct_rank"
+        case nbaFantasyPtsRank = "nba_fantasy_pts_rank"
     }
+    
+    public var ppg: String { String(format: "%.1f", pts) }
+    public var rpg: String { String(format: "%.1f", reb) }
+    public var apg: String { String(format: "%.1f", ast) }
+    public var rbpg: String { String(format: "%.1f", reb) }
+    public var spg: String { String(format: "%.1f", stl) }
+    public var bpg: String { String(format: "%.1f", blk) }
+    public var tovpg: String { String(format: "%.1f", tov) }
+    public var fgPercentage: String { String(format: "%.1f%%", fgPct * 100) }
+    public var fg3Percentage: String { String(format: "%.1f%%", fg3Pct * 100) }
+    public var ftPercentage: String { String(format: "%.1f%%", ftPct * 100) }
+    public var mpg: String { String(format: "%.1f", min) }
 }
 
 // MARK: - Shooting Stats Response (matches API exactly)
 
 public struct PlayerShootingStatsResponse: Codable {
     let data: [PlayerShootingStats]
-    let meta: Meta
+    let meta: PlayerMeta
 }
 
 public struct PlayerShootingStats: Codable {
@@ -237,5 +318,13 @@ public struct ShootingRangeStats: Codable {
         case ft40PlusFga = "40+_ft._fga"
         case ft40PlusFgm = "40+_ft._fgm"
         case ft40PlusFgPct = "40+_ft._fg_pct"
+    }
+}
+
+public struct PlayerMeta: Codable {
+    let perPage: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case perPage = "per_page"
     }
 }

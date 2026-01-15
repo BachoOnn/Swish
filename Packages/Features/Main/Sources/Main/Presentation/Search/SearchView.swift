@@ -12,7 +12,7 @@ struct SearchView: View {
     
     @StateObject var viewModel: SearchViewModel
     @State private var navigateToPlayer: Bool = false
-    
+    @State var selectedPlayer: PlayerSeasonAverages = .lebronMock
     @State var searchText: String = ""
     @FocusState var searchIsFocused: Bool
     
@@ -35,7 +35,7 @@ struct SearchView: View {
                 }
             }
             .navigationDestination(isPresented: $navigateToPlayer) {
-                PlayerView(viewModel: PlayerViewModel())
+                PlayerView(viewModel: PlayerViewModel(player: selectedPlayer))
             }
         }
     }
