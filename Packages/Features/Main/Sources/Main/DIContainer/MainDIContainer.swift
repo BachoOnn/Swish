@@ -53,4 +53,8 @@ public final class MainDIContainer {
     public func makeDiscoverViewModel() -> DiscoverViewModel {
         DiscoverViewModel()
     }
+    
+    public func makeSearchViewModel() -> SearchViewModel {
+        SearchViewModel()
+    }
 }
