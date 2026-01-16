@@ -7,13 +7,13 @@
 
 import Combine
 
-final class PlayerViewModel: ObservableObject {
+public final class PlayerViewModel: ObservableObject {
     
     @Published var isFavorite: Bool = false
     @Published var selectedSide: PlayerPickerSide = .Profile
     @Published var player: PlayerSeasonAverages
     
-    init(player: PlayerSeasonAverages) {
+    public init(player: PlayerSeasonAverages) {
         self.player = player
     }
     

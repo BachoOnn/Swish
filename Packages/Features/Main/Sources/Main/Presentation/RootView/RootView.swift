@@ -43,6 +43,10 @@ public struct RootView: View {
                         .navigationBarHidden(true)
                         .navigationBarBackButtonHidden(true)
                         .ignoresSafeArea()
+                case .player(let player):
+                    PlayerView(viewModel: container.makePlayerViewModel(player: player))
+                case .team(let team):
+                    TeamView(viewModel: container.makeTeamViewModel(team: team))
                 }
             }
             .ignoresSafeArea()

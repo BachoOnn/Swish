@@ -51,7 +51,7 @@ public struct PlayerSeasonAveragesResponse: Codable {
     let meta: PlayerMeta
 }
 
-public struct PlayerSeasonAverages: Codable {
+public struct PlayerSeasonAverages: Codable, Hashable {
     let player: PlayerInSeasonStats
     let season: Int
     let seasonType: String
@@ -64,7 +64,7 @@ public struct PlayerSeasonAverages: Codable {
     }
 }
 
-public struct PlayerInSeasonStats: Codable {
+public struct PlayerInSeasonStats: Codable, Hashable {
     let id: Int
     let firstName: String
     let lastName: String
@@ -91,7 +91,7 @@ public struct PlayerInSeasonStats: Codable {
     }
 }
 
-public struct SeasonStats: Codable {
+public struct SeasonStats: Codable, Hashable {
     // Basic Stats
     let gp: Int           // Games Played
     let min: Double       // Minutes Per Game

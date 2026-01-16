@@ -11,32 +11,25 @@ import Common
 struct SearchView: View {
     
     @StateObject var viewModel: SearchViewModel
-    @State private var navigateToPlayer: Bool = false
-    @State var selectedPlayer: PlayerSeasonAverages = .lebronMock
     @State var searchText: String = ""
     @FocusState var searchIsFocused: Bool
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                GradientBackground()
-                    .onTapGesture {
-                        searchIsFocused = false
-                    }
-                
-                VStack {
-                    SearchBarView(
-                        searchText: $searchText,
-                        isKeyboardFocused: $searchIsFocused
-                    )
-                    
-                    pickerSection
-                    
+        ZStack {
+            GradientBackground()
+                .onTapGesture {
+                    searchIsFocused = false
                 }
+            
+            VStack {
+                SearchBarView(
+                    searchText: $searchText,
+                    isKeyboardFocused: $searchIsFocused
+                )
+                pickerSection
+                
             }
-            .navigationDestination(isPresented: $navigateToPlayer) {
-                PlayerView(viewModel: PlayerViewModel(player: selectedPlayer))
-            }
+            
         }
     }
 }
@@ -59,7 +52,7 @@ extension SearchView {
                         Text("Teams here")
                             .listRowBackground(Color.clear)
                             .onTapGesture {
-                                navigateToPlayer = true
+                                viewModel.navigateToTeam(.lakersMock)
                             }
                     }
                 }
@@ -73,7 +66,7 @@ extension SearchView {
                         Text("Players here")
                             .listRowBackground(Color.clear)
                             .onTapGesture {
-                                navigateToPlayer = true
+                                viewModel.navigateToPlayer(.lebronMock)
                             }
                     }
                 }
@@ -86,5 +79,5 @@ extension SearchView {
 }
 
 #Preview {
-    SearchView(viewModel: SearchViewModel())
+    SearchView(viewModel: SearchViewModel(coordinator: MainCoordinator()))
 }

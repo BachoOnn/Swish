@@ -55,6 +55,14 @@ public final class MainDIContainer {
     }
     
     public func makeSearchViewModel() -> SearchViewModel {
-        SearchViewModel()
+        SearchViewModel(coordinator: coordinator)
+    }
+    
+    public func makePlayerViewModel(player: PlayerSeasonAverages) -> PlayerViewModel {
+        PlayerViewModel(player: player)
+    }
+    
+    public func makeTeamViewModel(team: TeamSeasonAverages) -> TeamViewModel {
+        TeamViewModel(team: team)
     }
 }
