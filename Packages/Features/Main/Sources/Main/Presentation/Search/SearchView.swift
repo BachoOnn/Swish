@@ -11,35 +11,31 @@ import Common
 struct SearchView: View {
     
     @StateObject var viewModel: SearchViewModel
-    @State private var navigateToPlayer: Bool = false
-    @State private var navigateToTeam: Bool = false
-    @State var selectedPlayer: PlayerSeasonAverages = .lebronMock
-    @State var selectedTeam: TeamSeasonAverages = .lakersMock
     @State var searchText: String = ""
     @FocusState var searchIsFocused: Bool
     
     var body: some View {
-            ZStack {
-                GradientBackground()
-                    .onTapGesture {
-                        searchIsFocused = false
-                    }
+        ZStack {
+            GradientBackground()
+                .onTapGesture {
+                    searchIsFocused = false
+                }
+            
+            VStack {
+                SearchBarView(
+                    searchText: $searchText,
+                    isKeyboardFocused: $searchIsFocused
+                )
+                pickerSection
                 
-                VStack {
-                    SearchBarView(
-                        searchText: $searchText,
-                        isKeyboardFocused: $searchIsFocused
-                    )
-                    
-                    pickerSection
-                
             }
-            .navigationDestination(isPresented: $navigateToPlayer) {
-                PlayerView(viewModel: PlayerViewModel(player: selectedPlayer))
-            }
-            .navigationDestination(isPresented: $navigateToTeam) {
-                TeamView(viewModel: TeamViewModel(team: selectedTeam))
-            }
+            
+        }
+        .navigationDestination(item: $viewModel.selectedPlayer) { player in
+            PlayerView(viewModel: PlayerViewModel(player: player))
+        }
+        .navigationDestination(item: $viewModel.selectedTeam) { team in
+            TeamView(viewModel: TeamViewModel(team: team))
         }
     }
 }
@@ -62,7 +58,7 @@ extension SearchView {
                         Text("Teams here")
                             .listRowBackground(Color.clear)
                             .onTapGesture {
-                                navigateToTeam = true
+                                viewModel.navigateToTeam(.lakersMock)
                             }
                     }
                 }
@@ -76,7 +72,7 @@ extension SearchView {
                         Text("Players here")
                             .listRowBackground(Color.clear)
                             .onTapGesture {
-                                navigateToPlayer = true
+                                viewModel.navigateToPlayer(.lebronMock)
                             }
                     }
                 }

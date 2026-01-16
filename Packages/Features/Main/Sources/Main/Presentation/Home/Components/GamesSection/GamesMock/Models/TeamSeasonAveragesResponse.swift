@@ -14,7 +14,7 @@ public struct TeamSeasonAveragesResponse: Codable {
     let meta: TeamMeta
 }
 
-public struct TeamSeasonAverages: Codable {
+public struct TeamSeasonAverages: Codable, Hashable {
     let team: TeamInfo
     let season: Int
     let seasonType: String
@@ -27,7 +27,7 @@ public struct TeamSeasonAverages: Codable {
     }
 }
 
-public struct TeamInfo: Codable {
+public struct TeamInfo: Codable, Hashable {
     let id: Int
     let conference: String
     let division: String
@@ -44,7 +44,7 @@ public struct TeamInfo: Codable {
 
 // MARK: - Team Season Stats
 
-public struct TeamSeasonStats: Codable {
+public struct TeamSeasonStats: Codable, Hashable {
     let w: Int           // Wins
     let l: Int           // Losses
     let gp: Int          // Games Played
