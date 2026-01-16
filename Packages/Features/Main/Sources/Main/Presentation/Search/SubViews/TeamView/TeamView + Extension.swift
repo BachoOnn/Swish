@@ -54,11 +54,11 @@ extension TeamView {
     }
     
     var recordSection: some View {
-        HStack(spacing: 16) {
-            CustomContainer(width: 110, height: 100) {
+        HStack(spacing: 20) {
+            CustomContainer(width: 110, height: 110) {
                 VStack(spacing: 10) {
                     Text("\(viewModel.team.stats.w)")
-                        .font(.system(size: 30, weight: .bold))
+                        .font(.system(size: 26, weight: .bold))
                         .foregroundStyle(.green)
                     
                     Text("Wins")
@@ -67,10 +67,10 @@ extension TeamView {
                 }
             }
             
-            CustomContainer(width: 110, height: 100) {
+            CustomContainer(width: 110, height: 110) {
                 VStack(spacing: 10) {
                     Text("\(viewModel.team.stats.l)")
-                        .font(.system(size: 30, weight: .bold))
+                        .font(.system(size: 26, weight: .bold))
                         .foregroundStyle(.red)
                     
                     Text("Losses")
@@ -79,10 +79,10 @@ extension TeamView {
                 }
             }
             
-            CustomContainer(width: 110, height: 100) {
+            CustomContainer(width: 110, height: 110) {
                 VStack(spacing: 10) {
                     Text(viewModel.team.stats.winPercentage)
-                        .font(.system(size: 30))
+                        .font(.system(size: 26))
                     
                     Text("Win %")
                         .font(.system(size: 14))
@@ -102,12 +102,12 @@ extension TeamView {
             }
             .padding(.horizontal)
             
-            VStack(spacing: 12) {
-                HStack(spacing: 16) {
-                    CustomContainer(width: 110, height: 100) {
+            VStack(spacing: 20) {
+                HStack(spacing: 20) {
+                    CustomContainer(width: 110, height: 110) {
                         VStack(spacing: 10) {
                             Text(viewModel.team.stats.ppg)
-                                .font(.system(size: 30, weight: .regular))
+                                .font(.system(size: 26, weight: .regular))
                             
                             Text("PPG")
                                 .font(.system(size: 14))
@@ -115,10 +115,10 @@ extension TeamView {
                         }
                     }
                     
-                    CustomContainer(width: 110, height: 100) {
+                    CustomContainer(width: 110, height: 110) {
                         VStack(spacing: 10) {
                             Text(viewModel.team.stats.rpg)
-                                .font(.system(size: 30, weight: .regular))
+                                .font(.system(size: 26, weight: .regular))
                             
                             Text("RPG")
                                 .font(.system(size: 14))
@@ -126,10 +126,10 @@ extension TeamView {
                         }
                     }
                     
-                    CustomContainer(width: 110, height: 100) {
+                    CustomContainer(width: 110, height: 110) {
                         VStack(spacing: 10) {
                             Text(viewModel.team.stats.apg)
-                                .font(.system(size: 30, weight: .regular))
+                                .font(.system(size: 26, weight: .regular))
                             
                             Text("APG")
                                 .font(.system(size: 14))
@@ -138,11 +138,11 @@ extension TeamView {
                     }
                 }
 
-                HStack(spacing: 16) {
-                    CustomContainer(width: 110, height: 100) {
+                HStack(spacing: 20) {
+                    CustomContainer(width: 110, height: 110) {
                         VStack(spacing: 10) {
                             Text(String(format: "%.1f", viewModel.team.stats.stl))
-                                .font(.system(size: 30, weight: .regular))
+                                .font(.system(size: 26, weight: .regular))
                             
                             Text("SPG")
                                 .font(.system(size: 14))
@@ -150,10 +150,10 @@ extension TeamView {
                         }
                     }
                     
-                    CustomContainer(width: 110, height: 100) {
+                    CustomContainer(width: 110, height: 110) {
                         VStack(spacing: 10) {
                             Text(String(format: "%.1f", viewModel.team.stats.blk))
-                                .font(.system(size: 30, weight: .regular))
+                                .font(.system(size: 26, weight: .regular))
                             
                             Text("BPG")
                                 .font(.system(size: 14))
@@ -161,10 +161,10 @@ extension TeamView {
                         }
                     }
                     
-                    CustomContainer(width: 110, height: 100) {
+                    CustomContainer(width: 110, height: 110) {
                         VStack(spacing: 10) {
                             Text(String(format: "%.1f", viewModel.team.stats.tov))
-                                .font(.system(size: 30, weight: .regular))
+                                .font(.system(size: 26, weight: .regular))
                             
                             Text("TOV")
                                 .font(.system(size: 14))
