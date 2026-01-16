@@ -29,6 +29,14 @@ public final class MainCoordinator: MainCoordinatorProtocol {
         navigationPath.append(.gameDetails(game))
     }
     
+    public func navigateToPlayer(_ player: PlayerSeasonAverages) {
+        navigationPath.append(.player(player))
+    }
+    
+    public func navigateToTeam(_ team: TeamSeasonAverages) {  
+        navigationPath.append(.team(team))
+    }
+    
     public func navigateBack() {
         if !navigationPath.isEmpty {
             navigationPath.removeLast()

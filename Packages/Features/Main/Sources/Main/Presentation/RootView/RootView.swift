@@ -43,6 +43,10 @@ public struct RootView: View {
                         .navigationBarHidden(true)
                         .navigationBarBackButtonHidden(true)
                         .ignoresSafeArea()
+                case .player(let player):
+                    PlayerView(viewModel: container.makePlayerViewModel(player: player))
+                case .team(let team):
+                    TeamView(viewModel: container.makeTeamViewModel(team: team))
                 }
             }
             .ignoresSafeArea()
@@ -67,11 +71,9 @@ public struct RootView: View {
     
     @ViewBuilder
     private var searchTab: some View {
-        NavigationStack { 
-            SearchView(viewModel: container.makeSearchViewModel())
-        }
-        .tag(Tabs.search)
-        .toolbarBackground(.hidden, for: .tabBar)
+        SearchView(viewModel: container.makeSearchViewModel())
+            .tag(Tabs.search)
+            .toolbarBackground(.hidden, for: .tabBar)
     }
     
     @ViewBuilder

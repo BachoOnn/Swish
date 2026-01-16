@@ -12,6 +12,8 @@ public protocol MainCoordinatorProtocol: ObservableObject {
     
     func navigateToProfile()
     func navigateToGameDetails(game: Game)
+    func navigateToPlayer(_ player: PlayerSeasonAverages) 
+    func navigateToTeam(_ team: TeamSeasonAverages)
     func navigateBack()
     func signOut()
 }

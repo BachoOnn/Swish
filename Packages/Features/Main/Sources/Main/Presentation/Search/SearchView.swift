@@ -31,12 +31,6 @@ struct SearchView: View {
             }
             
         }
-        .navigationDestination(item: $viewModel.selectedPlayer) { player in
-            PlayerView(viewModel: PlayerViewModel(player: player))
-        }
-        .navigationDestination(item: $viewModel.selectedTeam) { team in
-            TeamView(viewModel: TeamViewModel(team: team))
-        }
     }
 }
 
@@ -85,5 +79,5 @@ extension SearchView {
 }
 
 #Preview {
-    SearchView(viewModel: SearchViewModel())
+    SearchView(viewModel: SearchViewModel(coordinator: MainCoordinator()))
 }

@@ -7,12 +7,12 @@
 
 import Combine
 
-final class TeamViewModel: ObservableObject {
+public final class TeamViewModel: ObservableObject {
     
     @Published var team: TeamSeasonAverages
     @Published var isFavorite: Bool = false
     
-    init(team: TeamSeasonAverages) {
+    public init(team: TeamSeasonAverages) {
         self.team = team
     }
     

@@ -9,18 +9,20 @@ import Combine
 
 public final class SearchViewModel: ObservableObject {
     
-    public init() {}
+    private weak var coordinator: MainCoordinator?
+    
+    public init(coordinator: MainCoordinator) {
+        self.coordinator = coordinator
+    }
     
     @Published var selectedSide: SearchPickerSide = .Players
-    @Published var selectedPlayer: PlayerSeasonAverages?
-    @Published var selectedTeam: TeamSeasonAverages?
     
     func navigateToPlayer(_ player: PlayerSeasonAverages) {
-        selectedPlayer = player
+        coordinator?.navigateToPlayer(player)
     }
     
     func navigateToTeam(_ team: TeamSeasonAverages) {
-        selectedTeam = team
+        coordinator?.navigateToTeam(team)
     }
     
     // TODO: when user taps team or player to send its id and fetch data with it
