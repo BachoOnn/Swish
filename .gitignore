@@ -153,13 +153,15 @@ Temporary Items
 ## Xcode User State
 *.xcuserstate
 
-## Firebase - CRITICAL!
+## Firebase
 GoogleService-Info.plist
 .firebaserc
 .firebase/
 
-## API Keys & Sensitive Configuration - CRITICAL!
-Config.xcconfig
+## API Keys & Sensitive Configuration 
+Config/Secrets.xcconfig
+Config/*.xcconfig
+!Config/Secrets.xcconfig.example
 *.xcconfig
 !*.xcconfig.example
 
