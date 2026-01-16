@@ -158,6 +158,17 @@ GoogleService-Info.plist
 .firebaserc
 .firebase/
 
+## API Keys & Sensitive Configuration - CRITICAL!
+Config.xcconfig
+*.xcconfig
+!*.xcconfig.example
+
+## Secrets & Environment
+.env
+.env.*
+!.env.example
+secrets.json
+
 ## Testing & Coverage
 *.gcda
 *.gcno
