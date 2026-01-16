@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D4D5BBE2F1AF2DA0026877F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4D5BBD2F1AF2AE0026877F /* Config.swift */; };
 		9D646F082F172CFE00A706B6 /* PersistanceService in Frameworks */ = {isa = PBXBuildFile; productRef = 9D646F072F172CFE00A706B6 /* PersistanceService */; };
 		9D9C92962F15E42E00D4E429 /* Authorization in Frameworks */ = {isa = PBXBuildFile; productRef = 9D9C92952F15E42E00D4E429 /* Authorization */; };
 		9D9C92992F15E81000D4E429 /* Main in Frameworks */ = {isa = PBXBuildFile; productRef = 9D9C92982F15E81000D4E429 /* Main */; };
@@ -15,6 +16,7 @@
 /* Begin PBXFileReference section */
 		9D4D5BBB2F1AE3D00026877F /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		9D4D5BBC2F1AE6170026877F /* Secrets.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text; path = Secrets.xcconfig.example; sourceTree = "<group>"; };
+		9D4D5BBD2F1AF2AE0026877F /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		9D8F48582F0E87000014AB14 /* Swish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -78,6 +80,7 @@
 		9D4D5BBA2F1AE1570026877F /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				9D4D5BBD2F1AF2AE0026877F /* Config.swift */,
 				9D4D5BBC2F1AE6170026877F /* Secrets.xcconfig.example */,
 				9D4D5BBB2F1AE3D00026877F /* Secrets.xcconfig */,
 			);
@@ -190,6 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D4D5BBE2F1AF2DA0026877F /* Config.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +202,7 @@
 /* Begin XCBuildConfiguration section */
 		9D8F486C2F0E87020014AB14 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9D4D5BBB2F1AE3D00026877F /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -254,6 +259,7 @@
 		};
 		9D8F486E2F0E87020014AB14 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9D4D5BBB2F1AE3D00026877F /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
