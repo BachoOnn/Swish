@@ -15,7 +15,7 @@ public final class SearchViewModel: ObservableObject {
         self.coordinator = coordinator
     }
     
-    @Published var selectedSide: SearchPickerSide = .Players
+    @Published var selectedSide: SearchPickerSide = .Teams
     
     func navigateToPlayer(_ player: PlayerSeasonAverages) {
         coordinator?.navigateToPlayer(player)
