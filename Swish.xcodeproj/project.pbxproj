@@ -13,6 +13,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9D4D5BBB2F1AE3D00026877F /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		9D4D5BBC2F1AE6170026877F /* Secrets.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text; path = Secrets.xcconfig.example; sourceTree = "<group>"; };
 		9D8F48582F0E87000014AB14 /* Swish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -73,9 +75,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D4D5BBA2F1AE1570026877F /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				9D4D5BBC2F1AE6170026877F /* Secrets.xcconfig.example */,
+				9D4D5BBB2F1AE3D00026877F /* Secrets.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 		9D8F484F2F0E87000014AB14 = {
 			isa = PBXGroup;
 			children = (
+				9D4D5BBA2F1AE1570026877F /* Config */,
 				9DE5751F2F15C5280024E27A /* Packages */,
 				9D8F485A2F0E87000014AB14 /* Swish */,
 				9D9C92942F15E42E00D4E429 /* Frameworks */,
