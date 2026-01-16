@@ -9,14 +9,16 @@ import Combine
 
 public final class SearchViewModel: ObservableObject {
     
+    @Published var selectedSide: SearchPickerSide = .Teams
+    @Published private(set) var players: [PlayerSeasonAverages] = [.lebronMock, .lukaMock, .curryMock, .embiidMock, .tatumMock]
+    @Published private(set) var teams: [TeamSeasonAverages] = [.lakersMock, .bucksMock, .celticsMock, .warriorsMock]
+    
     private weak var coordinator: MainCoordinator?
     
     public init(coordinator: MainCoordinator) {
         self.coordinator = coordinator
     }
-    
-    @Published var selectedSide: SearchPickerSide = .Teams
-    
+        
     func navigateToPlayer(_ player: PlayerSeasonAverages) {
         coordinator?.navigateToPlayer(player)
     }

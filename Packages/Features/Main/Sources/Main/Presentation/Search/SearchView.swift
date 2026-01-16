@@ -29,7 +29,6 @@ struct SearchView: View {
                 pickerSection
                 
             }
-            
         }
     }
 }
@@ -44,35 +43,34 @@ extension SearchView {
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal)
+            .padding(.vertical, 5)
             
             switch viewModel.selectedSide {
             case .Teams:
-                List {
-                    ForEach(0..<20, id: \.self) { _ in
-                        Text("Teams here")
-                            .listRowBackground(Color.clear)
-                            .onTapGesture {
-                                viewModel.navigateToTeam(.lakersMock)
-                            }
+                ScrollView {
+                    LazyVStack(spacing: 20) {
+                        ForEach(viewModel.teams, id: \.self) { team in
+                            TeamCellView(team: team)
+                                .frame(width: 380, height: 80)
+                                .onTapGesture {
+                                    viewModel.navigateToTeam(team)
+                                }
+                        }
                     }
                 }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
-                .scrollIndicators(.hidden)
                 
             case .Players:
-                List {
-                    ForEach(0..<20, id: \.self) { _ in
-                        Text("Players here")
-                            .listRowBackground(Color.clear)
-                            .onTapGesture {
-                                viewModel.navigateToPlayer(.lebronMock)
-                            }
+                ScrollView {
+                    LazyVStack(spacing: 20) {
+                        ForEach(viewModel.players, id: \.self) { player in
+                            PlayerCellView(player: player)
+                                .frame(width: 380, height: 80)
+                                .onTapGesture {
+                                    viewModel.navigateToPlayer(player)
+                                }
+                        }
                     }
                 }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
-                .scrollIndicators(.hidden)
             }
         }
     }
