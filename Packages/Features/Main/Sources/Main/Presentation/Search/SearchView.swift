@@ -35,7 +35,7 @@ struct SearchView: View {
 
 extension SearchView {
     var pickerSection: some View {
-        VStack {
+        VStack(spacing: 20) {
             Picker("", selection: $viewModel.selectedSide) {
                 ForEach(SearchPickerSide.allCases, id: \.self) {
                     Text($0.rawValue)

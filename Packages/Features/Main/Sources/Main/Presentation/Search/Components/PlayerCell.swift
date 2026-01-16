@@ -66,7 +66,7 @@ final class PlayerCell: UIView {
     
     // MARK: - Setup
     private func setupUI() {
-        backgroundColor = .secondaryLabel.withAlphaComponent(0.1)
+        backgroundColor = .game
         layer.cornerRadius = 15
         layer.borderWidth = 1
         layer.borderColor = UIColor.systemGray2.cgColor

@@ -22,8 +22,6 @@ struct PlayerView: View {
                 bioSection
                 
                 pickerSection
-                
-                Spacer()
             }
         }
     }
