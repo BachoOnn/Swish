@@ -41,6 +41,7 @@
 				Data/PersistanceService,
 				Domain/AuthDomain,
 				Domain/GameDomain,
+				Domain/NewsDomain,
 				Features/Authorization,
 				Features/Main,
 			);

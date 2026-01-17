@@ -12,6 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Domain/GameDomain"),
+        .package(path: "../../Domain/NewsDomain"),
         .package(path: "../../Core/Helpers"),
         .package(path: "../../Config/Config")
     ],
@@ -20,6 +21,7 @@ let package = Package(
             name: "APIService",
             dependencies: [
                 "GameDomain",
+                "NewsDomain",
                 "Helpers",
                 "Config"
             ]

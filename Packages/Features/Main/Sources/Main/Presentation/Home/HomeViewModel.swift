@@ -52,6 +52,10 @@ public final class HomeViewModel: ObservableObject {
         isLoading = false
     }
     
+    func refreshGames() async {
+        await loadTodaysGames()
+    }
+    
     var featuredGames: [Game] {
         Array(games.prefix(5))
     }

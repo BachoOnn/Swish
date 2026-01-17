@@ -12,6 +12,7 @@ struct HomeView: View {
     
     @StateObject var viewModel: HomeViewModel
     @State private var scrollID: Int?
+    @State private var hasLoadedOnce = false
     
     var body: some View {
         ZStack {
@@ -35,8 +36,15 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity)
             }
         }
-        .task {
+        .task(id: hasLoadedOnce) {
+            guard !hasLoadedOnce else { return }
             await viewModel.loadTodaysGames()
+            hasLoadedOnce = true
+        }
+        .refreshable {
+            Task {
+                await viewModel.refreshGames()
+            }
         }
     }
 }
@@ -46,15 +54,16 @@ extension HomeView {
         VStack {
             if viewModel.isLoading {
                 VStack(spacing: 26) {
-                    ProgressView()
+                    CustomProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(1.5)
+                        .scaleEffect(1)
                     
                     Text("Loading today's games...")
                         .font(.subheadline)
                         .foregroundColor(.primary)
                 }
                 .frame(height: 200)
+                .padding(.vertical)
             } else if viewModel.featuredGames.isEmpty {
                 VStack(spacing: 12) {
                     Image(systemName: "basketball.fill")
