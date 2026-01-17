@@ -100,6 +100,22 @@ public extension Game {
         return status == "Final"
     }
     
+    var isLive: Bool {
+        return status == "1st Qtr" || status == "2nd Qtr"
+    }
+    
+    var isQ2: Bool {
+        return status == "2nd Qtr"
+    }
+    
+    var isQ3: Bool {
+        return status == "3rd Qtr"
+    }
+    
+    var isQ4: Bool {
+        return status == "4th Qtr"
+    }
+    
     /// Get home team quarter scores as array
     var homeQuarterScores: [Int] {
         return [

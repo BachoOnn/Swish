@@ -123,6 +123,11 @@ final class GameCell: UICollectionViewCell {
         if game.isFinished {
             timeLabel.text = "Final"
             vsLabel.text = "\(game.homeTeamScore) - \(game.visitorTeamScore)"
+        } else if game.isLive {
+            timeLabel.text = game.status
+            timeLabel.textColor = .red
+            vsLabel.text = "\(game.homeTeamScore) - \(game.visitorTeamScore)"
+            vsLabel.font = .systemFont(ofSize: 22, weight: .semibold)
         } else {
             timeLabel.text = game.formattedTime
             vsLabel.text = "VS"

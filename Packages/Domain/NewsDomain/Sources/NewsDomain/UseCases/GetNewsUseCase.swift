@@ -17,7 +17,7 @@ public struct DefaultGetNewsUseCase: GetNewsUseCase {
         self.newsRepository = newsRepository
     }
     
-    func execute() async throws -> [News] {
+    public func execute() async throws -> [News] {
         let news = try await newsRepository.getNews()
         
         return news.sorted { news1, news2 in

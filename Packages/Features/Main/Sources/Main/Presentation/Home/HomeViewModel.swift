@@ -6,22 +6,28 @@
 
 import Combine
 import GameDomain
+import NewsDomain
 
 @MainActor
 public final class HomeViewModel: ObservableObject {
     
     private weak var coordinator: MainCoordinator?
     private let getTodayGamesUseCase: DefaultGetTodayGamesUseCase
+    private let getNewsUseCase: DefaultGetNewsUseCase
     
     @Published private(set) var games: [Game] = []
-    @Published var isLoading: Bool = false 
+    @Published private(set) var news: [News] = []
+    @Published var isGamesLoading: Bool = false
+    @Published var isNewsLoading: Bool = false
     
     public init(
         coordinator: MainCoordinator,
-        getTodayGamesUseCase: DefaultGetTodayGamesUseCase
+        getTodayGamesUseCase: DefaultGetTodayGamesUseCase,
+        getNewsUseCase: DefaultGetNewsUseCase
     ) {
         self.coordinator = coordinator
         self.getTodayGamesUseCase = getTodayGamesUseCase
+        self.getNewsUseCase = getNewsUseCase
     }
     
     deinit {
@@ -41,7 +47,7 @@ public final class HomeViewModel: ObservableObject {
     }
     
     func loadTodaysGames() async {
-        isLoading = true
+        isGamesLoading = true
         
         do {
             games = try await getTodayGamesUseCase.execute()
@@ -49,7 +55,7 @@ public final class HomeViewModel: ObservableObject {
             print(error.localizedDescription)
         }
         
-        isLoading = false
+        isGamesLoading = false
     }
     
     func refreshGames() async {
@@ -58,5 +64,17 @@ public final class HomeViewModel: ObservableObject {
     
     var featuredGames: [Game] {
         Array(games.prefix(5))
+    }
+    
+    func loadNews() async {
+        isNewsLoading = true
+        
+        do {
+            news = try await getNewsUseCase.execute()
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        isNewsLoading = false
     }
 }

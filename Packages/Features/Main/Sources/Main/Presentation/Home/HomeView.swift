@@ -13,6 +13,7 @@ struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
     @State private var scrollID: Int?
     @State private var hasLoadedOnce = false
+    @State private var selectedNewsURL: URL?
     
     var body: some View {
         ZStack {
@@ -38,7 +39,10 @@ struct HomeView: View {
         }
         .task(id: hasLoadedOnce) {
             guard !hasLoadedOnce else { return }
-            await viewModel.loadTodaysGames()
+            async let games: () = viewModel.loadTodaysGames()
+            async let news: () = viewModel.loadNews()
+            
+            _ = await (games, news)
             hasLoadedOnce = true
         }
         .refreshable {
@@ -46,13 +50,16 @@ struct HomeView: View {
                 await viewModel.refreshGames()
             }
         }
+        .sheet(item: $selectedNewsURL) { url in
+            WebView(url)
+        }
     }
 }
 
 extension HomeView {
     private var gameCardSection: some View {
         VStack {
-            if viewModel.isLoading {
+            if viewModel.isGamesLoading {
                 VStack(spacing: 26) {
                     CustomProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
@@ -117,7 +124,6 @@ extension HomeView {
                 
                 Spacer()
             }
-            
             .padding(.horizontal, 20)
             .padding(.vertical, 20)
             .background(Color.game)
@@ -126,24 +132,23 @@ extension HomeView {
                 .background(Color.gray.opacity(0.3))
             
             LazyVStack(spacing: 0) {
-                ForEach(0..<5) { index in
-                    NewsItemView(
-                        imageURL: "placeholder-news",
-                        title: "Lakers dominate in overtime thriller against Warriors",
-                        source: "ESPN",
-                        timeAgo: "2h ago"
-                    )
-                    .onTapGesture {
-                        print(index.description)
-                    }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 12)
-                    .background(Color.game)
-                    
-                    if index < 4 {
-                        Divider()
-                            .background(Color.gray.opacity(0.3))
-                            .padding(.horizontal, 20)
+                ForEach(Array(viewModel.news.enumerated()), id: \.element.id) { index, news in
+                    if let url = URL(string: news.links.web.href) {
+                            NewsItemView(
+                                imageURL: news.images.first?.url ?? "",
+                                title: news.description,
+                                source: news.type,
+                                time: news.published.toRelativeDate()
+                            )
+                            .onTapGesture {
+                                selectedNewsURL = url
+                            }
+                        
+                        if index < viewModel.news.count - 1 {
+                            Divider()
+                                .background(Color.gray.opacity(0.3))
+                                .padding(.horizontal, 20)
+                        }
                     }
                 }
             }
