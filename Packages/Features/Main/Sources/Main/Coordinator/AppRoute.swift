@@ -5,6 +5,8 @@
 //  Created by Bacho on 06.01.26.
 //
 
+import GameDomain
+
 public enum AppRoute: Hashable, Equatable {
     case profile
     case gameDetails(Game)

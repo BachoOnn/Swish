@@ -140,6 +140,6 @@ final class GameDetailsViewController: UIViewController {
     private func configureViews() {
         gameScoreHeaderView.configure(with: viewModel.currentGame)
         quarterScoresView.configure(with: viewModel.currentGame)
-        topPerformersView.configure(with: viewModel.topPerformers)
+//        topPerformersView.configure(with: viewModel.topPerformers)
     }
 }

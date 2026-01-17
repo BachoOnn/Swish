@@ -10,8 +10,19 @@ let package = Package(
             name: "APIService",
             targets: ["APIService"]),
     ],
+    dependencies: [
+        .package(path: "../../Domain/GameDomain"),
+        .package(path: "../../Core/Helpers"),
+        .package(path: "../../Config/Config")
+    ],
     targets: [
         .target(
-            name: "APIService"),
+            name: "APIService",
+            dependencies: [
+                "GameDomain",
+                "Helpers",
+                "Config"
+            ]
+        ),
     ]
 )

@@ -7,7 +7,10 @@
 
 import Foundation
 import Combine
+import GameDomain
+import Helpers
 
+@MainActor
 public final class GamesViewModel: ObservableObject {
     
     // MARK: - Published Properties
@@ -18,42 +21,72 @@ public final class GamesViewModel: ObservableObject {
     
     // MARK: - Dependencies
     private weak var coordinator: MainCoordinator?
+    private let getTodayGamesUseCase: DefaultGetTodayGamesUseCase
+    private let getGamesUseCase: DefaultGetGamesUseCase
     
     // MARK: - Init
-    public init(coordinator: MainCoordinator) {
+    public init(
+        coordinator: MainCoordinator,
+        getTodayGamesUseCase: DefaultGetTodayGamesUseCase,
+        getGamesUseCase: DefaultGetGamesUseCase
+    ) {
         self.coordinator = coordinator
+        self.getTodayGamesUseCase = getTodayGamesUseCase
+        self.getGamesUseCase = getGamesUseCase
     }
     
     // MARK: - Public Methods
     func loadGames(for date: Date?) {
-        selectedDate = date
-        
-        // TODO: Replace with real API call in the future
+        Task {
+            await loadGamesAsync(for: date)
+        }
+    }
+    
+    private func loadGamesAsync(for date: Date?) async {
         guard let date = date else {
-            games = MockGameData.allGames
+            // No date selected, load today's games
+            await loadTodaysGames()
             return
         }
         
-        let calendar = Calendar.current
-        let selectedComponents = calendar.dateComponents([.year, .month, .day], from: date)
-        
-        let isoFormatter = ISO8601DateFormatter()
-        isoFormatter.formatOptions = [
-            .withInternetDateTime,
-            .withFractionalSeconds
-        ]
-        
-        games = MockGameData.allGames.filter { game in
-            guard let gameDate = isoFormatter.date(from: game.date) else {
-                return false
-            }
-            
-            let gameComponents = calendar.dateComponents([.year, .month, .day], from: gameDate)
-            
-            return selectedComponents.year == gameComponents.year &&
-            selectedComponents.month == gameComponents.month &&
-            selectedComponents.day == gameComponents.day
+        // Check if selected date is today
+        if Calendar.current.isDateInToday(date) {
+            await loadTodaysGames()
+        } else {
+            await loadGamesForDate(date)
         }
+    }
+    
+    private func loadTodaysGames() async {
+        isLoading = true
+        errorMessage = nil
+        
+        do {
+            games = try await getTodayGamesUseCase.execute()
+            print("✅ Successfully loaded \(games.count) games for today")
+        } catch {
+            errorMessage = error.localizedDescription
+            games = []
+        }
+        
+        isLoading = false
+    }
+    
+    private func loadGamesForDate(_ date: Date) async {
+        isLoading = true
+        errorMessage = nil
+        
+        let dateString = DateFormatter.apiDateFormatter.string(from: date)
+        
+        do {
+            games = try await getGamesUseCase.execute(date: dateString)
+            print("✅ Successfully loaded \(games.count) games for \(dateString)")
+        } catch {
+            errorMessage = "Failed to load games: \(error.localizedDescription)"
+            games = []
+        }
+        
+        isLoading = false
     }
     
     func navigateToGameDetails(game: Game) {

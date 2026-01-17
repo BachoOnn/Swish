@@ -7,6 +7,7 @@
 
 import Foundation
 import AuthDomain
+import GameDomain
 
 @MainActor
 public final class MainDIContainer {
@@ -15,17 +16,32 @@ public final class MainDIContainer {
     public let coordinator: MainCoordinator
     private let persistenceRepository: UserPersistenceRepositoryProtocol
     private let authRepository: AuthRepositoryProtocol
+    private let gameRepository: GamesRepositoryProtocol
     
-    public init(authRepository: AuthRepositoryProtocol,
-                persistenceRepository: UserPersistenceRepositoryProtocol) {
+    public init(
+        authRepository: AuthRepositoryProtocol,
+        persistenceRepository: UserPersistenceRepositoryProtocol,
+        gameRepository: GamesRepositoryProtocol
+    ) {
         self.authRepository = authRepository
         self.persistenceRepository = persistenceRepository
+        self.gameRepository = gameRepository
         self.coordinator = MainCoordinator()
     }
     
     public func handleSignOut() {
         try? authRepository.signOut()
         persistenceRepository.clear()
+    }
+    
+    // MARK: - Usecases
+
+    private func makeGetTodayGamesUseCase() -> DefaultGetTodayGamesUseCase {
+        DefaultGetTodayGamesUseCase(gamesRepository: gameRepository)
+    }
+    
+    private func makeGetGamesUseCase() -> DefaultGetGamesUseCase {
+        DefaultGetGamesUseCase(gamesRepository: gameRepository)
     }
     
     // MARK: - ViewModels
@@ -39,7 +55,7 @@ public final class MainDIContainer {
     }
     
     public func makeGamesViewModel() -> GamesViewModel {
-        GamesViewModel(coordinator: coordinator)
+        GamesViewModel(coordinator: coordinator, getTodayGamesUseCase: makeGetTodayGamesUseCase(), getGamesUseCase: makeGetGamesUseCase())
     }
     
     public func makeProfileViewModel() -> ProfileViewModel {
