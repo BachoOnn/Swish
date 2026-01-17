@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GameDomain
 
 public protocol MainCoordinatorProtocol: ObservableObject {
     var navigationPath: [AppRoute] { get set }

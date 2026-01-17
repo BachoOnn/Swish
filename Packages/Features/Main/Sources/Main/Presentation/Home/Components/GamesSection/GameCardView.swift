@@ -8,6 +8,7 @@
 import SwiftUI
 import Common
 import Helpers
+import GameDomain
 
 struct GameCardView: View {
     
@@ -75,8 +76,4 @@ struct GameCardView: View {
         }
         .roundedCorners(20)
     }
-}
-
-#Preview {
-    GameCardView(game: MockGameData.recentGames[0])
 }

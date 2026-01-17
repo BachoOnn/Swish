@@ -36,21 +36,74 @@ struct GamesView: View {
                 
                 calendarSection
                 
-                GamesCollectionView(viewModel: viewModel)
+                // Show loading indicator or games
+                if viewModel.isLoading {
+                    loadingView
+                } else if let errorMessage = viewModel.errorMessage {
+                    errorView(errorMessage)
+                } else {
+                    GamesCollectionView(viewModel: viewModel)
+                }
                 
                 Spacer()
             }
         }
-        .onAppear {
+        .task {
+            // Initial load
             viewModel.loadGames(for: selection)
         }
         .onChange(of: selection) { _, newValue in
+            // Load games when date changes
             viewModel.loadGames(for: newValue)
         }
     }
-}
-
-#Preview {
-    let coordinator = MainCoordinator()
-    GamesView(viewModel: GamesViewModel(coordinator: coordinator))
+    
+    // MARK: - Loading View
+    private var loadingView: some View {
+        VStack {
+            Spacer()
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle())
+                .scaleEffect(1.5)
+            Text("Loading games...")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .padding(.top, 8)
+            Spacer()
+        }
+    }
+    
+    // MARK: - Error View
+    private func errorView(_ message: String) -> some View {
+        VStack(spacing: 16) {
+            Spacer()
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.system(size: 50))
+                .foregroundColor(.orange)
+            
+            Text("Oops!")
+                .font(.title2.bold())
+            
+            Text(message)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 32)
+            
+            Button(action: {
+                viewModel.loadGames(for: selection)
+            }) {
+                Text("Try Again")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 32)
+                    .padding(.vertical, 12)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+            }
+            .padding(.top, 8)
+            
+            Spacer()
+        }
+    }
 }

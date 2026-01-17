@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import GameDomain
 
 final class GameCell: UICollectionViewCell {
     

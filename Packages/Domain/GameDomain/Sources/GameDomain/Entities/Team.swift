@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Team: Identifiable, Hashable {
+public struct Team: Identifiable, Hashable, Codable {
     public let id: Int
     public let conference: String
     public let division: String

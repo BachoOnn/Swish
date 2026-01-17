@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import GameDomain
 
 final class GameScoreHeaderView: UIView {
     
@@ -164,9 +165,7 @@ final class GameScoreHeaderView: UIView {
         
         if game.isFinished {
             statusLabel.text = "FINAL"
-        } else if game.isLive {
-            statusLabel.text = "Q\(game.period)"
-        } else {
+        } else if game.isUpcoming {
             statusLabel.text = game.formattedTime
         }
     }

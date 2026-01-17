@@ -4,6 +4,8 @@
 //  Created by Bacho on 10.01.26.
 //
 
+import GameDomain
+
 final class GameDetailsViewModel {
     
     private let game: Game
@@ -36,9 +38,7 @@ final class GameDetailsViewModel {
         game.status
     }
     
-    var topPerformers: [PlayerGameStats] {
-        let homeTop = currentGame.getTopHomePerformers(from: MockGameData.mockPlayerStats)
-        let visitorTop = currentGame.getTopVisitorPerformers(from: MockGameData.mockPlayerStats)
-        return homeTop + visitorTop
-    }
+//    var topPerformers: [PlayerGameStats] {
+//        
+//    }
 }

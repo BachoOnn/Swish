@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import GameDomain
 
 struct GamesCollectionView: UIViewRepresentable {
     @ObservedObject var viewModel: GamesViewModel

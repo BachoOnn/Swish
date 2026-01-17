@@ -17,7 +17,7 @@ public struct DefaultGetGamesUseCase: GetGamesUseCase {
         self.gamesRepository = gamesRepository
     }
     
-    func execute(date: String) async throws -> [Game] {
+    public func execute(date: String) async throws -> [Game] {
         let games = try await gamesRepository.fetchGames(date: date)
         
         return games.sorted { game1, game2 in

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9D4D5BBE2F1AF2DA0026877F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4D5BBD2F1AF2AE0026877F /* Config.swift */; };
 		9D4D5EAF2F1B09CA0026877F /* MyNetworkManager in Frameworks */ = {isa = PBXBuildFile; productRef = 9D4D5EAE2F1B09CA0026877F /* MyNetworkManager */; };
+		9D4D5EDF2F1BF11C0026877F /* APIService in Frameworks */ = {isa = PBXBuildFile; productRef = 9D4D5EDE2F1BF11C0026877F /* APIService */; };
 		9D646F082F172CFE00A706B6 /* PersistanceService in Frameworks */ = {isa = PBXBuildFile; productRef = 9D646F072F172CFE00A706B6 /* PersistanceService */; };
 		9D9C92962F15E42E00D4E429 /* Authorization in Frameworks */ = {isa = PBXBuildFile; productRef = 9D9C92952F15E42E00D4E429 /* Authorization */; };
 		9D9C92992F15E81000D4E429 /* Main in Frameworks */ = {isa = PBXBuildFile; productRef = 9D9C92982F15E81000D4E429 /* Main */; };
@@ -74,6 +75,7 @@
 				9D9C92962F15E42E00D4E429 /* Authorization in Frameworks */,
 				9D9C92992F15E81000D4E429 /* Main in Frameworks */,
 				9D646F082F172CFE00A706B6 /* PersistanceService in Frameworks */,
+				9D4D5EDF2F1BF11C0026877F /* APIService in Frameworks */,
 				9D4D5EAF2F1B09CA0026877F /* MyNetworkManager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +144,7 @@
 				9D9C92982F15E81000D4E429 /* Main */,
 				9D646F072F172CFE00A706B6 /* PersistanceService */,
 				9D4D5EAE2F1B09CA0026877F /* MyNetworkManager */,
+				9D4D5EDE2F1BF11C0026877F /* APIService */,
 			);
 			productName = Swish;
 			productReference = 9D8F48582F0E87000014AB14 /* Swish.app */;
@@ -422,6 +425,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9D4D5EAD2F1B09CA0026877F /* XCRemoteSwiftPackageReference "MyNetworkManager" */;
 			productName = MyNetworkManager;
+		};
+		9D4D5EDE2F1BF11C0026877F /* APIService */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = APIService;
 		};
 		9D646F072F172CFE00A706B6 /* PersistanceService */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -7,6 +7,7 @@
 
 
 import Foundation
+import GameDomain
 
 // MARK: - Stats Response
 public struct StatsResponse: Codable {

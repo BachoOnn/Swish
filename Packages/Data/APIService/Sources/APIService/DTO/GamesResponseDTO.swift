@@ -23,12 +23,33 @@ struct GameDTO: Codable {
     let homeTeam: TeamDTO
     let visitorTeam: TeamDTO
     
+    // Quarter scores
+    let homeQ1: Int?
+    let homeQ2: Int?
+    let homeQ3: Int?
+    let homeQ4: Int?
+    
+    let visitorQ1: Int?
+    let visitorQ2: Int?
+    let visitorQ3: Int?
+    let visitorQ4: Int?
+    
     enum CodingKeys: String, CodingKey {
         case id, date, season, status
         case homeTeamScore = "home_team_score"
         case visitorTeamScore = "visitor_team_score"
         case homeTeam = "home_team"
         case visitorTeam = "visitor_team"
+        
+        case homeQ1 = "home_q1"
+        case homeQ2 = "home_q2"
+        case homeQ3 = "home_q3"
+        case homeQ4 = "home_q4"
+        
+        case visitorQ1 = "visitor_q1"
+        case visitorQ2 = "visitor_q2"
+        case visitorQ3 = "visitor_q3"
+        case visitorQ4 = "visitor_q4"
     }
 }
 
@@ -65,7 +86,15 @@ extension GameDTO {
             homeTeam: homeTeam.toDomain(),
             visitorTeam: visitorTeam.toDomain(),
             homeTeamScore: homeTeamScore,
-            visitorTeamScore: visitorTeamScore
+            visitorTeamScore: visitorTeamScore,
+            homeQ1: homeQ1,
+            homeQ2: homeQ2,
+            homeQ3: homeQ3,
+            homeQ4: homeQ4,
+            visitorQ1: visitorQ1,
+            visitorQ2: visitorQ2,
+            visitorQ3: visitorQ3,
+            visitorQ4: visitorQ4
         )
     }
 }

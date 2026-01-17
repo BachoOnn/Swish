@@ -14,7 +14,8 @@ let package = Package(
     dependencies: [
         .package(path: "../../Core/Common"),
         .package(path: "../../Core/Helpers"),
-        .package(path: "../../Domain/AuthDomain")
+        .package(path: "../../Domain/AuthDomain"),
+        .package(path: "../../Domain/GameDomain"),
     ],
     targets: [
         .target(
@@ -22,7 +23,8 @@ let package = Package(
             dependencies: [
                 "Common",
                 "Helpers",
-                "AuthDomain"
+                "AuthDomain",
+                "GameDomain"
             ]
         ),
     ]

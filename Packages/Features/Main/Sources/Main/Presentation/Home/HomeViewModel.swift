@@ -5,13 +5,14 @@
 //
 
 import Combine
+import GameDomain
 
 @MainActor
 public final class HomeViewModel: ObservableObject {
     
     private weak var coordinator: MainCoordinator?
     
-    private(set) var games = MockGameData.allGames
+    private(set) var games: [Game] = []
     
     public init(coordinator: MainCoordinator) {
         self.coordinator = coordinator

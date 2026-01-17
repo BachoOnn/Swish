@@ -11,6 +11,7 @@ import Authorization
 import Main
 import PersistanceService
 import FirebaseService
+import APIService
 
 @MainActor
 final class InitialCoordinator {
@@ -62,10 +63,12 @@ final class InitialCoordinator {
         
         let authRepository = FirebaseAuthRepository(googleSignInService: GoogleSignInService())
         let persistenceRepository = KeychainUserRepository()
+        let gameRepository = GamesRepository()
         
         let mainDIContainer = MainDIContainer(
             authRepository: authRepository,
-            persistenceRepository: persistenceRepository
+            persistenceRepository: persistenceRepository,
+            gameRepository: gameRepository
         )
         
         self.mainDIContainer = mainDIContainer

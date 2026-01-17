@@ -6,6 +6,7 @@
 
 import UIKit
 import Combine
+import GameDomain
 
 public final class MainCoordinator: MainCoordinatorProtocol {
     

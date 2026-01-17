@@ -7,6 +7,7 @@
 
 import UIKit
 import Common
+import GameDomain
 
 final class QuarterScoresView: UIView {
     
@@ -117,7 +118,7 @@ final class QuarterScoresView: UIView {
     func configure(with game: Game) {
         let homeRow = createTeamRow(
             teamName: game.homeTeam.name,
-            quarterScores: game.homeTeamQuarterScores,
+            quarterScores: game.homeQuarterScores,
             totalScore: game.homeTeamScore
         )
         containerStackView.addArrangedSubview(homeRow)
@@ -127,7 +128,7 @@ final class QuarterScoresView: UIView {
         
         let visitorRow = createTeamRow(
             teamName: game.visitorTeam.name,
-            quarterScores: game.visitorTeamQuarterScores,
+            quarterScores: game.visitorQuarterScores,
             totalScore: game.visitorTeamScore
         )
         containerStackView.addArrangedSubview(visitorRow)
