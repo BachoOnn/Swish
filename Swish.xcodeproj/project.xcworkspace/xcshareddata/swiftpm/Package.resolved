@@ -132,8 +132,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/BachoOnn/MyNetworkManager.git",
       "state" : {
-        "revision" : "1f78f87af4e51273f4bf096627d4a109e58c21b7",
-        "version" : "1.0.0"
+        "revision" : "37f1aa76704b12e0912baf895a8a2740d769438a",
+        "version" : "1.0.1"
       }
     },
     {
