@@ -32,12 +32,14 @@
 		9DE575252F15C60D0024E27A /* Exceptions for "Packages" folder in "Swish" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Config/Config,
 				Core/Common,
 				Core/Helpers,
 				Data/APIService,
 				Data/FirebaseService,
 				Data/PersistanceService,
 				Domain/AuthDomain,
+				Domain/GameDomain,
 				Features/Authorization,
 				Features/Main,
 			);

@@ -1,19 +1,18 @@
 //
-//  GameDTO.swift
+//  GamesResponseDTO.swift
 //  APIService
 //
 //  Created by Bacho on 17.01.26.
 //
 
 import Foundation
+import GameDomain
 
-// MARK: - API Response
 struct GamesResponseDTO: Codable {
     let data: [GameDTO]
     let meta: MetaDTO
 }
 
-// MARK: - Game DTO (matches API exactly)
 struct GameDTO: Codable {
     let id: Int
     let date: String
@@ -33,7 +32,6 @@ struct GameDTO: Codable {
     }
 }
 
-// MARK: - Team DTO
 struct TeamDTO: Codable {
     let id: Int
     let conference: String
@@ -49,11 +47,39 @@ struct TeamDTO: Codable {
     }
 }
 
-// MARK: - Meta DTO
 struct MetaDTO: Codable {
     let perPage: Int
     
     enum CodingKeys: String, CodingKey {
         case perPage = "per_page"
+    }
+}
+
+extension GameDTO {
+    func toDomain() -> Game {
+        Game(
+            id: id,
+            date: date,
+            season: season,
+            status: status,
+            homeTeam: homeTeam.toDomain(),
+            visitorTeam: visitorTeam.toDomain(),
+            homeTeamScore: homeTeamScore,
+            visitorTeamScore: visitorTeamScore
+        )
+    }
+}
+
+extension TeamDTO {
+    func toDomain() -> Team {
+        Team(
+            id: id,
+            conference: conference,
+            division: division,
+            city: city,
+            name: name,
+            fullName: fullName,
+            abbreviation: abbreviation
+        )
     }
 }
