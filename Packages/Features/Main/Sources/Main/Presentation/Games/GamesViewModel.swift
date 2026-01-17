@@ -44,12 +44,10 @@ public final class GamesViewModel: ObservableObject {
     
     private func loadGamesAsync(for date: Date?) async {
         guard let date = date else {
-            // No date selected, load today's games
             await loadTodaysGames()
             return
         }
         
-        // Check if selected date is today
         if Calendar.current.isDateInToday(date) {
             await loadTodaysGames()
         } else {
@@ -63,7 +61,6 @@ public final class GamesViewModel: ObservableObject {
         
         do {
             games = try await getTodayGamesUseCase.execute()
-            print("✅ Successfully loaded \(games.count) games for today")
         } catch {
             errorMessage = error.localizedDescription
             games = []
@@ -80,7 +77,6 @@ public final class GamesViewModel: ObservableObject {
         
         do {
             games = try await getGamesUseCase.execute(date: dateString)
-            print("✅ Successfully loaded \(games.count) games for \(dateString)")
         } catch {
             errorMessage = "Failed to load games: \(error.localizedDescription)"
             games = []

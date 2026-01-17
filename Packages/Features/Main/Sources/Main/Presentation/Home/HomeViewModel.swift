@@ -11,11 +11,17 @@ import GameDomain
 public final class HomeViewModel: ObservableObject {
     
     private weak var coordinator: MainCoordinator?
+    private let getTodayGamesUseCase: DefaultGetTodayGamesUseCase
     
-    private(set) var games: [Game] = []
+    @Published private(set) var games: [Game] = []
+    @Published var isLoading: Bool = false 
     
-    public init(coordinator: MainCoordinator) {
+    public init(
+        coordinator: MainCoordinator,
+        getTodayGamesUseCase: DefaultGetTodayGamesUseCase
+    ) {
         self.coordinator = coordinator
+        self.getTodayGamesUseCase = getTodayGamesUseCase
     }
     
     deinit {
@@ -32,5 +38,21 @@ public final class HomeViewModel: ObservableObject {
     
     func signOut() {
         coordinator?.signOut()
+    }
+    
+    func loadTodaysGames() async {
+        isLoading = true
+        
+        do {
+            games = try await getTodayGamesUseCase.execute()
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        isLoading = false
+    }
+    
+    var featuredGames: [Game] {
+        Array(games.prefix(5))
     }
 }

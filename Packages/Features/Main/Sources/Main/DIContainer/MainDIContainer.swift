@@ -51,7 +51,7 @@ public final class MainDIContainer {
     }
     
     public func makeHomeViewModel() -> HomeViewModel {
-        HomeViewModel(coordinator: coordinator)
+        HomeViewModel(coordinator: coordinator, getTodayGamesUseCase: makeGetTodayGamesUseCase())
     }
     
     public func makeGamesViewModel() -> GamesViewModel {

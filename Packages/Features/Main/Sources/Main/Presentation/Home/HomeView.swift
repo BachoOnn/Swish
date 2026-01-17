@@ -25,7 +25,7 @@ struct HomeView: View {
                 .frame(height: 60)
                 
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 50) {
+                    VStack(spacing: 50) {
                         gameCardSection
                         
                         newsSection
@@ -35,42 +35,64 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity)
             }
         }
+        .task {
+            await viewModel.loadTodaysGames()
+        }
     }
-}
-
-#Preview {
-    HomeView(viewModel: HomeViewModel(coordinator: MainCoordinator()))
 }
 
 extension HomeView {
     private var gameCardSection: some View {
         VStack {
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 0) {
-                    ForEach(Array(viewModel.games.enumerated()), id: \.element.id) { index, game in
-                        GameCardView(game: game)
-                            .padding(.horizontal, 10)
-                            .containerRelativeFrame(.horizontal)
-                            .scrollTransition(.animated, axis: .horizontal) { content, phase in
-                                content
-                                    .opacity(phase.isIdentity ? 1.0 : 0.6)
-                                    .scaleEffect(phase.isIdentity ? 1.0 : 0.9)
-                            }
-                            .id(index)
-                            .onTapGesture {
-                                viewModel.navigateToGameDetails(game: game)
-                            }
-                    }
+            if viewModel.isLoading {
+                VStack(spacing: 26) {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(1.5)
+                    
+                    Text("Loading today's games...")
+                        .font(.subheadline)
+                        .foregroundColor(.primary)
                 }
-                .scrollTargetLayout()
+                .frame(height: 200)
+            } else if viewModel.featuredGames.isEmpty {
+                VStack(spacing: 12) {
+                    Image(systemName: "basketball.fill")
+                        .font(.system(size: 40))
+                        .foregroundColor(.gray)
+                    Text("No games today")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                .frame(height: 200)
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack(spacing: 0) {
+                        ForEach(Array(viewModel.featuredGames.enumerated()), id: \.element.id) { index, game in
+                            GameCardView(game: game)
+                                .padding(.horizontal, 10)
+                                .containerRelativeFrame(.horizontal)
+                                .scrollTransition(.animated, axis: .horizontal) { content, phase in
+                                    content
+                                        .opacity(phase.isIdentity ? 1.0 : 0.6)
+                                        .scaleEffect(phase.isIdentity ? 1.0 : 0.9)
+                                }
+                                .id(index)
+                                .onTapGesture {
+                                    viewModel.navigateToGameDetails(game: game)
+                                }
+                        }
+                    }
+                    .scrollTargetLayout()
+                }
+                .scrollPosition(id: $scrollID)
+                .scrollTargetBehavior(.paging)
+                
+                CustomPageIndicator(
+                    numberOfPages: viewModel.featuredGames.count,
+                    scrollID: $scrollID
+                )
             }
-            .scrollPosition(id: $scrollID)
-            .scrollTargetBehavior(.paging)
-            
-            CustomPageIndicator(
-                numberOfPages: viewModel.games.count,
-                scrollID: $scrollID
-            )
         }
     }
     
