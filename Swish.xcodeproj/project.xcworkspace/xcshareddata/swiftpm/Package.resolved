@@ -1,5 +1,5 @@
 {
-  "originHash" : "bb99ceed6074d0a8fa881c4c9c8083baba8b7f694bf13b574877ef4e38d60539",
+  "originHash" : "263128cca5a52d1ae13c02cce7acbfcd44ad8364d925dc96612b0cc7295f0135",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -132,8 +132,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/BachoOnn/MyNetworkManager.git",
       "state" : {
-        "revision" : "37f1aa76704b12e0912baf895a8a2740d769438a",
-        "version" : "1.0.1"
+        "revision" : "3252be6a295c1903f1e0c155536673f6a7a5506c",
+        "version" : "1.1.4"
       }
     },
     {

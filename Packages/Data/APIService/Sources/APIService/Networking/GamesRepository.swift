@@ -1,5 +1,5 @@
 //
-//  GamesRepositoryImpl.swift
+//  GamesRepository.swift
 //  APIService
 //
 //  Created by Bacho on 17.01.26.
@@ -29,7 +29,7 @@ public final class GamesRepository: GamesRepositoryProtocol {
         
     public func fetchGames(date: String) async throws -> [Game] {
         let url = "\(baseURL)/games?dates[]=\(date)"
-        let response: GamesResponseDTO = try await networkManager.fetch(
+        let response: GamesResponseDTO = try await networkManager.get(
             urlString: url,
             headers: headers
         )
