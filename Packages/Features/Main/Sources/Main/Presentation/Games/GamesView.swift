@@ -36,7 +36,6 @@ struct GamesView: View {
                 
                 calendarSection
                 
-                // Show loading indicator or games
                 if viewModel.isLoading {
                     loadingView
                 } else if let errorMessage = viewModel.errorMessage {
@@ -49,11 +48,9 @@ struct GamesView: View {
             }
         }
         .task {
-            // Initial load
             viewModel.loadGames(for: selection)
         }
         .onChange(of: selection) { _, newValue in
-            // Load games when date changes
             viewModel.loadGames(for: newValue)
         }
     }

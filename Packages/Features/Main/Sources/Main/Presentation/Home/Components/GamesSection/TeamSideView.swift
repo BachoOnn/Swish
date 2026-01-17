@@ -10,17 +10,19 @@ import SwiftUI
 struct TeamSideView: View {
     
     let team: String
+    let conference: String
     
     var body: some View {
         VStack(spacing: 2) {
             Image(team)
                 .resizable()
-                .frame(width: 60, height: 60)
+                .frame(width: 50, height: 50)
+                .scaledToFit()
             
             Text(team)
                 .font(.system(size: 14))
             
-            Text("30-12")
+            Text(conference)
                 .font(.system(size: 10))
                 .foregroundStyle(Color(.systemGray))
         }
@@ -28,5 +30,5 @@ struct TeamSideView: View {
 }
 
 #Preview {
-    TeamSideView(team: "Lakers")
+    TeamSideView(team: "Lakers", conference: "West")
 }

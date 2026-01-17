@@ -77,10 +77,10 @@ final class GameCell: UICollectionViewCell {
             dateLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
             dateLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             
+            timeLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 20),
             timeLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            timeLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             
-            vsLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 4),
+            vsLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 6),
             vsLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
         ])
     }
@@ -90,8 +90,8 @@ final class GameCell: UICollectionViewCell {
         homeTeamHosting?.view.removeFromSuperview()
         awayTeamHosting?.view.removeFromSuperview()
         
-        let homeView = TeamSideView(team: game.homeTeam.name)
-        let awayView = TeamSideView(team: game.visitorTeam.name)
+        let homeView = TeamSideView(team: game.homeTeam.name, conference: game.homeTeam.conference)
+        let awayView = TeamSideView(team: game.visitorTeam.name, conference: game.visitorTeam.conference)
         
         homeTeamHosting = UIHostingController(rootView: homeView)
         awayTeamHosting = UIHostingController(rootView: awayView)
@@ -108,11 +108,15 @@ final class GameCell: UICollectionViewCell {
             awayView.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint.activate([
-                homeView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+                homeView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
                 homeView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+                homeView.heightAnchor.constraint(equalToConstant: 100),
+                homeView.widthAnchor.constraint(equalToConstant: 100),
                 
-                awayView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-                awayView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+                awayView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
+                awayView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+                awayView.heightAnchor.constraint(equalToConstant: 100),
+                awayView.widthAnchor.constraint(equalToConstant: 100)
             ])
         }
         

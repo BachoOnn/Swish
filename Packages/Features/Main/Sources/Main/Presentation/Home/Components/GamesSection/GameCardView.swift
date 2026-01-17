@@ -40,7 +40,7 @@ struct GameCardView: View {
                     .frame(height: 150)
                 
                 HStack(spacing: 50) {
-                    TeamSideView(team: game.homeTeam.name)
+                    TeamSideView(team: game.homeTeam.name, conference: game.homeTeam.conference)
                     
                     VStack(spacing: 10) {
                         Text(game.formattedDate)
@@ -69,7 +69,7 @@ struct GameCardView: View {
                         }
                     }
                     
-                    TeamSideView(team: game.visitorTeam.name)
+                    TeamSideView(team: game.visitorTeam.name, conference: game.visitorTeam.conference)
                 }
                 .padding(.horizontal)
             }
