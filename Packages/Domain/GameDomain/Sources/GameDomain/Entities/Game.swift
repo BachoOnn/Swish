@@ -10,6 +10,7 @@ import Foundation
 public struct Game: Identifiable, Hashable {
     public let id: Int
     public let date: String
+    public let dateTime: String
     public let season: Int
     public let status: String
     public let homeTeam: Team
@@ -31,6 +32,7 @@ public struct Game: Identifiable, Hashable {
     public init(
         id: Int,
         date: String,
+        dateTime: String,
         season: Int,
         status: String,
         homeTeam: Team,
@@ -48,6 +50,7 @@ public struct Game: Identifiable, Hashable {
     ) {
         self.id = id
         self.date = date
+        self.dateTime = dateTime
         self.season = season
         self.status = status
         self.homeTeam = homeTeam
@@ -70,12 +73,30 @@ public extension Game {
     /// Formatted date (e.g., "Fri, 17 January")
     var formattedDate: String {
         let isoFormatter = ISO8601DateFormatter()
-        guard let parsedDate = isoFormatter.date(from: date) else {
-            return date
+        isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        
+        var parsedDate = isoFormatter.date(from: dateTime)
+        
+        if parsedDate == nil {
+            isoFormatter.formatOptions = [.withInternetDateTime]
+            parsedDate = isoFormatter.date(from: dateTime)
         }
+        
+        if parsedDate == nil {
+            isoFormatter.formatOptions = [.withFullDate]
+            parsedDate = isoFormatter.date(from: dateTime)
+        }
+        
+        guard let finalDate = parsedDate else {
+            return dateTime
+        }
+        
         let displayFormatter = DateFormatter()
+        displayFormatter.timeZone = TimeZone(identifier: "Asia/Tbilisi")
+        displayFormatter.locale = Locale(identifier: "en_US")
         displayFormatter.dateFormat = "EEE, d MMMM"
-        return displayFormatter.string(from: parsedDate)
+        
+        return displayFormatter.string(from: finalDate)
     }
     
     /// Formatted time (e.g., "5:00 PM")
@@ -101,19 +122,7 @@ public extension Game {
     }
     
     var isLive: Bool {
-        return status == "1st Qtr" || status == "2nd Qtr"
-    }
-    
-    var isQ2: Bool {
-        return status == "2nd Qtr"
-    }
-    
-    var isQ3: Bool {
-        return status == "3rd Qtr"
-    }
-    
-    var isQ4: Bool {
-        return status == "4th Qtr"
+        return status == "1st Qtr" || status == "2nd Qtr" || status == "3rd Qtr" || status == "4th Qtr"
     }
     
     /// Get home team quarter scores as array
