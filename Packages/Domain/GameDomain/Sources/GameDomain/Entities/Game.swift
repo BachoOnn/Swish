@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import Helpers
 
 public struct Game: Identifiable, Hashable {
     public let id: Int
     public let date: String
+    public let dateTime: String
     public let season: Int
     public let status: String
     public let homeTeam: Team
@@ -31,6 +33,7 @@ public struct Game: Identifiable, Hashable {
     public init(
         id: Int,
         date: String,
+        dateTime: String,
         season: Int,
         status: String,
         homeTeam: Team,
@@ -48,6 +51,7 @@ public struct Game: Identifiable, Hashable {
     ) {
         self.id = id
         self.date = date
+        self.dateTime = dateTime
         self.season = season
         self.status = status
         self.homeTeam = homeTeam
@@ -70,24 +74,53 @@ public extension Game {
     /// Formatted date (e.g., "Fri, 17 January")
     var formattedDate: String {
         let isoFormatter = ISO8601DateFormatter()
-        guard let parsedDate = isoFormatter.date(from: date) else {
+        isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        
+        var parsedDate = isoFormatter.date(from: dateTime)
+        
+        if parsedDate == nil {
+            isoFormatter.formatOptions = [.withInternetDateTime]
+            parsedDate = isoFormatter.date(from: dateTime)
+        }
+        
+        if parsedDate == nil {
+            isoFormatter.formatOptions = [.withFullDate]
+            parsedDate = isoFormatter.date(from: dateTime)
+        }
+        
+        if let finalDate = parsedDate {
+            return DateFormatter.displayDateFormatter.string(from: finalDate)
+        }
+        
+        guard let fallbackDate = DateFormatter.apiDateFormatter.date(from: date) else {
             return date
         }
-        let displayFormatter = DateFormatter()
-        displayFormatter.dateFormat = "EEE, d MMMM"
-        return displayFormatter.string(from: parsedDate)
+        
+        return DateFormatter.displayDateFormatter.string(from: fallbackDate)
     }
     
     /// Formatted time (e.g., "5:00 PM")
     var formattedTime: String {
-        let isoFormatter = ISO8601DateFormatter()
-        guard let parsedDate = isoFormatter.date(from: status) else {
-            return ""
+        // For upcoming games, parse the dateTime
+        if isUpcoming {
+            let isoFormatter = ISO8601DateFormatter()
+            isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            
+            var parsedDate = isoFormatter.date(from: dateTime)
+            
+            if parsedDate == nil {
+                isoFormatter.formatOptions = [.withInternetDateTime]
+                parsedDate = isoFormatter.date(from: dateTime)
+            }
+            
+            guard let finalDate = parsedDate else {
+                return ""
+            }
+            
+            return DateFormatter.displayTimeFormatter.string(from: finalDate)
         }
-        let displayFormatter = DateFormatter()
-        displayFormatter.dateFormat = "h:mm a"
-        displayFormatter.timeZone = .current
-        return displayFormatter.string(from: parsedDate)
+        
+        return status
     }
     
     /// Check if game is upcoming
@@ -98,6 +131,10 @@ public extension Game {
     /// Check if game is finished
     var isFinished: Bool {
         return status == "Final"
+    }
+    
+    var isLive: Bool {
+        return status == "1st Qtr" || status == "2nd Qtr" || status == "3rd Qtr" || status == "4th Qtr"
     }
     
     /// Get home team quarter scores as array

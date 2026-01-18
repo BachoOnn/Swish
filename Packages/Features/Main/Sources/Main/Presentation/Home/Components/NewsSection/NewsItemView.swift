@@ -13,15 +13,27 @@ struct NewsItemView: View {
     let imageURL: String
     let title: String
     let source: String
-    let timeAgo: String
+    let time: String
     
     var body: some View {
         HStack(spacing: 12) {
-            Image(imageURL)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 100, height: 80)
-                .roundedCorners(8)
+            AsyncImage(url: URL(string: imageURL)) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                case .failure:
+                    Image(systemName: "basketball.circle.fill")
+                        .foregroundStyle(.gray)
+                @unknown default:
+                    EmptyView()
+                }
+            }
+            .frame(width: 60, height: 60)
+            .roundedCorners(8)
             
             VStack(alignment: .leading, spacing: 6) {
                 Text(title)
@@ -36,7 +48,7 @@ struct NewsItemView: View {
                     Text("•")
                         .foregroundStyle(.gray)
                     
-                    Text(timeAgo)
+                    Text(time)
                         .font(.system(size: 12))
                         .foregroundStyle(.gray)
                 }

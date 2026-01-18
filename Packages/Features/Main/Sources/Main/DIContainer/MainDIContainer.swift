@@ -8,24 +8,27 @@
 import Foundation
 import AuthDomain
 import GameDomain
+import NewsDomain
 
 @MainActor
 public final class MainDIContainer {
     
-    // MARK: - Coordinator
     public let coordinator: MainCoordinator
     private let persistenceRepository: UserPersistenceRepositoryProtocol
     private let authRepository: AuthRepositoryProtocol
     private let gameRepository: GamesRepositoryProtocol
+    private let newsRepository: NewsRepositoryProtocol
     
     public init(
         authRepository: AuthRepositoryProtocol,
         persistenceRepository: UserPersistenceRepositoryProtocol,
-        gameRepository: GamesRepositoryProtocol
+        gameRepository: GamesRepositoryProtocol,
+        newsRepository: NewsRepositoryProtocol
     ) {
         self.authRepository = authRepository
         self.persistenceRepository = persistenceRepository
         self.gameRepository = gameRepository
+        self.newsRepository = newsRepository
         self.coordinator = MainCoordinator()
     }
     
@@ -44,6 +47,10 @@ public final class MainDIContainer {
         DefaultGetGamesUseCase(gamesRepository: gameRepository)
     }
     
+    private func makeGetNewsUseCase() -> DefaultGetNewsUseCase {
+        DefaultGetNewsUseCase(newsRepository: newsRepository)
+    }
+    
     // MARK: - ViewModels
     
     public func makeRootViewModel() -> RootViewModel {
@@ -51,7 +58,7 @@ public final class MainDIContainer {
     }
     
     public func makeHomeViewModel() -> HomeViewModel {
-        HomeViewModel(coordinator: coordinator, getTodayGamesUseCase: makeGetTodayGamesUseCase())
+        HomeViewModel(coordinator: coordinator, getTodayGamesUseCase: makeGetTodayGamesUseCase(), getNewsUseCase: makeGetNewsUseCase())
     }
     
     public func makeGamesViewModel() -> GamesViewModel {

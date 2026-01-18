@@ -16,6 +16,7 @@ struct GamesResponseDTO: Codable {
 struct GameDTO: Codable {
     let id: Int
     let date: String
+    let dateTime: String
     let season: Int
     let status: String
     let homeTeamScore: Int
@@ -40,6 +41,7 @@ struct GameDTO: Codable {
         case visitorTeamScore = "visitor_team_score"
         case homeTeam = "home_team"
         case visitorTeam = "visitor_team"
+        case dateTime = "datetime"
         
         case homeQ1 = "home_q1"
         case homeQ2 = "home_q2"
@@ -81,6 +83,7 @@ extension GameDTO {
         Game(
             id: id,
             date: date,
+            dateTime: dateTime,
             season: season,
             status: status,
             homeTeam: homeTeam.toDomain(),

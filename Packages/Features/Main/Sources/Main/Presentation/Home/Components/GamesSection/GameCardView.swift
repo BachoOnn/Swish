@@ -63,6 +63,21 @@ struct GameCardView: View {
                                         .font(.system(size: 20, weight: .bold))
                                 }
                             }
+                        } else if game.isLive{
+                            VStack {
+                                Text(game.status)
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundStyle(.red)
+                                
+                                HStack {
+                                    Text(String(game.homeTeamScore))
+                                        .font(.system(size: 14, design: .monospaced))
+                                    Text("-")
+                                    
+                                    Text(String(game.visitorTeamScore))
+                                        .font(.system(size: 14, design: .monospaced))
+                                }
+                            }
                         } else {
                             Text(game.formattedTime)
                                 .font(.system(size: 25, weight: .bold))

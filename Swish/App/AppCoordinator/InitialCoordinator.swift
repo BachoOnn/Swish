@@ -64,11 +64,13 @@ final class InitialCoordinator {
         let authRepository = FirebaseAuthRepository(googleSignInService: GoogleSignInService())
         let persistenceRepository = KeychainUserRepository()
         let gameRepository = GamesRepository()
+        let newsRepository = NewsRepository()
         
         let mainDIContainer = MainDIContainer(
             authRepository: authRepository,
             persistenceRepository: persistenceRepository,
-            gameRepository: gameRepository
+            gameRepository: gameRepository,
+            newsRepository: newsRepository
         )
         
         self.mainDIContainer = mainDIContainer

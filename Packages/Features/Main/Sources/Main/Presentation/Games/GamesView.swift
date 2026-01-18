@@ -40,6 +40,9 @@ struct GamesView: View {
                     loadingView
                 } else if let errorMessage = viewModel.errorMessage {
                     errorView(errorMessage)
+                } else if viewModel.games.isEmpty {
+                        Text("No Game For This Day")
+                        .padding(.top, 80)
                 } else {
                     GamesCollectionView(viewModel: viewModel)
                 }
@@ -59,9 +62,9 @@ struct GamesView: View {
     private var loadingView: some View {
         VStack {
             Spacer()
-            ProgressView()
+            CustomProgressView()
                 .progressViewStyle(CircularProgressViewStyle())
-                .scaleEffect(1.5)
+                .scaleEffect(1)
             Text("Loading games...")
                 .font(.subheadline)
                 .foregroundColor(.secondary)

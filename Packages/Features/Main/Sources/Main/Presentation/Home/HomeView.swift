@@ -12,6 +12,8 @@ struct HomeView: View {
     
     @StateObject var viewModel: HomeViewModel
     @State private var scrollID: Int?
+    @State private var hasLoadedOnce = false
+    @State private var selectedNewsURL: URL?
     
     var body: some View {
         ZStack {
@@ -35,8 +37,24 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity)
             }
         }
-        .task {
-            await viewModel.loadTodaysGames()
+        .task(id: hasLoadedOnce) {
+            guard !hasLoadedOnce else { return }
+            async let games: () = viewModel.loadTodaysGames()
+            async let news: () = viewModel.loadNews()
+            
+            _ = await (games, news)
+            hasLoadedOnce = true
+        }
+        .refreshable {
+            Task {
+                async let games: () = viewModel.refreshGames()
+                async let news: () = viewModel.refreshNews()
+                
+                _ = await (games, news)
+            }
+        }
+        .sheet(item: $selectedNewsURL) { url in
+            WebView(url)
         }
     }
 }
@@ -44,17 +62,18 @@ struct HomeView: View {
 extension HomeView {
     private var gameCardSection: some View {
         VStack {
-            if viewModel.isLoading {
+            if viewModel.isGamesLoading {
                 VStack(spacing: 26) {
-                    ProgressView()
+                    CustomProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(1.5)
+                        .scaleEffect(1)
                     
                     Text("Loading today's games...")
                         .font(.subheadline)
                         .foregroundColor(.primary)
                 }
                 .frame(height: 200)
+                .padding(.vertical)
             } else if viewModel.featuredGames.isEmpty {
                 VStack(spacing: 12) {
                     Image(systemName: "basketball.fill")
@@ -108,7 +127,6 @@ extension HomeView {
                 
                 Spacer()
             }
-            
             .padding(.horizontal, 20)
             .padding(.vertical, 20)
             .background(Color.game)
@@ -117,24 +135,23 @@ extension HomeView {
                 .background(Color.gray.opacity(0.3))
             
             LazyVStack(spacing: 0) {
-                ForEach(0..<5) { index in
-                    NewsItemView(
-                        imageURL: "placeholder-news",
-                        title: "Lakers dominate in overtime thriller against Warriors",
-                        source: "ESPN",
-                        timeAgo: "2h ago"
-                    )
-                    .onTapGesture {
-                        print(index.description)
-                    }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 12)
-                    .background(Color.game)
-                    
-                    if index < 4 {
-                        Divider()
-                            .background(Color.gray.opacity(0.3))
-                            .padding(.horizontal, 20)
+                ForEach(Array(viewModel.news.enumerated()), id: \.element.id) { index, news in
+                    if let url = URL(string: news.links.web.href) {
+                            NewsItemView(
+                                imageURL: news.images.first?.url ?? "",
+                                title: news.description,
+                                source: news.type,
+                                time: news.published.toRelativeDate()
+                            )
+                            .onTapGesture {
+                                selectedNewsURL = url
+                            }
+                        
+                        if index < viewModel.news.count - 1 {
+                            Divider()
+                                .background(Color.gray.opacity(0.3))
+                                .padding(.horizontal, 20)
+                        }
                     }
                 }
             }

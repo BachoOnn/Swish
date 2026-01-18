@@ -11,9 +11,17 @@ let package = Package(
             targets: ["GameDomain"]
         ),
     ],
+    dependencies: [
+        .package(path: "../../Core/Helpers"),
+        .package(path: "../../Core/Common"),
+    ],
     targets: [
         .target(
-            name: "GameDomain"
+            name: "GameDomain",
+            dependencies: [
+                "Helpers",
+                "Common"
+            ]
         ),
     ]
 )

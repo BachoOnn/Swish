@@ -29,7 +29,7 @@ extension PlayerView {
     
     var bioSection: some View {
         HStack {
-            Image("LAL", bundle: .common)
+            Image("LAL")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 200, height: 200)
@@ -49,7 +49,7 @@ extension PlayerView {
                 .font(.system(size: 14))
                 .foregroundStyle(.gray)
                 
-                Image("Lakers", bundle: .common)
+                Image("Lakers")
                     .resizable()
                     .frame(width: 70, height: 70)
             }
