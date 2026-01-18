@@ -40,4 +40,22 @@ public final class GamesRepository: GamesRepositoryProtocol {
         let today = DateFormatter.calendarDateString(from: Date())
         return try await fetchGames(date: today)
     }
+    
+    public func fetchBoxScore(gameId: Int) async throws -> [PlayerStats] {
+        let url = "\(baseURL)/stats?game_ids[]=\(gameId)&per_page=100"
+        let response: StatsResponseDTO = try await networkManager.get(
+            urlString: url,
+            headers: headers
+        )
+        return response.data.map { $0.toDomain() }
+    }
+        
+    public func fetchLineups(gameId: Int) async throws -> [Lineup] {
+        let url = "\(baseURL)/lineups?game_ids[]=\(gameId)"
+        let response: LineupsResponseDTO = try await networkManager.get(
+            urlString: url,
+            headers: headers
+        )
+        return response.data.map { $0.toDomain() }
+    }
 }
