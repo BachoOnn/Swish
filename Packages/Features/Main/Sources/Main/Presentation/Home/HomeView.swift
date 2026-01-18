@@ -47,7 +47,10 @@ struct HomeView: View {
         }
         .refreshable {
             Task {
-                await viewModel.refreshGames()
+                async let games: () = viewModel.refreshGames()
+                async let news: () = viewModel.refreshNews()
+                
+                _ = await (games, news)
             }
         }
         .sheet(item: $selectedNewsURL) { url in

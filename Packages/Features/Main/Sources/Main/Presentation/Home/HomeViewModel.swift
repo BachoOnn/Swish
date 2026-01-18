@@ -57,11 +57,7 @@ public final class HomeViewModel: ObservableObject {
         
         isGamesLoading = false
     }
-    
-    func refreshGames() async {
-        await loadTodaysGames()
-    }
-    
+
     var featuredGames: [Game] {
         Array(games.prefix(5))
     }
@@ -76,5 +72,13 @@ public final class HomeViewModel: ObservableObject {
         }
         
         isNewsLoading = false
+    }
+    
+    func refreshGames() async {
+        await loadTodaysGames()
+    }
+    
+    func refreshNews() async {
+        await loadNews()
     }
 }
