@@ -7,6 +7,7 @@
 
 import UIKit
 import Common
+import GameDomain
 
 final class TopPerformersView: UIView {
     
@@ -81,7 +82,7 @@ final class TopPerformersView: UIView {
     }
     
     // MARK: - Configuration
-    func configure(with players: [PlayerGameStats]) {
+    func configure(with players: [PlayerStats]) {
         playerCardsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
         players.forEach { stats in

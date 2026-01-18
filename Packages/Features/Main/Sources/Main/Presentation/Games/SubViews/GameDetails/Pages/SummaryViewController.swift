@@ -102,6 +102,22 @@ class SummaryViewController: UIViewController {
                 self?.startersView.configure(homeLineup: homeLineup, awayLineup: awayLineup)
             }
             .store(in: &cancellables)
+        
+        viewModel.$homeTeamStats
+            .combineLatest(viewModel.$awayTeamStats)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] homeStats, awayStats in
+                let homePlayers = homeStats.filter { $0.didPlay }
+                let awayPlayers = awayStats.filter { $0.didPlay }
+                let allPlayers = homePlayers + awayPlayers
+                
+                let topPerformers = allPlayers
+                    .sorted { $0.pts > $1.pts }
+                    .prefix(3)
+                
+                self?.topPerformersView.configure(with: Array(topPerformers))
+            }
+            .store(in: &cancellables)
     }
     
     func configure(with game: Game, viewModel: GameDetailsViewModel) {
@@ -114,6 +130,7 @@ class SummaryViewController: UIViewController {
         
         Task {
             await viewModel.loadLineups()
+            await viewModel.loadBoxScore()
         }
     }
 }

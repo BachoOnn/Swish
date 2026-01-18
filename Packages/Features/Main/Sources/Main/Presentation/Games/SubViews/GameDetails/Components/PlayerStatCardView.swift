@@ -7,6 +7,7 @@
 
 import UIKit
 import Common
+import GameDomain
 
 final class PlayerStatCardView: UIView {
     
@@ -127,11 +128,12 @@ final class PlayerStatCardView: UIView {
     }
     
     // MARK: - Configuration
-    func configure(with stats: PlayerGameStats) {
-        playerImageView.image = UIImage(named: stats.photoName)
+    func configure(with stats: PlayerStats) {
+        playerImageView.image = UIImage(systemName: "person.circle.fill")
         nameLabel.text = stats.player.fullName
+        let jerseyNumber: String = stats.player.jerseyNumber ?? "N/A"
         
-        teamInfoLabel.text = "\(stats.team.abbreviation) | #\(stats.displayNumber) | \(stats.player.position)"
+        teamInfoLabel.text = "\(stats.team.abbreviation) | #\(jerseyNumber) | \(stats.player.position)"
         
         statsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
