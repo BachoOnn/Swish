@@ -6,29 +6,91 @@
 //
 
 import UIKit
-
-import UIKit
+import GameDomain
+import Combine
 
 class BoxScoreViewController: UIViewController {
     
-    private let label: UILabel = {
-        let label = UILabel()
-        label.text = "Box Score Content Coming Soon"
-        label.textColor = .white
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    // MARK: - Properties
+    weak var viewModel: GameDetailsViewModel?
+    private var cancellables = Set<AnyCancellable>()
+    
+    // MARK: - UI Components
+    
+    private let boxScoreTableView: BoxScoreTableView = {
+        let view = BoxScoreTableView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        setupUI()
+        setupBindings()
+        loadData()
+    }
+    
+    // MARK: - Setup
+    
+    private func setupUI() {
+        view.backgroundColor = .clear
+        view.addSubview(boxScoreTableView)
         
-        view.addSubview(label)
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            view.heightAnchor.constraint(equalToConstant: 300)
+            boxScoreTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            boxScoreTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            boxScoreTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            boxScoreTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    private func setupBindings() {
+        guard let viewModel = viewModel else { return }
+        
+        // Observe loading state
+        viewModel.$isLoadingBoxScore
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLoading in
+                if isLoading {
+                    self?.boxScoreTableView.showLoading()
+                } else {
+                    self?.boxScoreTableView.hideLoading()
+                }
+            }
+            .store(in: &cancellables)
+        
+        // Observe data changes
+        viewModel.$homeTeamStats
+            .combineLatest(viewModel.$awayTeamStats)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] homeStats, awayStats in
+                print("📊 Box Score data updated - Home: \(homeStats.count), Away: \(awayStats.count)")
+                self?.boxScoreTableView.configure(homeStats: homeStats, awayStats: awayStats)
+            }
+            .store(in: &cancellables)
+    }
+    
+    // MARK: - Configuration
+    
+    func configure(with viewModel: GameDetailsViewModel) {
+        self.viewModel = viewModel
+        print("✅ BoxScoreViewController configured with viewModel")
+    }
+    
+    // MARK: - Data Loading
+    
+    private func loadData() {
+        guard let viewModel = viewModel else {
+            print("❌ BoxScoreViewController: viewModel is nil!")
+            return
+        }
+        
+        print("🔄 BoxScoreViewController: Loading box score...")
+        
+        Task {
+            await viewModel.loadBoxScore()
+        }
     }
 }

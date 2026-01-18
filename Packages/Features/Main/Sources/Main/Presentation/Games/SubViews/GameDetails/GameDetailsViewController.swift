@@ -1,7 +1,8 @@
-//  GameDetailsViewController.swift
-//  Swish
 //
-//  Created by Bacho on 10.01.26.
+//  GameDetailsViewController.swift
+//  Main
+//
+//  Created by Bacho on 18.01.26.
 //
 
 import UIKit
@@ -34,21 +35,6 @@ final class GameDetailsViewController: UIViewController {
         let view = GameScoreHeaderView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-    }()
-    
-    private let scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = false
-        return scrollView
-    }()
-    
-    private let contentStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 20
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
     }()
     
     private let segmentedControl: UISegmentedControl = {
@@ -112,25 +98,20 @@ final class GameDetailsViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .systemBackground
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentStackView)
+        view.backgroundColor = .clear
+        view.addSubview(segmentedControl)
+        view.addSubview(pageContainerView)
         
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: customNavigationBar.bottomAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            segmentedControl.topAnchor.constraint(equalTo: customNavigationBar.bottomAnchor, constant: 16),
+            segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            contentStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
-            contentStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            contentStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
-            contentStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20),
-            contentStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32)
+            pageContainerView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16),
+            pageContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            pageContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            pageContainerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
-        
-        contentStackView.addArrangedSubview(segmentedControl)
-        contentStackView.addArrangedSubview(pageContainerView)
         
         segmentedControl.addTarget(self, action: #selector(didChangeSegment), for: .valueChanged)
         
@@ -157,13 +138,15 @@ final class GameDetailsViewController: UIViewController {
         }
         
         let newVC: UIViewController
+        
         if index == 0 {
             let summaryVC = SummaryViewController()
-            summaryVC.configure(with: viewModel.currentGame)
+            summaryVC.configure(with: viewModel.currentGame, viewModel: viewModel)
             newVC = summaryVC
         } else {
-            newVC = BoxScoreViewController()
-            
+            let boxScoreVC = BoxScoreViewController()
+            boxScoreVC.configure(with: viewModel)
+            newVC = boxScoreVC
         }
         
         addChild(newVC)

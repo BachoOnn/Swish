@@ -51,6 +51,14 @@ public final class MainDIContainer {
         DefaultGetNewsUseCase(newsRepository: newsRepository)
     }
     
+    private func makeGetLineupsUseCase() -> DefaultGetGameLineupUseCase {
+        DefaultGetGameLineupUseCase(gameRepository: gameRepository)
+    }
+    
+    private func makeGetBoxScoreUseCase() -> DefaultGetBoxScoreUseCase {
+        DefaultGetBoxScoreUseCase(gameRepository: gameRepository)
+    }
+    
     // MARK: - ViewModels
     
     public func makeRootViewModel() -> RootViewModel {
@@ -87,5 +95,9 @@ public final class MainDIContainer {
     
     public func makeTeamViewModel(team: TeamSeasonAverages) -> TeamViewModel {
         TeamViewModel(team: team)
+    }
+    
+    public func makeGameDetailsViewModel(game: Game) -> GameDetailsViewModel {
+        GameDetailsViewModel(game: game, getLineupUseCase: makeGetLineupsUseCase(), getBoxScoreUseCase: makeGetBoxScoreUseCase())
     }
 }

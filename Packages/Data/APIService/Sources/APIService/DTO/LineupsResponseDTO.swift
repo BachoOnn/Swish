@@ -15,16 +15,19 @@ struct LineupsResponseDTO: Codable {
 
 struct LineupDTO: Codable {
     let id: Int
-    let game: GameReferenceDTO
     let team: TeamDTO
     let starters: [PlayerDTO]
+    
+    enum CodingKeys: String, CodingKey {
+        case id, team, starters
+    }
 }
 
 extension LineupDTO {
     func toDomain() -> Lineup {
         Lineup(
             id: id,
-            game: game.toDomain(),
+            game: nil, 
             team: team.toDomain(),
             starters: starters.map { $0.toDomain() }
         )

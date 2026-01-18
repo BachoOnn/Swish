@@ -39,7 +39,7 @@ public struct RootView: View {
                 case .profile:
                     ProfileView(viewModel: container.makeProfileViewModel())
                 case .gameDetails(let game):
-                    GameDetailsViewControllerWrapper(game: game)
+                    GameDetailsViewControllerWrapper(viewModel: container.makeGameDetailsViewModel(game: game))
                         .navigationBarHidden(true)
                         .navigationBarBackButtonHidden(true)
                         .ignoresSafeArea()

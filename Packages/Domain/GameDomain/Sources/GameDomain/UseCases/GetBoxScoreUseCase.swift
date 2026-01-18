@@ -17,11 +17,9 @@ public struct DefaultGetBoxScoreUseCase: GetBoxScoreUseCase {
         self.gameRepository = gameRepository
     }
     
-    func execute(gameId: Int) async throws -> [PlayerStats] {
+    public func execute(gameId: Int) async throws -> [PlayerStats] {
         let result = try await gameRepository.fetchBoxScore(gameId: gameId)
         
-        return result.sorted { player1, player2 in
-            player1.minFormatted < player2.minFormatted
-        }
+        return result
     }
 }

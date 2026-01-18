@@ -10,10 +10,9 @@ import GameDomain
 
 struct GameDetailsViewControllerWrapper: UIViewControllerRepresentable {
     
-    let game: Game
+    let viewModel: GameDetailsViewModel
 
     func makeUIViewController(context: Context) -> GameDetailsViewController {
-        let viewModel = GameDetailsViewModel(game: game)
         return GameDetailsViewController(viewModel: viewModel)
     }
     

@@ -139,19 +139,20 @@ public extension PlayerStats {
     /// Field Goal Percentage formatted as string
     var fgPctFormatted: String {
         guard let pct = fgPct else { return "-" }
-        return String(format: "%.1f%%", pct * 100)
+        return String(format: "%.0f%%", pct * 100)
     }
+
     
     /// 3-Point Percentage formatted as string
     var fg3PctFormatted: String {
         guard let pct = fg3Pct else { return "-" }
-        return String(format: "%.1f%%", pct * 100)
+        return String(format: "%.0f%%", pct * 100)
     }
     
     /// Free Throw Percentage formatted as string
     var ftPctFormatted: String {
         guard let pct = ftPct else { return "-" }
-        return String(format: "%.1f%%", pct * 100)
+        return String(format: "%.0f%%", pct * 100)
     }
     
     /// Minutes played formatted

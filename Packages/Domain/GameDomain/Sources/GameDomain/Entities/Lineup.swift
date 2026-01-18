@@ -9,13 +9,13 @@ import Foundation
 
 public struct Lineup: Identifiable, Hashable {
     public let id: Int
-    public let game: GameReference
+    public let game: GameReference? 
     public let team: Team
     public let starters: [Player]
     
     public init(
         id: Int,
-        game: GameReference,
+        game: GameReference?,
         team: Team,
         starters: [Player]
     ) {
