@@ -48,9 +48,9 @@ final class BoxScoreTableView: UIView {
     
     private let emptyLabel: UILabel = {
         let label = UILabel()
-        label.text = "Box score not available"
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .secondaryLabel
+        label.text = "Box score is not available yet"
+        label.font = .systemFont(ofSize: 24, weight: .semibold)
+        label.textColor = .gray
         label.textAlignment = .center
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -173,7 +173,7 @@ final class BoxScoreTableView: UIView {
     
     private func createTeamSection(teamName: String, stats: [PlayerStats]) -> UIView {
         let container = UIView()
-        container.backgroundColor = .secondarySystemBackground
+        container.backgroundColor = .game
         container.layer.cornerRadius = 12
         
         let teamLabel = UILabel()
@@ -231,18 +231,18 @@ final class BoxScoreTableView: UIView {
         let row = UIStackView()
         row.axis = .horizontal
         row.spacing = 0
-        row.backgroundColor = .tertiarySystemBackground
+        row.backgroundColor = .game
         
         let headers = ["PLAYER", "MIN", "PTS", "REB", "AST", "FG%", "3P%", "FT%", "STL", "BLK", "TO"]
-        let widths: [CGFloat] = [120, 45, 40, 40, 40, 50, 50, 50, 40, 40, 40]
+        let widths: [CGFloat] = [140, 45, 40, 40, 40, 50, 50, 50, 40, 40, 40]
         
         for (index, header) in headers.enumerated() {
             let container = UIView()
-            container.backgroundColor = .tertiarySystemBackground
+            container.backgroundColor = .game
             
             let label = UILabel()
             label.text = header
-            label.font = .systemFont(ofSize: 11, weight: .bold)
+            label.font = .systemFont(ofSize: 10, weight: .bold)
             label.textColor = .secondaryLabel
             label.textAlignment = index == 0 ? .left : .center
             label.translatesAutoresizingMaskIntoConstraints = false
@@ -287,7 +287,7 @@ final class BoxScoreTableView: UIView {
             "\(stat.turnover)"
         ]
         
-        let widths: [CGFloat] = [120, 45, 40, 40, 40, 50, 50, 50, 40, 40, 40]
+        let widths: [CGFloat] = [140, 45, 40, 40, 40, 50, 50, 50, 40, 40, 40]
         
         for (index, value) in values.enumerated() {
             let container = UIView()
@@ -295,7 +295,7 @@ final class BoxScoreTableView: UIView {
             
             let label = UILabel()
             label.text = value
-            label.font = .systemFont(ofSize: index == 0 ? 13 : 12, weight: index == 0 ? .semibold : .regular)
+            label.font = .systemFont(ofSize: index == 0 ? 14 : 12, weight: index == 0 ? .semibold : .regular)
             label.textColor = .label
             label.textAlignment = index == 0 ? .left : .center
             label.translatesAutoresizingMaskIntoConstraints = false

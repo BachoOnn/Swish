@@ -52,7 +52,7 @@ final class StartersView: UIView {
         let label = UILabel()
         label.text = "Starting lineups is not available yet"
         label.font = .systemFont(ofSize: 14)
-        label.textColor = .secondaryLabel
+        label.textColor = .gray
         label.textAlignment = .center
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -95,7 +95,7 @@ final class StartersView: UIView {
             containerStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             
             loadingIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
-            loadingIndicator.centerYAnchor.constraint(equalTo: centerYAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 20),
             
             emptyLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             emptyLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 20),
@@ -118,12 +118,9 @@ final class StartersView: UIView {
     
     func configure(homeLineup: Lineup?, awayLineup: Lineup?) {
         hideLoading()
-        
-        // Clear old views
         homeTeamContainer.subviews.forEach { $0.removeFromSuperview() }
         awayTeamContainer.subviews.forEach { $0.removeFromSuperview() }
         
-        // Check if we have any lineups
         guard homeLineup != nil || awayLineup != nil else {
             showEmptyState()
             return
@@ -132,7 +129,6 @@ final class StartersView: UIView {
         containerStackView.isHidden = false
         emptyLabel.isHidden = true
         
-        // Configure home team
         if let lineup = homeLineup {
             let teamView = createTeamLineupView(lineup: lineup)
             homeTeamContainer.addSubview(teamView)
@@ -145,7 +141,6 @@ final class StartersView: UIView {
             ])
         }
         
-        // Configure away team
         if let lineup = awayLineup {
             let teamView = createTeamLineupView(lineup: lineup)
             awayTeamContainer.addSubview(teamView)
@@ -167,14 +162,12 @@ final class StartersView: UIView {
         stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        // Team name label
         let teamLabel = UILabel()
         teamLabel.text = lineup.team.fullName
         teamLabel.font = .systemFont(ofSize: 16, weight: .semibold)
         teamLabel.textColor = .label
         stackView.addArrangedSubview(teamLabel)
         
-        // Add each starter
         for starter in lineup.starters {
             let playerView = createPlayerRow(player: starter)
             stackView.addArrangedSubview(playerView)
