@@ -73,7 +73,7 @@ public final class GamesViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         
-        let dateString = DateFormatter.apiDateFormatter.string(from: date)
+        let dateString = DateFormatter.calendarDateString(from: date)
         
         do {
             games = try await getGamesUseCase.execute(date: dateString)

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Helpers
 
 public struct Game: Identifiable, Hashable {
     public let id: Int
@@ -87,28 +88,39 @@ public extension Game {
             parsedDate = isoFormatter.date(from: dateTime)
         }
         
-        guard let finalDate = parsedDate else {
-            return dateTime
+        if let finalDate = parsedDate {
+            return DateFormatter.displayDateFormatter.string(from: finalDate)
         }
         
-        let displayFormatter = DateFormatter()
-        displayFormatter.timeZone = TimeZone(identifier: "Asia/Tbilisi")
-        displayFormatter.locale = Locale(identifier: "en_US")
-        displayFormatter.dateFormat = "EEE, d MMMM"
+        guard let fallbackDate = DateFormatter.apiDateFormatter.date(from: date) else {
+            return date
+        }
         
-        return displayFormatter.string(from: finalDate)
+        return DateFormatter.displayDateFormatter.string(from: fallbackDate)
     }
     
     /// Formatted time (e.g., "5:00 PM")
     var formattedTime: String {
-        let isoFormatter = ISO8601DateFormatter()
-        guard let parsedDate = isoFormatter.date(from: status) else {
-            return ""
+        // For upcoming games, parse the dateTime
+        if isUpcoming {
+            let isoFormatter = ISO8601DateFormatter()
+            isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            
+            var parsedDate = isoFormatter.date(from: dateTime)
+            
+            if parsedDate == nil {
+                isoFormatter.formatOptions = [.withInternetDateTime]
+                parsedDate = isoFormatter.date(from: dateTime)
+            }
+            
+            guard let finalDate = parsedDate else {
+                return ""
+            }
+            
+            return DateFormatter.displayTimeFormatter.string(from: finalDate)
         }
-        let displayFormatter = DateFormatter()
-        displayFormatter.dateFormat = "h:mm a"
-        displayFormatter.timeZone = .current
-        return displayFormatter.string(from: parsedDate)
+        
+        return status
     }
     
     /// Check if game is upcoming

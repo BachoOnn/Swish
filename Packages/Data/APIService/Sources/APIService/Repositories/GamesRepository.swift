@@ -37,7 +37,7 @@ public final class GamesRepository: GamesRepositoryProtocol {
     }
     
     public func fetchTodaysGames() async throws -> [Game] {
-        let today = DateFormatter.apiDateFormatter.string(from: Date())
+        let today = DateFormatter.calendarDateString(from: Date())
         return try await fetchGames(date: today)
     }
 }
