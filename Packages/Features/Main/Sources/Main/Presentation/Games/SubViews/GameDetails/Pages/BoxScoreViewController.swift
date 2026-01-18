@@ -49,7 +49,6 @@ class BoxScoreViewController: UIViewController {
     private func setupBindings() {
         guard let viewModel = viewModel else { return }
         
-        // Observe loading state
         viewModel.$isLoadingBoxScore
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isLoading in
@@ -61,12 +60,10 @@ class BoxScoreViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        // Observe data changes
         viewModel.$homeTeamStats
             .combineLatest(viewModel.$awayTeamStats)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] homeStats, awayStats in
-                print("📊 Box Score data updated - Home: \(homeStats.count), Away: \(awayStats.count)")
                 self?.boxScoreTableView.configure(homeStats: homeStats, awayStats: awayStats)
             }
             .store(in: &cancellables)
@@ -76,18 +73,12 @@ class BoxScoreViewController: UIViewController {
     
     func configure(with viewModel: GameDetailsViewModel) {
         self.viewModel = viewModel
-        print("✅ BoxScoreViewController configured with viewModel")
     }
     
     // MARK: - Data Loading
     
     private func loadData() {
-        guard let viewModel = viewModel else {
-            print("❌ BoxScoreViewController: viewModel is nil!")
-            return
-        }
-        
-        print("🔄 BoxScoreViewController: Loading box score...")
+        guard let viewModel = viewModel else { return }
         
         Task {
             await viewModel.loadBoxScore()

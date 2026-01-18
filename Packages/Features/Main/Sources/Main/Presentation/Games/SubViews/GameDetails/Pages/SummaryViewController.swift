@@ -53,6 +53,7 @@ class SummaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        topPerformersView.showLoading()
         setupBindings()
         loadData()
     }
@@ -103,6 +104,17 @@ class SummaryViewController: UIViewController {
             }
             .store(in: &cancellables)
         
+        viewModel.$isLoadingBoxScore
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLoading in
+                if isLoading {
+                    self?.topPerformersView.showLoading()
+                } else {
+                    self?.topPerformersView.hideLoading()
+                }
+            }
+            .store(in: &cancellables)
+        
         viewModel.$homeTeamStats
             .combineLatest(viewModel.$awayTeamStats)
             .receive(on: DispatchQueue.main)
@@ -127,10 +139,11 @@ class SummaryViewController: UIViewController {
     
     private func loadData() {
         guard let viewModel = viewModel else { return }
-        
         Task {
-            await viewModel.loadLineups()
-            await viewModel.loadBoxScore()
+            async let lineup: () = viewModel.loadLineups()
+            async let boxScore: () = viewModel.loadBoxScore()
+            
+            _ = await (lineup, boxScore)
         }
     }
 }

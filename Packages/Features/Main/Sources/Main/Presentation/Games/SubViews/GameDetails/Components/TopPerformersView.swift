@@ -29,13 +29,37 @@ final class TopPerformersView: UIView {
         return stack
     }()
     
-    
     private let playerCardsStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 1
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
+    }()
+    
+    private let loadingContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.color = .label
+        return indicator
+    }()
+    
+    private let loadingLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Loading top performers..."
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.textColor = .secondaryLabel
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     private lazy var separatorLine = CustomElements.createSeparator()
@@ -69,8 +93,24 @@ final class TopPerformersView: UIView {
             titleLabel.bottomAnchor.constraint(equalTo: titleContainer.bottomAnchor, constant: -16)
         ])
         
+        loadingContainerView.addSubview(loadingIndicator)
+        loadingContainerView.addSubview(loadingLabel)
+        
+        NSLayoutConstraint.activate([
+            loadingContainerView.heightAnchor.constraint(equalToConstant: 120),
+            
+            loadingIndicator.centerXAnchor.constraint(equalTo: loadingContainerView.centerXAnchor),
+            loadingIndicator.topAnchor.constraint(equalTo: loadingContainerView.topAnchor, constant: 20),
+            
+            loadingLabel.centerXAnchor.constraint(equalTo: loadingContainerView.centerXAnchor),
+            loadingLabel.topAnchor.constraint(equalTo: loadingIndicator.bottomAnchor, constant: 12),
+            loadingLabel.leadingAnchor.constraint(equalTo: loadingContainerView.leadingAnchor, constant: 16),
+            loadingLabel.trailingAnchor.constraint(equalTo: loadingContainerView.trailingAnchor, constant: -16)
+        ])
+        
         containerStackView.addArrangedSubview(titleContainer)
         containerStackView.addArrangedSubview(separatorLine)
+        containerStackView.addArrangedSubview(loadingContainerView)
         containerStackView.addArrangedSubview(playerCardsStackView)
         
         NSLayoutConstraint.activate([
@@ -79,11 +119,31 @@ final class TopPerformersView: UIView {
             containerStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             containerStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        
+        loadingContainerView.isHidden = true
+        playerCardsStackView.isHidden = false
+    }
+    
+    // MARK: - Public Methods
+    
+    func showLoading() {
+        loadingIndicator.startAnimating()
+        loadingContainerView.isHidden = false
+        playerCardsStackView.isHidden = true
+    }
+    
+    func hideLoading() {
+        loadingIndicator.stopAnimating()
+        loadingContainerView.isHidden = true
+        playerCardsStackView.isHidden = false
     }
     
     // MARK: - Configuration
     func configure(with players: [PlayerStats]) {
+        hideLoading()
         playerCardsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        guard !players.isEmpty else { return }
         
         players.forEach { stats in
             let cardView = PlayerStatCardView()
