@@ -11,6 +11,7 @@ import Helpers
 final class GameDetailsViewController: UIViewController {
     
     private let viewModel: GameDetailsViewModel
+    private var currentPageViewController: UIViewController?
     
     // MARK: - UI Components
     
@@ -50,16 +51,16 @@ final class GameDetailsViewController: UIViewController {
         return stack
     }()
     
-    private let quarterScoresView: QuarterScoresView = {
-        let view = QuarterScoresView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 10
-        view.clipsToBounds = true
-        return view
+    private let segmentedControl: UISegmentedControl = {
+        let sc = UISegmentedControl(items: ["Summary", "Box Score"])
+        sc.selectedSegmentIndex = 0
+        sc.setTitleTextAttributes([.foregroundColor: UIColor.label], for: .selected)
+        sc.translatesAutoresizingMaskIntoConstraints = false
+        return sc
     }()
     
-    private let topPerformersView: TopPerformersView = {
-        let view = TopPerformersView()
+    private let pageContainerView: UIView = {
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -90,7 +91,6 @@ final class GameDetailsViewController: UIViewController {
         customNavigationBar.addSubview(gameScoreHeaderView)
         
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        
         
         NSLayoutConstraint.activate([
             customNavigationBar.topAnchor.constraint(equalTo: view.topAnchor),
@@ -129,8 +129,12 @@ final class GameDetailsViewController: UIViewController {
             contentStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32)
         ])
         
-        contentStackView.addArrangedSubview(quarterScoresView)
-        contentStackView.addArrangedSubview(topPerformersView)
+        contentStackView.addArrangedSubview(segmentedControl)
+        contentStackView.addArrangedSubview(pageContainerView)
+        
+        segmentedControl.addTarget(self, action: #selector(didChangeSegment), for: .valueChanged)
+        
+        displayPage(index: 0)
     }
     
     @objc private func backButtonTapped() {
@@ -139,7 +143,41 @@ final class GameDetailsViewController: UIViewController {
     
     private func configureViews() {
         gameScoreHeaderView.configure(with: viewModel.currentGame)
-        quarterScoresView.configure(with: viewModel.currentGame)
-//        topPerformersView.configure(with: viewModel.topPerformers)
+    }
+    
+    @objc private func didChangeSegment(_ sender: UISegmentedControl) {
+        displayPage(index: sender.selectedSegmentIndex)
+    }
+    
+    private func displayPage(index: Int) {
+        if let currentVC = currentPageViewController {
+            currentVC.willMove(toParent: nil)
+            currentVC.view.removeFromSuperview()
+            currentVC.removeFromParent()
+        }
+        
+        let newVC: UIViewController
+        if index == 0 {
+            let summaryVC = SummaryViewController()
+            summaryVC.configure(with: viewModel.currentGame)
+            newVC = summaryVC
+        } else {
+            newVC = BoxScoreViewController()
+            
+        }
+        
+        addChild(newVC)
+        pageContainerView.addSubview(newVC.view)
+        newVC.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            newVC.view.topAnchor.constraint(equalTo: pageContainerView.topAnchor),
+            newVC.view.leadingAnchor.constraint(equalTo: pageContainerView.leadingAnchor),
+            newVC.view.trailingAnchor.constraint(equalTo: pageContainerView.trailingAnchor),
+            newVC.view.bottomAnchor.constraint(equalTo: pageContainerView.bottomAnchor)
+        ])
+        
+        newVC.didMove(toParent: self)
+        currentPageViewController = newVC
     }
 }
