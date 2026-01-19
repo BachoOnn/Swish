@@ -11,7 +11,6 @@ import Common
 struct SearchView: View {
     
     @StateObject var viewModel: SearchViewModel
-    @State var searchText: String = ""
     @FocusState var searchIsFocused: Bool
     @State private var hasLoadedOnce = false
     
@@ -24,11 +23,10 @@ struct SearchView: View {
             
             VStack {
                 SearchBarView(
-                    searchText: $searchText,
+                    searchText: $viewModel.searchText,
                     isKeyboardFocused: $searchIsFocused
                 )
                 pickerSection
-                
             }
         }
         .task(id: hasLoadedOnce) {
@@ -36,7 +34,6 @@ struct SearchView: View {
             await viewModel.loadTeams()
             hasLoadedOnce = true
         }
-        
         .refreshable {
             Task {
                 await viewModel.loadTeams()
@@ -45,59 +42,3 @@ struct SearchView: View {
     }
 }
 
-extension SearchView {
-    var pickerSection: some View {
-        VStack(spacing: 20) {
-            Picker("", selection: $viewModel.selectedSide) {
-                ForEach(SearchPickerSide.allCases, id: \.self) {
-                    Text($0.rawValue)
-                }
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding(.horizontal)
-            .padding(.vertical, 5)
-            
-            switch viewModel.selectedSide {
-            case .Teams:
-                if viewModel.isLoading {
-                    VStack {
-                        CustomProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                            .scaleEffect(1)
-                        
-                        Text("Loading Teams...")
-                            .fontDesign(.monospaced)
-                        
-                        Spacer()
-                    }
-                    
-                } else {
-                    ScrollView {
-                        LazyVStack(spacing: 20) {
-                            ForEach(viewModel.teams, id: \.self) { team in
-                                TeamCellView(team: team)
-                                    .frame(width: 380, height: 80)
-                                    .onTapGesture {
-                                        viewModel.navigateToTeam(team)
-                                    }
-                            }
-                        }
-                    }
-                }
-                
-            case .Players:
-                ScrollView {
-                    LazyVStack(spacing: 20) {
-                        ForEach(viewModel.players, id: \.self) { player in
-                            PlayerCellView(player: player)
-                                .frame(width: 380, height: 80)
-                                .onTapGesture {
-                                    viewModel.navigateToPlayer(player)
-                                }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
