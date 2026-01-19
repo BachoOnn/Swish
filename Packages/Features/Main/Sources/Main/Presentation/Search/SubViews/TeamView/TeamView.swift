@@ -26,17 +26,12 @@ struct TeamView: View {
                     
                     keyStatsSection
                     
-                    shootingChartsSection
-                    
-                    leagueRankingsSection
+//                    shootingChartsSection
+//                    
+//                    leagueRankingsSection
                     
                 }
             }
         }
     }
-}
-
-
-#Preview {
-    TeamView(viewModel: TeamViewModel(team: .lakersMock))
 }

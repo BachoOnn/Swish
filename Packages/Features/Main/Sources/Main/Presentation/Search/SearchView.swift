@@ -13,6 +13,7 @@ struct SearchView: View {
     @StateObject var viewModel: SearchViewModel
     @State var searchText: String = ""
     @FocusState var searchIsFocused: Bool
+    @State private var hasLoadedOnce = false
     
     var body: some View {
         ZStack {
@@ -28,6 +29,17 @@ struct SearchView: View {
                 )
                 pickerSection
                 
+            }
+        }
+        .task(id: hasLoadedOnce) {
+            guard !hasLoadedOnce else { return }
+            await viewModel.loadTeams()
+            hasLoadedOnce = true
+        }
+        
+        .refreshable {
+            Task {
+                await viewModel.loadTeams()
             }
         }
     }
@@ -47,14 +59,22 @@ extension SearchView {
             
             switch viewModel.selectedSide {
             case .Teams:
-                ScrollView {
-                    LazyVStack(spacing: 20) {
-                        ForEach(viewModel.teams, id: \.self) { team in
-                            TeamCellView(team: team)
-                                .frame(width: 380, height: 80)
-                                .onTapGesture {
-                                    viewModel.navigateToTeam(team)
-                                }
+                if viewModel.isLoading {
+                    CustomProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(1)
+                    Spacer()
+                    
+                } else {
+                    ScrollView {
+                        LazyVStack(spacing: 20) {
+                            ForEach(viewModel.teams, id: \.self) { team in
+                                TeamCellView(team: team)
+                                    .frame(width: 380, height: 80)
+                                    .onTapGesture {
+                                        viewModel.navigateToTeam(team)
+                                    }
+                            }
                         }
                     }
                 }
@@ -74,8 +94,4 @@ extension SearchView {
             }
         }
     }
-}
-
-#Preview {
-    SearchView(viewModel: SearchViewModel(coordinator: MainCoordinator()))
 }

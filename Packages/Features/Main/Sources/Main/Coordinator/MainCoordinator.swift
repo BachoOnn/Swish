@@ -7,6 +7,7 @@
 import UIKit
 import Combine
 import GameDomain
+import TeamDomain
 
 public final class MainCoordinator: MainCoordinatorProtocol {
     
@@ -34,7 +35,7 @@ public final class MainCoordinator: MainCoordinatorProtocol {
         navigationPath.append(.player(player))
     }
     
-    public func navigateToTeam(_ team: TeamSeasonAverages) {  
+    public func navigateToTeam(_ team: TeamDomain.Team) {
         navigationPath.append(.team(team))
     }
     

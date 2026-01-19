@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TeamDomain
 
 struct PlayerCellView: UIViewRepresentable {
     
@@ -24,7 +25,7 @@ struct PlayerCellView: UIViewRepresentable {
 
 struct TeamCellView: UIViewRepresentable {
     
-    let team: TeamSeasonAverages
+    let team: Team
     
     func makeUIView(context: Context) -> TeamCell {
         let cell = TeamCell()

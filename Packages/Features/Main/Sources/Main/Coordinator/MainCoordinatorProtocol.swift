@@ -7,6 +7,7 @@
 
 import Foundation
 import GameDomain
+import TeamDomain
 
 public protocol MainCoordinatorProtocol: ObservableObject {
     var navigationPath: [AppRoute] { get set }
@@ -14,7 +15,7 @@ public protocol MainCoordinatorProtocol: ObservableObject {
     func navigateToProfile()
     func navigateToGameDetails(game: Game)
     func navigateToPlayer(_ player: PlayerSeasonAverages) 
-    func navigateToTeam(_ team: TeamSeasonAverages)
+    func navigateToTeam(_ team: TeamDomain.Team)
     func navigateBack()
     func signOut()
 }

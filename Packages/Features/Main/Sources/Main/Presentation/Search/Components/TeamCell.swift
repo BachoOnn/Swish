@@ -7,6 +7,7 @@
 
 import UIKit
 import Common
+import TeamDomain
 
 final class TeamCell: UIView {
     
@@ -91,18 +92,12 @@ final class TeamCell: UIView {
     }
     
     // MARK: - Configuration
-    func configure(with team: TeamSeasonAverages) {
-        let image = UIImage(named: team.team.name, in: .common, with: .none)
+    func configure(with team: Team) {
+        let image = UIImage(named: team.name)
         teamImageView.image = image ?? UIImage(systemName: "basketball")
         
-        teamNameLabel.text =  team.team.fullName
-        locationLabel.text = "\(team.team.city), \(team.team.name)"
-        conferenceLabel.text = "\(team.team.conference) • \(team.team.division)"
+        teamNameLabel.text =  team.fullName
+        locationLabel.text = "\(team.city), \(team.name)"
+        conferenceLabel.text = "\(team.conference) • \(team.division)"
     }
-}
-
-#Preview {
-    let cell = TeamCell()
-    cell.configure(with: .lakersMock)
-    return cell
 }

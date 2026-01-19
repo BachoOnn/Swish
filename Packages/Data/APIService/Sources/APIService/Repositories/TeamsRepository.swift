@@ -28,7 +28,7 @@ public final class TeamsRepository: TeamsRepositoryProtocol {
     
     public func fetchAllTeams() async throws -> [Team] {
         let url = "\(baseURL)/teams"
-        let response: TeamResponseDTO = try await networkManager.get(urlString: url)
+        let response: TeamResponseDTO = try await networkManager.get(urlString: url, headers: headers)
         return response.data.map { $0.toDomain() }
     }
 }

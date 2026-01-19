@@ -6,13 +6,14 @@
 //
 
 import Combine
+import TeamDomain
 
 public final class TeamViewModel: ObservableObject {
     
-    @Published var team: TeamSeasonAverages
+    @Published var team: Team
     @Published var isFavorite: Bool = false
     
-    public init(team: TeamSeasonAverages) {
+    public init(team: Team) {
         self.team = team
     }
     
