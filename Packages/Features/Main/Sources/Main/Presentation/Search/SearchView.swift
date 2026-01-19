@@ -60,10 +60,16 @@ extension SearchView {
             switch viewModel.selectedSide {
             case .Teams:
                 if viewModel.isLoading {
-                    CustomProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(1)
-                    Spacer()
+                    VStack {
+                        CustomProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(1)
+                        
+                        Text("Loading Teams...")
+                            .fontDesign(.monospaced)
+                        
+                        Spacer()
+                    }
                     
                 } else {
                     ScrollView {

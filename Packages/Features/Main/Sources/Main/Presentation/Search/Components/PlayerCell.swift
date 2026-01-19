@@ -88,8 +88,7 @@ final class PlayerCell: UIView {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            heightAnchor.constraint(equalToConstant: 80),
-            widthAnchor.constraint(equalToConstant: 350)
+            heightAnchor.constraint(equalToConstant: 80)
         ])
     }
     

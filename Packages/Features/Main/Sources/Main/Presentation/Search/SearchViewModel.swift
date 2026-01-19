@@ -39,7 +39,6 @@ public final class SearchViewModel: ObservableObject {
         
         do {
             teams = try await getTeamsUseCase.execute()
-            print(teams.count)
         } catch {
             errorMessage = error.localizedDescription
             teams = []
