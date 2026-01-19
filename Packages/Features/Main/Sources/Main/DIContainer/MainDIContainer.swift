@@ -79,6 +79,10 @@ public final class MainDIContainer {
         DefaultGetPlayerUseCase(playersRepository: playersRepository)
     }
     
+    private func makeGetPlayersStatsUseCase() -> DefaultGetPlayerStatsUseCase {
+        DefaultGetPlayerStatsUseCase(playersRepository: playersRepository)
+    }
+    
     // MARK: - ViewModels
     
     public func makeRootViewModel() -> RootViewModel {
@@ -109,8 +113,8 @@ public final class MainDIContainer {
         SearchViewModel(coordinator: coordinator, getTeamsUseCase: makeGetTeamsUseCase(), getPlayersUseCase: makeGetPlayersUseCase())
     }
     
-    public func makePlayerViewModel(player: PlayerSeasonAverages) -> PlayerViewModel {
-        PlayerViewModel(player: player)
+    public func makePlayerViewModel(player: PlayerDomain.Player) -> PlayerViewModel {
+        PlayerViewModel(player: player, getPlayerStatsUseCase: makeGetPlayersStatsUseCase())
     }
     
     public func makeTeamViewModel(team: TeamDomain.Team) -> TeamViewModel {

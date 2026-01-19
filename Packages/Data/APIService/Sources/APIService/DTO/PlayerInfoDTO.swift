@@ -25,7 +25,7 @@ public struct PlayerDTO: Codable {
     let draftYear: Int?
     let draftRound: Int?
     let draftNumber: Int?
-    let team: PlayerTeamInfoDTO
+    let team: PlayerTeamInfoDTO?
     
     enum CodingKeys: String, CodingKey {
         case id, team
@@ -84,7 +84,15 @@ extension PlayerDTO {
             draftYear: draftYear,
             draftRound: draftRound,
             draftNumber: draftNumber,
-            team: team.toDomain()
+            team: team?.toDomain() ?? PlayerTeamInfo(
+                id: 0,
+                conference: "",
+                division: "",
+                city: "",
+                name: "",
+                fullName: "",
+                abbreviation: ""
+            )
         )
     }
 }

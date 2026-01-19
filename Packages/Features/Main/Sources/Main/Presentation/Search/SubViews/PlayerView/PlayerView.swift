@@ -26,7 +26,3 @@ struct PlayerView: View {
         }
     }
 }
-
-#Preview {
-    PlayerView(viewModel: PlayerViewModel(player: .lebronMock))
-}

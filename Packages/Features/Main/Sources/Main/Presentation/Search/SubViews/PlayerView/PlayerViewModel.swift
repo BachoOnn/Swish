@@ -6,15 +6,23 @@
 //
 
 import Combine
+import PlayerDomain
 
+@MainActor
 public final class PlayerViewModel: ObservableObject {
     
     @Published var isFavorite: Bool = false
     @Published var selectedSide: PlayerPickerSide = .Profile
-    @Published var player: PlayerSeasonAverages
+    @Published var player: Player
+    @Published var playerStats: PlayerSeasonStats?
+    @Published var isLoadingStats: Bool = false
+    @Published var errorMessage: String?
     
-    public init(player: PlayerSeasonAverages) {
+    private let getPlayerStatsUseCase: DefaultGetPlayerStatsUseCase
+    
+    public init(player: Player, getPlayerStatsUseCase: DefaultGetPlayerStatsUseCase) {
         self.player = player
+        self.getPlayerStatsUseCase = getPlayerStatsUseCase
     }
     
     func toggleFavorite() {
@@ -24,21 +32,34 @@ public final class PlayerViewModel: ObservableObject {
         isFavorite.toggle()
     }
     
+    func fetchPlayerStats() async {
+        isLoadingStats = true
+        errorMessage = nil
+        
+        do {
+            playerStats = try await getPlayerStatsUseCase.execute(id: player.id)
+            print("Stats fetched successfully: \(playerStats?.pts ?? 0)") 
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+        
+        isLoadingStats = false
+    }
+    
     var playerName: String {
-        "\(player.player.firstName) \(player.player.lastName)"
+        "\(player.firstName) \(player.lastName)"
     }
     
     var number: String {
-        "№ \(player.player.jerseyNumber ?? "N")"
+        "№ \(player.jerseyNumber ?? "N")"
     }
     
     var position: String {
-        "Position: \(player.player.position)"
+        "Position: \(player.position)"
     }
     
     var team: String {
-        // TODO: find a way to bring team name
-        ""
+        player.team.name
     }
 
 }

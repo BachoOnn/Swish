@@ -7,10 +7,11 @@
 
 import GameDomain
 import TeamDomain
+import PlayerDomain
 
 public enum AppRoute: Hashable, Equatable {
     case profile
     case gameDetails(Game)
-    case player(PlayerSeasonAverages)
+    case player(PlayerDomain.Player)
     case team(TeamDomain.Team)
 }
