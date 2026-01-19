@@ -19,7 +19,6 @@ public struct Game: Identifiable, Hashable {
     public let homeTeamScore: Int
     public let visitorTeamScore: Int
     
-    // Quarter scores
     public let homeQ1: Int?
     public let homeQ2: Int?
     public let homeQ3: Int?
