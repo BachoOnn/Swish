@@ -14,12 +14,10 @@ extension HomeView {
             if viewModel.isGamesLoading {
                 VStack(spacing: 26) {
                     CustomProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(1)
                     
                     Text("Loading today's games...")
                         .font(.subheadline)
-                        .foregroundColor(.primary)
+                        .fontDesign(.monospaced)
                 }
                 .frame(height: 200)
                 .padding(.vertical)

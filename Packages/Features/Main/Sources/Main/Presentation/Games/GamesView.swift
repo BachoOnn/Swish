@@ -58,22 +58,18 @@ struct GamesView: View {
         }
     }
     
-    // MARK: - Loading View
     private var loadingView: some View {
         VStack {
             Spacer()
             CustomProgressView()
-                .progressViewStyle(CircularProgressViewStyle())
-                .scaleEffect(1)
             Text("Loading games...")
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .fontDesign(.monospaced)
                 .padding(.top, 8)
             Spacer()
         }
     }
     
-    // MARK: - Error View
     private func errorView(_ message: String) -> some View {
         VStack(spacing: 16) {
             Spacer()

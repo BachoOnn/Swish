@@ -25,10 +25,9 @@ extension SearchView {
                 if viewModel.isLoading {
                     VStack {
                         CustomProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                            .scaleEffect(1)
                         
                         Text("Loading Teams...")
+                            .font(.subheadline)
                             .fontDesign(.monospaced)
                         
                         Spacer()
