@@ -108,9 +108,7 @@ public final class SearchViewModel: ObservableObject {
     }
     
     func navigateToPlayer(_ player: Player) {
-        // TODO: Update coordinator to accept Player instead of PlayerSeasonAverages
-        // coordinator?.navigateToPlayer(player)
-        print("🏀 Navigate to player: \(player.firstName) \(player.lastName) id: \(player.id)")
+         coordinator?.navigateToPlayer(player)
     }
     
     func navigateToTeam(_ team: Team) {

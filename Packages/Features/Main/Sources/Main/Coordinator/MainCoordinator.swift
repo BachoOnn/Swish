@@ -8,9 +8,10 @@ import UIKit
 import Combine
 import GameDomain
 import TeamDomain
+import PlayerDomain
 
 public final class MainCoordinator: MainCoordinatorProtocol {
-    
+
     @Published public var navigationPath: [AppRoute] = []
     
     public var onSignOut: (() -> Void)?
@@ -25,7 +26,7 @@ public final class MainCoordinator: MainCoordinatorProtocol {
         navigationPath.append(.gameDetails(game))
     }
     
-    public func navigateToPlayer(_ player: PlayerSeasonAverages) {
+    public func navigateToPlayer(_ player: PlayerDomain.Player) {
         navigationPath.append(.player(player))
     }
     

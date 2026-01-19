@@ -109,7 +109,7 @@ public final class MainDIContainer {
         SearchViewModel(coordinator: coordinator, getTeamsUseCase: makeGetTeamsUseCase(), getPlayersUseCase: makeGetPlayersUseCase())
     }
     
-    public func makePlayerViewModel(player: PlayerSeasonAverages) -> PlayerViewModel {
+    public func makePlayerViewModel(player: PlayerDomain.Player) -> PlayerViewModel {
         PlayerViewModel(player: player)
     }
     

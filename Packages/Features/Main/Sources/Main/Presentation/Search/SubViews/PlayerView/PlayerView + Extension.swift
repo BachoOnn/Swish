@@ -29,7 +29,7 @@ extension PlayerView {
     
     var bioSection: some View {
         HStack {
-            Image("LAL")
+            Image(viewModel.player.team.abbreviation)  // TODO: use kingfisher here later
                 .resizable()
                 .scaledToFit()
                 .frame(width: 200, height: 200)
@@ -49,7 +49,7 @@ extension PlayerView {
                 .font(.system(size: 14))
                 .foregroundStyle(.gray)
                 
-                Image("Lakers")
+                Image(viewModel.team)
                     .resizable()
                     .frame(width: 70, height: 70)
             }
@@ -71,8 +71,8 @@ extension PlayerView {
             case .Profile:
                 ProfileSectionView(playerData: viewModel.player)
             case .Stats:
-                StatsView(player: viewModel.player)
-                
+//                StatsView(player: viewModel.player)
+                EmptyView()
             }
         }
     }

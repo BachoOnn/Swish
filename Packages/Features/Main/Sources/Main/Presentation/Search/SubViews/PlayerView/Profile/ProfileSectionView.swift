@@ -7,9 +7,10 @@
 
 import SwiftUI
 import Common
+import PlayerDomain
 
 struct ProfileSectionView: View {
-    let playerData: PlayerSeasonAverages
+    let playerData: Player
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -24,10 +25,10 @@ struct ProfileSectionView: View {
                                     .foregroundStyle(.gray)
                                 
                                 HStack(spacing: 20) {
-                                    Text((playerData.player.height ?? "0-0").heightInCentimeters())
+                                    Text((playerData.height ?? "0-0").heightInCentimeters())
                                         .font(.system(size: 24, weight: .semibold))
                                     
-                                    Text((playerData.player.height ?? "0-0").formattedHeight())
+                                    Text((playerData.height ?? "0-0").formattedHeight())
                                         .font(.system(size: 16))
                                         .offset(y: 2)
                                 }
@@ -43,10 +44,10 @@ struct ProfileSectionView: View {
                                     .foregroundStyle(.gray)
                                 
                                 HStack(spacing: 20) {
-                                    Text((playerData.player.weight ?? "0").weightInKilograms())
+                                    Text((playerData.weight ?? "0").weightInKilograms())
                                         .font(.system(size: 24, weight: .semibold))
                                     
-                                    Text("\(playerData.player.weight ?? "0") lbs")
+                                    Text("\(playerData.weight ?? "0") lbs")
                                         .font(.system(size: 16))
                                         .offset(y: 2)
                                 }
@@ -67,7 +68,7 @@ struct ProfileSectionView: View {
                                     .padding(.trailing, 80)
                                 
                                 HStack(spacing: 20) {
-                                    Text(playerData.player.country ?? "N/A")
+                                    Text(playerData.country ?? "N/A")
                                         .font(.system(size: 24, weight: .semibold))
                                 }
                             }
@@ -83,7 +84,7 @@ struct ProfileSectionView: View {
                                     .padding(.trailing, 80)
                                 
                                 HStack(spacing: 20) {
-                                    Text(playerData.player.position)
+                                    Text(playerData.position)
                                         .font(.system(size: 24, weight: .semibold))
                                 }
                             }
@@ -105,7 +106,7 @@ struct ProfileSectionView: View {
                                         .font(.system(size: 16))
                                         .foregroundStyle(.gray)
                                     
-                                    Text("#\(playerData.player.jerseyNumber ?? "0")")
+                                    Text("#\(playerData.jerseyNumber ?? "0")")
                                         .font(.system(size: 24, weight: .semibold))
                                 }
                                 .padding(.horizontal)
@@ -124,7 +125,7 @@ struct ProfileSectionView: View {
                                         .foregroundStyle(.gray)
                                         .frame(width: 100, alignment: .leading)
                                     
-                                    Text(playerData.player.college ?? "N/A")
+                                    Text(playerData.college ?? "N/A")
                                         .font(.system(size: 18, weight: .medium))
                                 }
                                 
@@ -136,7 +137,7 @@ struct ProfileSectionView: View {
                                         .foregroundStyle(.gray)
                                         .frame(width: 100, alignment: .leading)
                                     
-                                    Text("\(playerData.player.draftYear ?? 0)")
+                                    Text("\(playerData.draftYear ?? 0)")
                                         .font(.system(size: 18, weight: .medium))
                                 }
                                 
@@ -148,8 +149,8 @@ struct ProfileSectionView: View {
                                         .foregroundStyle(.gray)
                                         .frame(width: 100, alignment: .leading)
                                     
-                                    if let round = playerData.player.draftRound,
-                                       let pick = playerData.player.draftNumber {
+                                    if let round = playerData.draftRound,
+                                       let pick = playerData.draftNumber {
                                         Text("Round \(round), Pick \(pick)")
                                             .font(.system(size: 18, weight: .medium))
                                     } else {
@@ -166,7 +167,7 @@ struct ProfileSectionView: View {
                                         .foregroundStyle(.gray)
                                         .frame(width: 100, alignment: .leading)
                                     
-                                    if let draftYear = playerData.player.draftYear {
+                                    if let draftYear = playerData.draftYear {
                                         Text("\(Calendar.current.component(.year, from: Date()) - draftYear) Seasons")
                                             .font(.system(size: 18, weight: .medium))
                                     } else {
@@ -183,8 +184,4 @@ struct ProfileSectionView: View {
             }
         }
     }
-}
-
-#Preview {
-    ProfileSectionView(playerData: .lebronMock)
 }

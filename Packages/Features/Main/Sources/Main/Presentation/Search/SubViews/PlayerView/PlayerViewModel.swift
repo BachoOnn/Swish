@@ -6,14 +6,15 @@
 //
 
 import Combine
+import PlayerDomain
 
 public final class PlayerViewModel: ObservableObject {
     
     @Published var isFavorite: Bool = false
     @Published var selectedSide: PlayerPickerSide = .Profile
-    @Published var player: PlayerSeasonAverages
+    @Published var player: Player
     
-    public init(player: PlayerSeasonAverages) {
+    public init(player: Player) {
         self.player = player
     }
     
@@ -25,20 +26,19 @@ public final class PlayerViewModel: ObservableObject {
     }
     
     var playerName: String {
-        "\(player.player.firstName) \(player.player.lastName)"
+        "\(player.firstName) \(player.lastName)"
     }
     
     var number: String {
-        "№ \(player.player.jerseyNumber ?? "N")"
+        "№ \(player.jerseyNumber ?? "N")"
     }
     
     var position: String {
-        "Position: \(player.player.position)"
+        "Position: \(player.position)"
     }
     
     var team: String {
-        // TODO: find a way to bring team name
-        ""
+        player.team.name
     }
 
 }
