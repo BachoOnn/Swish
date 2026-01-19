@@ -67,6 +67,10 @@ public final class MainDIContainer {
         DefaultGetTeamsUseCase(teamsRepository: teamsRepository)
     }
     
+    private func makeGetTeamStatsUseCase() -> DefaultGetTeamStatsUseCase {
+        DefaultGetTeamStatsUseCase(teamRepository: teamsRepository)
+    }
+    
     // MARK: - ViewModels
     
     public func makeRootViewModel() -> RootViewModel {
@@ -102,7 +106,7 @@ public final class MainDIContainer {
     }
     
     public func makeTeamViewModel(team: TeamDomain.Team) -> TeamViewModel {
-        TeamViewModel(team: team)
+        TeamViewModel(team: team, getTeamStatsUseCase: makeGetTeamStatsUseCase())
     }
     
     public func makeGameDetailsViewModel(game: Game) -> GameDetailsViewModel {

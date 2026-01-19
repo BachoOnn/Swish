@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Common
+import TeamDomain
 
 extension TeamView {
     
@@ -53,13 +54,13 @@ extension TeamView {
         .padding()
     }
     
-    var recordSection: some View {
+    func recordSection(stats: TeamSeasonStats) -> some View {
         HStack(spacing: 20) {
             CustomContainer(width: 110, height: 110) {
                 VStack(spacing: 10) {
-                    //                    Text("\(viewModel.team.stats.w)")
-                    //                        .font(.system(size: 26, weight: .bold))
-                    //                        .foregroundStyle(.green)
+                    Text("\(stats.w)")
+                        .font(.system(size: 26, weight: .bold))
+                        .foregroundStyle(.green)
                     
                     Text("Wins")
                         .font(.system(size: 14))
@@ -69,9 +70,9 @@ extension TeamView {
             
             CustomContainer(width: 110, height: 110) {
                 VStack(spacing: 10) {
-                    //                    Text("\(viewModel.team.stats.l)")
-                    //                        .font(.system(size: 26, weight: .bold))
-                    //                        .foregroundStyle(.red)
+                    Text("\(stats.l)")
+                        .font(.system(size: 26, weight: .bold))
+                        .foregroundStyle(.red)
                     
                     Text("Losses")
                         .font(.system(size: 14))
@@ -81,8 +82,8 @@ extension TeamView {
             
             CustomContainer(width: 110, height: 110) {
                 VStack(spacing: 10) {
-                    //                    Text(viewModel.team.stats.winPercentage)
-                    //                        .font(.system(size: 26))
+                    Text(stats.winPercentage)
+                        .font(.system(size: 26))
                     
                     Text("Win %")
                         .font(.system(size: 14))
@@ -93,7 +94,7 @@ extension TeamView {
         .padding(.horizontal, 5)
     }
     
-    var keyStatsSection: some View {
+    func keyStatsSection(stats: TeamSeasonStats) -> some View {
         VStack(spacing: 16) {
             HStack {
                 Text("Season Averages")
@@ -106,8 +107,8 @@ extension TeamView {
                 HStack(spacing: 20) {
                     CustomContainer(width: 110, height: 110) {
                         VStack(spacing: 10) {
-                            //                            Text(viewModel.team.stats.ppg)
-                            //                                .font(.system(size: 26, weight: .regular))
+                            Text(stats.ppg)
+                                .font(.system(size: 26, weight: .regular))
                             
                             Text("PPG")
                                 .font(.system(size: 14))
@@ -117,8 +118,8 @@ extension TeamView {
                     
                     CustomContainer(width: 110, height: 110) {
                         VStack(spacing: 10) {
-                            //                            Text(viewModel.team.stats.rpg)
-                            //                                .font(.system(size: 26, weight: .regular))
+                            Text(stats.rpg)
+                                .font(.system(size: 26, weight: .regular))
                             
                             Text("RPG")
                                 .font(.system(size: 14))
@@ -128,8 +129,8 @@ extension TeamView {
                     
                     CustomContainer(width: 110, height: 110) {
                         VStack(spacing: 10) {
-                            //                            Text(viewModel.team.stats.apg)
-                            //                                .font(.system(size: 26, weight: .regular))
+                            Text(stats.apg)
+                                .font(.system(size: 26, weight: .regular))
                             
                             Text("APG")
                                 .font(.system(size: 14))
@@ -141,8 +142,8 @@ extension TeamView {
                 HStack(spacing: 20) {
                     CustomContainer(width: 110, height: 110) {
                         VStack(spacing: 10) {
-                            //                            Text(String(format: "%.1f", viewModel.team.stats.stl))
-                            //                                .font(.system(size: 26, weight: .regular))
+                            Text(String(format: "%.1f", stats.stl))
+                                .font(.system(size: 26, weight: .regular))
                             
                             Text("SPG")
                                 .font(.system(size: 14))
@@ -152,8 +153,8 @@ extension TeamView {
                     
                     CustomContainer(width: 110, height: 110) {
                         VStack(spacing: 10) {
-                            //                            Text(String(format: "%.1f", viewModel.team.stats.blk))
-                            //                                .font(.system(size: 26, weight: .regular))
+                            Text(String(format: "%.1f", stats.blk))
+                                .font(.system(size: 26, weight: .regular))
                             
                             Text("BPG")
                                 .font(.system(size: 14))
@@ -163,8 +164,8 @@ extension TeamView {
                     
                     CustomContainer(width: 110, height: 110) {
                         VStack(spacing: 10) {
-                            //                            Text(String(format: "%.1f", viewModel.team.stats.tov))
-                            //                                .font(.system(size: 26, weight: .regular))
+                            Text(String(format: "%.1f", stats.tov)) 
+                                .font(.system(size: 26, weight: .regular))
                             
                             Text("TOV")
                                 .font(.system(size: 14))
@@ -177,118 +178,167 @@ extension TeamView {
         }
     }
     
-    //    var shootingChartsSection: some View {
-    //        VStack(alignment: .leading, spacing: 16) {
-    //            HStack {
-    //                Text("Shooting Breakdown")
-    //                    .font(.system(size: 20, weight: .heavy))
-    //                Spacer()
-    //            }
-    //            .padding(.horizontal)
-    //
-    //            ScrollView(.horizontal, showsIndicators: false) {
-    //                HStack(spacing: 16) {
-    //                    CustomContainer(width: 200, height: 250) {
-    //                        CustomChart(
-    //                            centerValue: viewModel.team.stats.ppg,
-    //                            chartData: [
-    //                                ChartData(
-    //                                    category: "2-Points",
-    //                                    value: (viewModel.team.stats.fgm - viewModel.team.stats.fg3m) * 2,
-    //                                    color: .gray
-    //                                ),
-    //                                ChartData(
-    //                                    category: "3-Points",
-    //                                    value: viewModel.team.stats.fg3m * 3,
-    //                                    color: .red
-    //                                ),
-    //                                ChartData(
-    //                                    category: "Free Throws",
-    //                                    value: viewModel.team.stats.ftm,
-    //                                    color: .gray.opacity(0.5)
-    //                                )
-    //                            ],
-    //                            text: "Points Per Game"
-    //                        )
-    //                    }
-    //
-    //                    CustomContainer(width: 200, height: 250) {
-    //                        CustomGaugeChart(
-    //                            title: "Field Goal %",
-    //                            value: viewModel.team.stats.fgPct,
-    //                            color: .gray
-    //                        )
-    //                    }
-    //
-    //                    CustomContainer(width: 200, height: 250) {
-    //                        CustomGaugeChart(
-    //                            title: "3-Point %",
-    //                            value: viewModel.team.stats.fg3Pct,
-    //                            color: .red
-    //                        )
-    //                    }
-    //
-    //                    CustomContainer(width: 200, height: 250) {
-    //                        CustomGaugeChart(
-    //                            title: "Free Throw %",
-    //                            value: viewModel.team.stats.ftPct,
-    //                            color: .gray.opacity(0.3)
-    //                        )
-    //                    }
-    //                }
-    //                .padding(.horizontal)
-    //            }
-    //        }
-    //    }
-    //
-    //    var leagueRankingsSection: some View {
-    //        VStack(alignment: .leading, spacing: 16) {
-    //            HStack {
-    //                Text("League Rankings")
-    //                    .font(.system(size: 20, weight: .heavy))
-    //                Spacer()
-    //            }
-    //            .padding(.horizontal)
-    //
-    //            VStack(spacing: 8) {
-    //                RankingRow(
-    //                    statName: "Points",
-    //                    rank: viewModel.team.stats.ptsRank,
-    //                    icon: "basketball.fill",
-    //                )
-    //
-    //                RankingRow(
-    //                    statName: "Assists",
-    //                    rank: viewModel.team.stats.astRank,
-    //                    icon: "a",
-    //                )
-    //
-    //                RankingRow(
-    //                    statName: "Rebounds",
-    //                    rank: viewModel.team.stats.rebRank,
-    //                    icon: "r.circle.fill",
-    //                )
-    //
-    //                RankingRow(
-    //                    statName: "Steals",
-    //                    rank: viewModel.team.stats.stlRank,
-    //                    icon: "hand.raised.fill",
-    //                )
-    //
-    //                RankingRow(
-    //                    statName: "Blocks",
-    //                    rank: viewModel.team.stats.blkRank,
-    //                    icon: "nosign",
-    //                )
-    //
-    //                RankingRow(
-    //                    statName: "Win Percentage",
-    //                    rank: viewModel.team.stats.wPctRank,
-    //                    icon: "trophy.fill",
-    //                )
-    //            }
-    //            .padding(.horizontal)
-    //        }
-    //    }
-    //}
+    func shootingChartsSection(stats: TeamSeasonStats) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Text("Shooting Breakdown")
+                    .font(.system(size: 20, weight: .heavy))
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 16) {
+                    CustomContainer(width: 200, height: 250) {
+                        CustomChart(
+                            centerValue: stats.ppg,
+                            chartData: [
+                                ChartData(
+                                    category: "2-Points",
+                                    value: (stats.fgm - stats.fg3m) * 2,
+                                    color: .gray
+                                ),
+                                ChartData(
+                                    category: "3-Points",
+                                    value: stats.fg3m * 3,
+                                    color: .red
+                                ),
+                                ChartData(
+                                    category: "Free Throws",
+                                    value: stats.ftm,
+                                    color: .gray.opacity(0.5)
+                                )
+                            ],
+                            text: "Points Per Game"
+                        )
+                    }
+                    
+                    CustomContainer(width: 200, height: 250) {
+                        CustomGaugeChart(
+                            title: "Field Goal %",
+                            value: stats.fgPct,
+                            color: .gray
+                        )
+                    }
+                    
+                    CustomContainer(width: 200, height: 250) {
+                        CustomGaugeChart(
+                            title: "3-Point %",
+                            value: stats.fg3Pct,
+                            color: .red
+                        )
+                    }
+                    
+                    CustomContainer(width: 200, height: 250) {
+                        CustomGaugeChart(
+                            title: "Free Throw %",
+                            value: stats.ftPct,
+                            color: .gray.opacity(0.3)
+                        )
+                    }
+                }
+                .padding(.horizontal)
+            }
+        }
+    }
+    
+    func leagueRankingsSection(stats: TeamSeasonStats) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Text("League Rankings")
+                    .font(.system(size: 20, weight: .heavy))
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            VStack(spacing: 8) {
+                RankingRow(
+                    statName: "Points",
+                    rank: stats.ptsRank,
+                    icon: "basketball.fill"
+                )
+                
+                RankingRow(
+                    statName: "Assists",
+                    rank: stats.astRank,
+                    icon: "a"
+                )
+                
+                RankingRow(
+                    statName: "Rebounds",
+                    rank: stats.rebRank,
+                    icon: "r.circle.fill"
+                )
+                
+                RankingRow(
+                    statName: "Steals",
+                    rank: stats.stlRank,
+                    icon: "hand.raised.fill"
+                )
+                
+                RankingRow(
+                    statName: "Blocks",
+                    rank: stats.blkRank,
+                    icon: "nosign"
+                )
+                
+                RankingRow(
+                    statName: "Win Percentage",
+                    rank: stats.wPctRank,
+                    icon: "trophy.fill"
+                )
+            }
+            .padding(.horizontal)
+        }
+    }
+    
+    func errorSection(message: String) -> some View {
+        VStack(spacing: 16) {
+            Image(systemName: "exclamationmark.triangle")
+                .font(.system(size: 50))
+                .foregroundColor(.orange)
+            
+            Text("Failed to load stats")
+                .font(.headline)
+            
+            Text(message)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+            
+            Button("Retry") {
+                Task {
+                    await viewModel.fetchTeamStats()
+                }
+            }
+            .buttonStyle(.bordered)
+        }
+        .padding(.top, 40)
+    }
+    
+    var placeholderSection: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "chart.bar")
+                .font(.system(size: 50))
+                .foregroundColor(.gray)
+            
+            Text("No stats available")
+                .font(.headline)
+                .foregroundColor(.secondary)
+        }
+        .padding(.top, 40)
+    }
+    
+    var loadingSection: some View {
+        VStack(spacing: 16) {
+            CustomProgressView()
+                .padding()
+            
+            Text("Loading team statistics...")
+                .font(.subheadline)
+                .fontDesign(.monospaced)
+        }
+        .padding(.top, 40)
+    }
 }

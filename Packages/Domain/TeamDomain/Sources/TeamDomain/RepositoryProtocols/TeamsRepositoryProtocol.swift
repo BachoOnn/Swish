@@ -7,4 +7,5 @@
 
 public protocol TeamsRepositoryProtocol {
     func fetchAllTeams() async throws -> [Team]
+    func fetchTeamStats(teamId: Int) async throws -> TeamSeasonStats
 }
