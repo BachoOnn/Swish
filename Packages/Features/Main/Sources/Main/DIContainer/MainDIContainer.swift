@@ -9,6 +9,7 @@ import Foundation
 import AuthDomain
 import GameDomain
 import NewsDomain
+import TeamDomain
 
 @MainActor
 public final class MainDIContainer {
@@ -18,17 +19,20 @@ public final class MainDIContainer {
     private let authRepository: AuthRepositoryProtocol
     private let gameRepository: GamesRepositoryProtocol
     private let newsRepository: NewsRepositoryProtocol
+    private let teamsRepository: TeamsRepositoryProtocol
     
     public init(
         authRepository: AuthRepositoryProtocol,
         persistenceRepository: UserPersistenceRepositoryProtocol,
         gameRepository: GamesRepositoryProtocol,
-        newsRepository: NewsRepositoryProtocol
+        newsRepository: NewsRepositoryProtocol,
+        teamsRepository: TeamsRepositoryProtocol
     ) {
         self.authRepository = authRepository
         self.persistenceRepository = persistenceRepository
         self.gameRepository = gameRepository
         self.newsRepository = newsRepository
+        self.teamsRepository = teamsRepository
         self.coordinator = MainCoordinator()
     }
     
@@ -59,6 +63,10 @@ public final class MainDIContainer {
         DefaultGetBoxScoreUseCase(gameRepository: gameRepository)
     }
     
+    private func makeGetTeamsUseCase() -> DefaultGetTeamsUseCase {
+        DefaultGetTeamsUseCase(teamsRepository: teamsRepository)
+    }
+    
     // MARK: - ViewModels
     
     public func makeRootViewModel() -> RootViewModel {
@@ -86,14 +94,14 @@ public final class MainDIContainer {
     }
     
     public func makeSearchViewModel() -> SearchViewModel {
-        SearchViewModel(coordinator: coordinator)
+        SearchViewModel(coordinator: coordinator, getTeamsUseCase: makeGetTeamsUseCase())
     }
     
     public func makePlayerViewModel(player: PlayerSeasonAverages) -> PlayerViewModel {
         PlayerViewModel(player: player)
     }
     
-    public func makeTeamViewModel(team: TeamSeasonAverages) -> TeamViewModel {
+    public func makeTeamViewModel(team: TeamDomain.Team) -> TeamViewModel {
         TeamViewModel(team: team)
     }
     

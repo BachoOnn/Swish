@@ -65,12 +65,14 @@ final class InitialCoordinator {
         let persistenceRepository = KeychainUserRepository()
         let gameRepository = GamesRepository()
         let newsRepository = NewsRepository()
+        let teamsRepository = TeamsRepository()
         
         let mainDIContainer = MainDIContainer(
             authRepository: authRepository,
             persistenceRepository: persistenceRepository,
             gameRepository: gameRepository,
-            newsRepository: newsRepository
+            newsRepository: newsRepository,
+            teamsRepository: teamsRepository
         )
         
         self.mainDIContainer = mainDIContainer

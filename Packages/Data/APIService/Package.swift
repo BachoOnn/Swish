@@ -13,6 +13,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../Domain/GameDomain"),
         .package(path: "../../Domain/NewsDomain"),
+        .package(path: "../../Domain/TeamDomain"),
         .package(path: "../../Core/Helpers"),
         .package(path: "../../Config/Config")
     ],
@@ -22,6 +23,7 @@ let package = Package(
             dependencies: [
                 "GameDomain",
                 "NewsDomain",
+                "TeamDomain",
                 "Helpers",
                 "Config"
             ]
