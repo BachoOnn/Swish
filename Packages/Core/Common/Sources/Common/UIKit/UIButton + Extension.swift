@@ -61,7 +61,7 @@ public extension UIButton {
         let primaryAction = UIAction { _ in action() }
         let button = UIButton(type: .custom, primaryAction: primaryAction)
         
-        button.backgroundColor = .game
+        button.backgroundColor = UIColor(named: "league")
         button.layer.cornerRadius = 12
         button.translatesAutoresizingMaskIntoConstraints = false
         
