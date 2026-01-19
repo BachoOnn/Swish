@@ -27,6 +27,7 @@ struct SearchView: View {
                     isKeyboardFocused: $searchIsFocused
                 )
                 pickerSection
+                    .padding(.bottom, 15)
             }
         }
         .task(id: hasLoadedOnce) {
