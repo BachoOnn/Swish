@@ -26,7 +26,7 @@ public final class PlayersRepository: PlayersRepositoryProtocol {
     }
     
     public func fetchPlayers(name: String) async throws -> [Player] {
-        let url = "\(baseURL)/players/active?search=\(name)"
+        let url = "\(baseURL)/players/active?search=\(name)&per_page=25"
         let response: PlayerResponseDTO = try await networkManager.get(urlString: url, headers: headers)
         
         return response.data.map { $0.toDomain() }

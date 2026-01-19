@@ -22,75 +22,143 @@ extension SearchView {
             
             switch viewModel.selectedSide {
             case .Teams:
-                if viewModel.isLoading {
-                    VStack {
-                        CustomProgressView()
-                        
-                        Text("Loading Teams...")
-                            .font(.subheadline)
-                            .fontDesign(.monospaced)
-                        
-                        Spacer()
-                    }
-                } else if viewModel.teams.isEmpty && !viewModel.searchText.isEmpty {
-                    VStack(spacing: 16) {
-                        Image(systemName: "magnifyingglass")
-                            .font(.system(size: 50))
-                            .foregroundColor(.gray)
-                        
-                        Text("No Teams Found on \(viewModel.searchText)")
-                            .font(.headline)
-                        
-                        Spacer()
-                    }
-                    .padding(.top, 40)
-                } else if viewModel.teams.isEmpty {
-                    VStack(spacing: 16) {
-                        Image(systemName: "basketball")
-                            .font(.system(size: 50))
-                            .foregroundColor(.gray)
-                        
-                        Text("No Teams Available")
-                            .font(.headline)
-                        
-                        if let error = viewModel.errorMessage {
-                            Text(error)
-                                .font(.subheadline)
-                                .foregroundColor(.red)
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal)
-                        }
-                        
-                        Spacer()
-                    }
-                    .padding(.top, 40)
-                } else {
-                    ScrollView {
-                        LazyVStack(spacing: 20) {
-                            ForEach(viewModel.teams, id: \.self) { team in
-                                TeamCellView(team: team)
-                                    .frame(width: 380, height: 80)
-                                    .onTapGesture {
-                                        viewModel.navigateToTeam(team)
-                                    }
-                            }
-                        }
-                    }
-                }
+                teamsListSection
                 
             case .Players:
-                ScrollView {
-                    LazyVStack(spacing: 20) {
-                        ForEach(viewModel.players, id: \.self) { player in
-                            PlayerCellView(player: player)
-                                .frame(width: 380, height: 80)
-                                .onTapGesture {
-                                    viewModel.navigateToPlayer(player)
-                                }
-                        }
-                    }
-                }
+                playersListSection
             }
         }
+    }
+        
+    var teamsListSection: some View {
+        ZStack {
+            if viewModel.isLoadingTeams {
+                loadingView(message: "Loading Teams...")
+            } else if viewModel.teams.isEmpty && !viewModel.searchText.isEmpty {
+                emptySearchView(searchText: viewModel.searchText, type: "Teams")
+            } else if viewModel.teams.isEmpty {
+                noDataView(message: "No Teams Available", error: viewModel.errorMessage)
+            } else {
+                teamsContent
+            }
+        }
+    }
+    
+    var teamsContent: some View {
+        
+            ScrollView {
+                LazyVStack(spacing: 20) {
+                    ForEach(viewModel.teams, id: \.self) { team in
+                        TeamCellView(team: team)
+                            .frame(width: 380, height: 80)
+                            .onTapGesture {
+                                viewModel.navigateToTeam(team)
+                            }
+                    }
+                }
+        }
+    }
+        
+    var playersListSection: some View {
+        Group {
+            if viewModel.searchText.isEmpty {
+                placeholderView(
+                    icon: "magnifyingglass",
+                    title: "Search for NBA Players",
+                    message: "Enter a player's name to get started"
+                )
+            } else if viewModel.isLoadingPlayers {
+                loadingView(message: "Searching Players...")
+            } else if viewModel.players.isEmpty {
+                emptySearchView(searchText: viewModel.searchText, type: "Players")
+            } else {
+                playersContent
+            }
+        }
+    }
+    
+    var playersContent: some View {
+            ScrollView {
+                LazyVStack(spacing: 20) {
+                    ForEach(viewModel.players, id: \.id) { player in
+                        PlayerCellView(player: player)
+                            .frame(width: 380, height: 80)
+                            .onTapGesture {
+                                viewModel.navigateToPlayer(player)
+                            }
+                    }
+            }
+        }
+    }
+    
+    func loadingView(message: String) -> some View {
+        VStack {
+            CustomProgressView()
+            
+            Text(message)
+                .fontDesign(.monospaced)
+                .font(.subheadline)
+            
+            Spacer()
+        }
+    }
+    
+    func emptySearchView(searchText: String, type: String) -> some View {
+        VStack(spacing: 16) {
+            Image(systemName: "magnifyingglass")
+                .font(.system(size: 50))
+                .foregroundColor(.gray)
+            
+            Text("No \(type) Found")
+                .font(.headline)
+            
+            Text("No results for '\(searchText)'")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            
+            Spacer()
+        }
+        .padding(.top, 40)
+    }
+    
+    func noDataView(message: String, error: String?) -> some View {
+        VStack(spacing: 16) {
+            Image(systemName: "basketball")
+                .font(.system(size: 50))
+                .foregroundColor(.gray)
+            
+            Text(message)
+                .font(.headline)
+            
+            if let error = error {
+                Text(error)
+                    .font(.subheadline)
+                    .foregroundColor(.red)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+            }
+            
+            Spacer()
+        }
+        .padding(.top, 40)
+    }
+    
+    func placeholderView(icon: String, title: String, message: String) -> some View {
+        VStack(spacing: 16) {
+            Image(systemName: icon)
+                .font(.system(size: 60))
+                .foregroundColor(.gray)
+            
+            Text(title)
+                .font(.title3)
+                .fontWeight(.semibold)
+            
+            Text(message)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            
+            Spacer()
+        }
+        .padding()
     }
 }

@@ -66,13 +66,15 @@ final class InitialCoordinator {
         let gameRepository = GamesRepository()
         let newsRepository = NewsRepository()
         let teamsRepository = TeamsRepository()
+        let playersRepository = PlayersRepository()
         
         let mainDIContainer = MainDIContainer(
             authRepository: authRepository,
             persistenceRepository: persistenceRepository,
             gameRepository: gameRepository,
             newsRepository: newsRepository,
-            teamsRepository: teamsRepository
+            teamsRepository: teamsRepository,
+            playersRepository: playersRepository
         )
         
         self.mainDIContainer = mainDIContainer

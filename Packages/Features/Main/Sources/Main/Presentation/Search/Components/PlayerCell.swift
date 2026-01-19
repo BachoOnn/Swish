@@ -7,6 +7,7 @@
 
 import UIKit
 import Common
+import PlayerDomain
 
 final class PlayerCell: UIView {
     
@@ -93,24 +94,17 @@ final class PlayerCell: UIView {
     }
     
     // MARK: - Configuration
-    func configure(with player: PlayerSeasonAverages) {
+    func configure(with player: Player) {
         playerImageView.image = UIImage(named: "LAL", in: .common, with: .none)
         
-        playerNameLabel.text = "\(player.player.firstName) \(player.player.lastName)"
+        playerNameLabel.text = "\(player.firstName) \(player.lastName)"
         
-        if player.player.jerseyNumber != nil {
-            positionLabel.text = "\(player.player.position) • #\(player.player.jerseyNumber ?? "N/A")"
+        if player.jerseyNumber != nil {
+            positionLabel.text = "\(player.position) • #\(player.jerseyNumber ?? "N/A")"
         } else {
-            positionLabel.text = player.player.position
+            positionLabel.text = player.position
         }
         
-        teamLabel.text = player.player.country
+        teamLabel.text = player.country
     }
-}
-
-// MARK: - Preview
-#Preview {
-    let cell = PlayerCell()
-    cell.configure(with: .lebronMock)
-    return cell
 }
