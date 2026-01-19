@@ -16,7 +16,7 @@ struct LineupsResponseDTO: Codable {
 struct LineupDTO: Codable {
     let id: Int
     let team: TeamDTO
-    let starters: [PlayerDTO]
+    let starters: [PlayerGameDTO]
     
     enum CodingKeys: String, CodingKey {
         case id, team, starters

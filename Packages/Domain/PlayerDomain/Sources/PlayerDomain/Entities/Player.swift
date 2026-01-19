@@ -17,7 +17,8 @@ public struct Player: Identifiable, Codable, Hashable {
     public let country: String?
     public let draftYear: Int?
     public let draftRound: Int?
-    public let draftNumber: PlayerTeamInfo
+    public let draftNumber: Int?
+    public let team: PlayerTeamInfo
     
     public init(
         id: Int,
@@ -31,7 +32,8 @@ public struct Player: Identifiable, Codable, Hashable {
         country: String?,
         draftYear: Int?,
         draftRound: Int?,
-        draftNumber: PlayerTeamInfo
+        draftNumber: Int?,
+        team: PlayerTeamInfo
     ) {
         self.id = id
         self.firstName = firstName
@@ -45,6 +47,7 @@ public struct Player: Identifiable, Codable, Hashable {
         self.draftYear = draftYear
         self.draftRound = draftRound
         self.draftNumber = draftNumber
+        self.team = team
     }
 }
 
