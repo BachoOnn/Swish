@@ -86,7 +86,7 @@ extension PlayerStatsDTO {
         PlayerStats(
             id: id,
             player: player.toDomain(),
-            team: team.toDomain(),
+            team: team.toGameDomain(),
             game: game.toDomain(),
             min: min,
             pts: pts,

@@ -28,7 +28,7 @@ extension LineupDTO {
         Lineup(
             id: id,
             game: nil, 
-            team: team.toDomain(),
+            team: team.toGameDomain(),
             starters: starters.map { $0.toDomain() }
         )
     }

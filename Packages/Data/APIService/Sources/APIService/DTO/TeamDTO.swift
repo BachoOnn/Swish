@@ -6,6 +6,14 @@
 //
 
 import GameDomain
+import TeamDomain
+
+typealias DomainTeam = TeamDomain.Team
+typealias GameTeam = GameDomain.Team
+
+struct TeamResponseDTO: Codable {
+    let data: [TeamDTO]
+}
 
 struct TeamDTO: Codable {
     let id: Int
@@ -31,8 +39,20 @@ struct MetaDTO: Codable {
 }
 
 extension TeamDTO {
-    func toDomain() -> Team {
-        Team(
+    public func toDomain() -> DomainTeam {
+        DomainTeam(
+            id: id,
+            conference: conference,
+            division: division,
+            city: city,
+            name: name,
+            fullName: fullName,
+            abbreviation: abbreviation
+        )
+    }
+    
+    public func toGameDomain() -> GameTeam {
+        GameTeam(
             id: id,
             conference: conference,
             division: division,
