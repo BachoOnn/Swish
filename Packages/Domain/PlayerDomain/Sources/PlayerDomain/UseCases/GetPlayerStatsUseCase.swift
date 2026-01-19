@@ -6,7 +6,7 @@
 //
 
 protocol GetPlayerStatsUseCase {
-    func execute(id: Int) async throws -> [PlayerSeasonStats]
+    func execute(id: Int) async throws -> PlayerSeasonStats
 }
 
 public struct DefaultGetPlayerStatsUseCase: GetPlayerStatsUseCase {
@@ -17,7 +17,7 @@ public struct DefaultGetPlayerStatsUseCase: GetPlayerStatsUseCase {
         self.playersRepository = playersRepository
     }
     
-    public func execute(id: Int) async throws -> [PlayerSeasonStats] {
+    public func execute(id: Int) async throws -> PlayerSeasonStats {
         let result = try await playersRepository.fetchPlayersStats(id: id)
         
         return result

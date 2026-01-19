@@ -192,10 +192,56 @@ public struct PlayerSeasonStats: Codable, Hashable {
         self.wPctRank = wPctRank
         self.nbaFantasyPtsRank = nbaFantasyPtsRank
     }
+}
+
+extension PlayerSeasonStats {
+        
+    public var ppg: String {
+        String(format: "%.1f", pts)
+    }
     
-    public var ppg: String { String(format: "%.1f", pts) }
-    public var rpg: String { String(format: "%.1f", reb) }
-    public var apg: String { String(format: "%.1f", ast) }
-    public var fgPercentage: String { String(format: "%.1f%%", fgPct * 100) }
-    public var mpg: String { String(format: "%.1f", min) }
+    public var rpg: String {
+        String(format: "%.1f", reb)
+    }
+    
+    public var apg: String {
+        String(format: "%.1f", ast)
+    }
+    
+    public var mpg: String {
+        String(format: "%.1f", min)
+    }
+    
+    public var spg: String {
+        String(format: "%.1f", stl)
+    }
+    
+    public var bpg: String {
+        String(format: "%.1f", blk)
+    }
+    
+    public var topg: String {
+        String(format: "%.1f", tov)
+    }
+        
+    public var fgPctFormatted: String {
+        String(format: "%.1f%%", fgPct * 100)
+    }
+    
+    public var fg3PctFormatted: String {
+        String(format: "%.1f%%", fg3Pct * 100)
+    }
+    
+    public var ftPctFormatted: String {
+        String(format: "%.1f%%", ftPct * 100)
+    }
+    
+    public var wPctFormatted: String {
+        guard let wPct = wPct else { return "N/A" }
+        return String(format: "%.1f%%", wPct * 100)
+    }
+    
+    public var winPercentage: Double {
+        wPct ?? 0
+    }
 }

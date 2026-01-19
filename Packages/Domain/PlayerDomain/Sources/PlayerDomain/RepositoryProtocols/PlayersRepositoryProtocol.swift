@@ -7,5 +7,5 @@
 
 public protocol PlayersRepositoryProtocol {
     func fetchPlayers(name: String) async throws -> [Player]
-    func fetchPlayersStats(id: Int) async throws -> [PlayerSeasonStats]
+    func fetchPlayersStats(id: Int) async throws -> PlayerSeasonStats
 }

@@ -71,8 +71,7 @@ extension PlayerView {
             case .Profile:
                 ProfileSectionView(playerData: viewModel.player)
             case .Stats:
-//                StatsView(player: viewModel.player)
-                EmptyView()
+                StatsView(viewModel: viewModel)
             }
         }
     }
