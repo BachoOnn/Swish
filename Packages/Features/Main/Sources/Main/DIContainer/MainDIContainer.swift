@@ -10,6 +10,7 @@ import AuthDomain
 import GameDomain
 import NewsDomain
 import TeamDomain
+import PlayerDomain
 
 @MainActor
 public final class MainDIContainer {
@@ -20,19 +21,22 @@ public final class MainDIContainer {
     private let gameRepository: GamesRepositoryProtocol
     private let newsRepository: NewsRepositoryProtocol
     private let teamsRepository: TeamsRepositoryProtocol
+    private let playersRepository: PlayersRepositoryProtocol
     
     public init(
         authRepository: AuthRepositoryProtocol,
         persistenceRepository: UserPersistenceRepositoryProtocol,
         gameRepository: GamesRepositoryProtocol,
         newsRepository: NewsRepositoryProtocol,
-        teamsRepository: TeamsRepositoryProtocol
+        teamsRepository: TeamsRepositoryProtocol,
+        playersRepository: PlayersRepositoryProtocol
     ) {
         self.authRepository = authRepository
         self.persistenceRepository = persistenceRepository
         self.gameRepository = gameRepository
         self.newsRepository = newsRepository
         self.teamsRepository = teamsRepository
+        self.playersRepository = playersRepository
         self.coordinator = MainCoordinator()
     }
     
@@ -71,6 +75,10 @@ public final class MainDIContainer {
         DefaultGetTeamStatsUseCase(teamRepository: teamsRepository)
     }
     
+    private func makeGetPlayersUseCase() -> DefaultGetPlayerUseCase {
+        DefaultGetPlayerUseCase(playersRepository: playersRepository)
+    }
+    
     // MARK: - ViewModels
     
     public func makeRootViewModel() -> RootViewModel {
@@ -98,7 +106,7 @@ public final class MainDIContainer {
     }
     
     public func makeSearchViewModel() -> SearchViewModel {
-        SearchViewModel(coordinator: coordinator, getTeamsUseCase: makeGetTeamsUseCase())
+        SearchViewModel(coordinator: coordinator, getTeamsUseCase: makeGetTeamsUseCase(), getPlayersUseCase: makeGetPlayersUseCase())
     }
     
     public func makePlayerViewModel(player: PlayerSeasonAverages) -> PlayerViewModel {

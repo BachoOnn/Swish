@@ -10,13 +10,13 @@ import GameDomain
 
 
 struct StatsResponseDTO: Codable {
-    let data: [PlayerStatsDTO]
+    let data: [PlayerGameStatsDTO]
     let meta: MetaDTO
 }
 
-struct PlayerStatsDTO: Codable {
+struct PlayerGameStatsDTO: Codable {
     let id: Int
-    let player: PlayerDTO
+    let player: PlayerGameDTO
     let team: TeamDTO
     let game: GameReferenceDTO
     let min: String?
@@ -52,7 +52,7 @@ struct PlayerStatsDTO: Codable {
 }
 
 
-struct PlayerDTO: Codable {
+struct PlayerGameDTO: Codable {
     let id: Int
     let firstName: String
     let lastName: String
@@ -81,7 +81,7 @@ struct GameReferenceDTO: Codable {
     }
 }
 
-extension PlayerStatsDTO {
+extension PlayerGameStatsDTO {
     func toDomain() -> PlayerStats {
         PlayerStats(
             id: id,
@@ -111,7 +111,7 @@ extension PlayerStatsDTO {
     }
 }
 
-extension PlayerDTO {
+extension PlayerGameDTO {
     func toDomain() -> Player {
         Player(
             id: id,

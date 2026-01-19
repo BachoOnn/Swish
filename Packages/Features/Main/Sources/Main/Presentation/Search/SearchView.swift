@@ -12,7 +12,7 @@ struct SearchView: View {
     
     @StateObject var viewModel: SearchViewModel
     @FocusState var searchIsFocused: Bool
-    @State private var hasLoadedOnce = false
+    @State private var hasLoadedTeams = false
     
     var body: some View {
         ZStack {
@@ -30,10 +30,10 @@ struct SearchView: View {
                     .padding(.bottom, 15)
             }
         }
-        .task(id: hasLoadedOnce) {
-            guard !hasLoadedOnce else { return }
+        .task(id: hasLoadedTeams) {
+            guard !hasLoadedTeams else { return }
             await viewModel.loadTeams()
-            hasLoadedOnce = true
+            hasLoadedTeams = true
         }
         .refreshable {
             Task {
@@ -42,4 +42,3 @@ struct SearchView: View {
         }
     }
 }
-

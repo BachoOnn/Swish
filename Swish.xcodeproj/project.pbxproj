@@ -42,6 +42,7 @@
 				Domain/AuthDomain,
 				Domain/GameDomain,
 				Domain/NewsDomain,
+				Domain/PlayerDomain,
 				Domain/TeamDomain,
 				Features/Authorization,
 				Features/Main,
