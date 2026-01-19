@@ -203,17 +203,7 @@ public struct SeasonStats: Codable, Hashable {
         case nbaFantasyPtsRank = "nba_fantasy_pts_rank"
     }
     
-    public var ppg: String { String(format: "%.1f", pts) }
-    public var rpg: String { String(format: "%.1f", reb) }
-    public var apg: String { String(format: "%.1f", ast) }
-    public var rbpg: String { String(format: "%.1f", reb) }
-    public var spg: String { String(format: "%.1f", stl) }
-    public var bpg: String { String(format: "%.1f", blk) }
-    public var tovpg: String { String(format: "%.1f", tov) }
-    public var fgPercentage: String { String(format: "%.1f%%", fgPct * 100) }
-    public var fg3Percentage: String { String(format: "%.1f%%", fg3Pct * 100) }
-    public var ftPercentage: String { String(format: "%.1f%%", ftPct * 100) }
-    public var mpg: String { String(format: "%.1f", min) }
+
 }
 
 // MARK: - Shooting Stats Response (matches API exactly)
@@ -326,5 +316,31 @@ public struct PlayerMeta: Codable {
     
     enum CodingKeys: String, CodingKey {
         case perPage = "per_page"
+    }
+}
+
+
+enum CodingKeys: String, CodingKey {
+    case id
+    case firstName = "first_name"
+    case lastName = "last_name"
+    case position, height, weight
+    case jerseyNumber = "jersey_number"
+    case college, country
+    case draftYear = "draft_year"
+    case draftRound = "draft_round"
+    case draftNumber = "draft_number"
+    }
+
+
+public struct PlayerData: Codable {
+    public let player: [PlayerDetail]
+    public let season: Int
+    public let seasonType: String
+    public let stats: [PlayerSeasonStats]
+    
+    enum CodingKeys: String, CodingKey {
+        case player, season, stats
+        case seasonType = "season_type"
     }
 }

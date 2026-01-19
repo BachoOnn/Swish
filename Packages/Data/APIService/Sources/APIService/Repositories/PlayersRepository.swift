@@ -31,4 +31,9 @@ public final class PlayersRepository: PlayersRepositoryProtocol {
         
         return response.data.map { $0.toDomain() }
     }
+    public func fetchPlayersStats(id: Int) async throws -> [PlayerSeasonStats] {
+        let url = "\(baseURL)/season_averages/general?season=2025&season_type=regular&type=base&player_ids[]=\(id)"
+        let response: PlayerSeasonStatsResponseDTO = try await networkManager.get(urlString: url, headers: headers)
+        return response.data.map { $0.stats.toDomain() }
+    }
 }
