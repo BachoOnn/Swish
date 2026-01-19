@@ -26,8 +26,6 @@ public struct Lineup: Identifiable, Hashable {
     }
 }
 
-// MARK: - Computed Properties
-
 public extension Lineup {
     /// Get starters by position
     var startersByPosition: [String: Player] {

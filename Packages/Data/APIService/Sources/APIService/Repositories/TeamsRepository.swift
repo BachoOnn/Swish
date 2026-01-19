@@ -31,4 +31,13 @@ public final class TeamsRepository: TeamsRepositoryProtocol {
         let response: TeamResponseDTO = try await networkManager.get(urlString: url, headers: headers)
         return response.data.map { $0.toDomain() }
     }
+    
+    public func fetchTeamStats(teamId: Int) async throws -> TeamSeasonStats {
+        let url = "\(baseURL)/team_season_averages/general?season=2025&season_type=regular&type=base&team_ids[]=\(teamId)"
+        let response: TeamSeasonAveragesResponseDTO = try await networkManager.get(urlString: url, headers: headers)
+        guard let firstTeamData = response.data.first else {
+            throw NSErrorDomain(string: "No stats found in response for team ID: \(teamId)") as! any Error
+        }
+        return firstTeamData.stats.toDomain()
+    }
 }

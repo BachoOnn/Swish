@@ -24,7 +24,6 @@ struct GameDTO: Codable {
     let homeTeam: TeamDTO
     let visitorTeam: TeamDTO
     
-    // Quarter scores
     let homeQ1: Int?
     let homeQ2: Int?
     let homeQ3: Int?

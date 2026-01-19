@@ -83,8 +83,6 @@ public struct PlayerStats: Identifiable, Hashable {
     }
 }
 
-// MARK: - Nested Types
-
 public struct Player: Identifiable, Hashable, Codable {
     public let id: Int
     public let firstName: String
@@ -132,8 +130,6 @@ public struct GameReference: Hashable, Codable {
         self.visitorTeamId = visitorTeamId
     }
 }
-
-// MARK: - Computed Properties
 
 public extension PlayerStats {
     /// Field Goal Percentage formatted as string

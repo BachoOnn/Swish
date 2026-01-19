@@ -1,24 +1,23 @@
 //
-//  TeamSeasonAveragesResponse.swift
-//  Main
+//  TeamSeasonAveragesResponseDTO.swift
+//  APIService
 //
-//  Created by Bacho on 16.01.26.
+//  Created by Bacho on 19.01.26.
 //
 
 import Foundation
+import TeamDomain
 
-// MARK: - Team Season Averages Response
-
-public struct TeamSeasonAveragesResponse: Codable {
-    let data: [TeamSeasonAverages]
-    let meta: TeamMeta
+public struct TeamSeasonAveragesResponseDTO: Codable {
+    let data: [TeamSeasonAveragesDTO]
+    let meta: TeamMetaDTO
 }
 
-public struct TeamSeasonAverages: Codable, Hashable {
-    let team: TeamInfo
+public struct TeamSeasonAveragesDTO: Codable {
+    let team: TeamInfoDTO
     let season: Int
     let seasonType: String
-    let stats: TeamSeasonStats
+    let stats: TeamSeasonStatsDTO
     
     enum CodingKeys: String, CodingKey {
         case team, season
@@ -27,7 +26,7 @@ public struct TeamSeasonAverages: Codable, Hashable {
     }
 }
 
-public struct TeamInfo: Codable, Hashable {
+public struct TeamInfoDTO: Codable {
     let id: Int
     let conference: String
     let division: String
@@ -42,43 +41,33 @@ public struct TeamInfo: Codable, Hashable {
     }
 }
 
-// MARK: - Team Season Stats
-
-public struct TeamSeasonStats: Codable, Hashable {
-    let w: Int           // Wins
-    let l: Int           // Losses
-    let gp: Int          // Games Played
-    let wPct: Double     // Win Percentage
-    
-    // Scoring
-    let pts: Double      // Points Per Game
-    let fgm: Double      // Field Goals Made
-    let fga: Double      // Field Goals Attempted
-    let fgPct: Double    // Field Goal Percentage
-    let fg3m: Double     // 3-Point Field Goals Made
-    let fg3a: Double     // 3-Point Field Goals Attempted
-    let fg3Pct: Double   // 3-Point Percentage
-    let ftm: Double      // Free Throws Made
-    let fta: Double      // Free Throws Attempted
-    let ftPct: Double    // Free Throw Percentage
-    
-    // Rebounds
-    let reb: Double      // Total Rebounds
-    let oreb: Double     // Offensive Rebounds
-    let dreb: Double     // Defensive Rebounds
-    
-    // Other Stats
-    let ast: Double      // Assists
-    let stl: Double      // Steals
-    let blk: Double      // Blocks
-    let tov: Double      // Turnovers
-    let pf: Double       // Personal Fouls
-    let pfd: Double      // Personal Fouls Drawn
-    let blka: Double     // Blocks Against
-    let min: Double      // Minutes
-    let plusMinus: Double // Plus/Minus
-    
-    // Rankings
+public struct TeamSeasonStatsDTO: Codable {
+    let w: Int
+    let l: Int
+    let gp: Int
+    let wPct: Double
+    let pts: Double
+    let fgm: Double
+    let fga: Double
+    let fgPct: Double
+    let fg3m: Double
+    let fg3a: Double
+    let fg3Pct: Double
+    let ftm: Double
+    let fta: Double
+    let ftPct: Double
+    let reb: Double
+    let oreb: Double
+    let dreb: Double
+    let ast: Double
+    let stl: Double
+    let blk: Double
+    let tov: Double
+    let pf: Double
+    let pfd: Double
+    let blka: Double
+    let min: Double
+    let plusMinus: Double
     let wRank: Int
     let lRank: Int
     let gpRank: Int
@@ -118,7 +107,6 @@ public struct TeamSeasonStats: Codable, Hashable {
         case reb, oreb, dreb, ast, stl, blk, tov, pf, pfd, blka, min
         case plusMinus = "plus_minus"
         
-        // Rankings
         case wRank = "w_rank"
         case lRank = "l_rank"
         case gpRank = "gp_rank"
@@ -146,21 +134,71 @@ public struct TeamSeasonStats: Codable, Hashable {
         case minRank = "min_rank"
         case plusMinusRank = "plus_minus_rank"
     }
-    
-    // Computed properties for display
-    public var ppg: String { String(format: "%.1f", pts) }
-    public var rpg: String { String(format: "%.1f", reb) }
-    public var apg: String { String(format: "%.1f", ast) }
-    public var fgPercentage: String { String(format: "%.1f%%", fgPct * 100) }
-    public var fg3Percentage: String { String(format: "%.1f%%", fg3Pct * 100) }
-    public var ftPercentage: String { String(format: "%.1f%%", ftPct * 100) }
-    public var winPercentage: String { String(format: "%.1f%%", wPct * 100) }
 }
 
-public struct TeamMeta: Codable {
+public struct TeamMetaDTO: Codable {
     let perPage: Int
     
     enum CodingKeys: String, CodingKey {
         case perPage = "per_page"
+    }
+}
+
+extension TeamSeasonStatsDTO {
+    public func toDomain() -> TeamSeasonStats  {
+        TeamSeasonStats(
+            w: w,
+            l: l,
+            gp: gp,
+            wPct: wPct,
+            pts: pts,
+            fgm: fgm,
+            fga: fga,
+            fgPct: fgPct,
+            fg3m: fg3m,
+            fg3a: fg3a,
+            fg3Pct: fg3Pct,
+            ftm: ftm,
+            fta: fta,
+            ftPct: ftPct,
+            reb: reb,
+            oreb: oreb,
+            dreb: dreb,
+            ast: ast,
+            stl: stl,
+            blk: blk,
+            tov: tov,
+            pf: pf,
+            pfd: pfd,
+            blka: blka,
+            min: min,
+            plusMinus: plusMinus,
+            wRank: wRank,
+            lRank: lRank,
+            gpRank: gpRank,
+            wPctRank: wPctRank,
+            ptsRank: ptsRank,
+            fgmRank: fgmRank,
+            fgaRank: fgaRank,
+            fgPctRank: fgPctRank,
+            fg3mRank: fg3mRank,
+            fg3aRank: fg3aRank,
+            fg3PctRank: fg3PctRank,
+            ftmRank: ftmRank,
+            ftaRank: ftaRank,
+            ftPctRank: ftPctRank,
+            rebRank: rebRank,
+            orebRank: orebRank,
+            drebRank: drebRank,
+            astRank: astRank,
+            stlRank: stlRank,
+            blkRank: blkRank,
+            tovRank: tovRank,
+            pfRank: pfRank,
+            pfdRank: pfdRank,
+            blkaRank: blkaRank,
+            minRank: minRank,
+            plusMinusRank: plusMinusRank
+        )
     }
 }

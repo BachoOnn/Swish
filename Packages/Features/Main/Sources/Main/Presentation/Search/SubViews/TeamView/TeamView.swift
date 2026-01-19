@@ -11,7 +11,7 @@ import Common
 struct TeamView: View {
     
     @StateObject var viewModel: TeamViewModel
-        
+    
     var body: some View {
         ZStack {
             GradientBackground()
@@ -19,19 +19,30 @@ struct TeamView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 16) {
                     headerSection
-                    
                     teamInfoSection
                     
-                    recordSection
-                    
-                    keyStatsSection
-                    
-//                    shootingChartsSection
-//                    
-//                    leagueRankingsSection
-                    
+                    if viewModel.isLoadingStats {
+                        loadingSection
+                        
+                    } else if let stats = viewModel.stats {
+                        
+                        recordSection(stats: stats)
+                        keyStatsSection(stats: stats)
+                        shootingChartsSection(stats: stats)
+                        leagueRankingsSection(stats: stats)
+                        
+                    } else if let error = viewModel.errorMessage {
+                        
+                        errorSection(message: error)
+                        
+                    } else {
+                        placeholderSection
+                    }
                 }
             }
+        }
+        .task {
+            await viewModel.fetchTeamStats()
         }
     }
 }
