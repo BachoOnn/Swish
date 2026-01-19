@@ -14,7 +14,4 @@ public final class RootViewModel: ObservableObject {
         
     public init() {}
     
-    deinit {
-        print("RootViewModel destroyed")
-    }
 }

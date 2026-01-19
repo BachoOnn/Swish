@@ -30,10 +30,6 @@ public final class HomeViewModel: ObservableObject {
         self.getNewsUseCase = getNewsUseCase
     }
     
-    deinit {
-        print("HomeViewModel destroyed")
-    }
-    
     func navigateToProfile() {
         coordinator?.navigateToProfile()
     }

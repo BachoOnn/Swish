@@ -25,10 +25,6 @@ final class AppCoordinator {
         window.makeKeyAndVisible()
     }
     
-    deinit {
-        print("AppCoordinator deallocated")
-    }
-    
     func start() {
         initialCoordinator.start()
     }

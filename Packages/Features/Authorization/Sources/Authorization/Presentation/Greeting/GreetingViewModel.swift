@@ -15,11 +15,6 @@ public final class GreetingViewModel {
         self.coordinator = coordinator
     }
     
-    // delete this laterrr
-    deinit {
-        print("🗑️ GreetingViewModel deallocated")
-    }
-    
     func getStartedTapped() {
         coordinator?.showSignUp()
     }

@@ -37,10 +37,6 @@ public final class SignUpViewModel: ObservableObject {
         observeState()
     }
     
-    deinit {
-        print("🗑️ SignUpViewModel deallocated")
-    }
-    
     // MARK: - Combine Observation
     private func observeState() {
         $state
@@ -69,7 +65,6 @@ public final class SignUpViewModel: ObservableObject {
                 firstName: firstName,
                 lastName: lastName
             )
-            print("✅ Signed up: \(user.email)")
             state = .success
             coordinator?.didSignIn()
         } catch {

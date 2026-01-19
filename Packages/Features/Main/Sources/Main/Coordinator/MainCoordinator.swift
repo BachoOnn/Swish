@@ -15,13 +15,7 @@ public final class MainCoordinator: MainCoordinatorProtocol {
     
     public var onSignOut: (() -> Void)?
     
-    public init() {
-        print("MainCoordinator created")
-    }
-    
-    deinit {
-        print("MainCoordinator destroyed")
-    }
+    public init() {}
     
     public func navigateToProfile() {
         navigationPath.append(.profile)

@@ -23,10 +23,6 @@ public final class ProfileViewModel: ObservableObject {
         loadUserData()
     }
     
-    deinit {
-        print("ProfileViewModel destroyed")
-    }
-    
     // MARK: - Navigation
     
     func navigateBack() {

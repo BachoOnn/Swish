@@ -39,10 +39,6 @@ public final class SignInViewModel: ObservableObject {
         observeState()
     }
     
-    deinit {
-        print("🗑️ SignInViewModel deallocated")
-    }
-    
     // MARK: - Combine Observation
     private func observeState() {
         $state
@@ -65,7 +61,6 @@ public final class SignInViewModel: ObservableObject {
         
         do {
             let user = try await signInUseCase.execute(email: email, password: password)
-            print("✅ Signed in: \(user.email)")
             state = .success
             coordinator?.didSignIn()
         } catch {
@@ -78,7 +73,6 @@ public final class SignInViewModel: ObservableObject {
         
         do {
             let user = try await googleSignInUseCase.execute()
-            print("✅ Signed in with Google: \(user.email)")
             state = .success
             coordinator?.didSignIn()
         } catch {

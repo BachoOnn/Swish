@@ -97,10 +97,6 @@ extension GamesView {
                 title = Calendar.monthAndYear(from: newValue)
             }
             
-            .onChange(of: focusedWeek) { _, n in
-                print(n.id)
-            }
-            
             .gesture(
                 DragGesture(minimumDistance: .zero)
                     .onChanged { value in

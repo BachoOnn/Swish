@@ -73,11 +73,8 @@ public final class GameDetailsViewModel: ObservableObject {
             let lineups = try await getLineupUseCase.execute(gameId: game.id)
             homeLineup = lineups.first { $0.team.id == game.homeTeam.id }
             awayLineup = lineups.first { $0.team.id == game.visitorTeam.id }
-            
-            print("✅ Loaded lineups - Home: \(homeLineup != nil), Away: \(awayLineup != nil)")
         } catch {
             errorMessage = "Failed to load lineups: \(error.localizedDescription)"
-            print("❌ Error loading lineups: \(error)")
         }
         
         isLoadingLineups = false
@@ -98,10 +95,8 @@ public final class GameDetailsViewModel: ObservableObject {
             awayTeamStats = allStats.filter { $0.team.id == game.visitorTeam.id }
                 .sorted { $0.pts > $1.pts }  
             
-            print("✅ Loaded box scores - Home: \(homeTeamStats.count), Away: \(awayTeamStats.count)")
         } catch {
             errorMessage = "Failed to load box score: \(error.localizedDescription)"
-            print("❌ Error loading box score: \(error)")
         }
         
         isLoadingBoxScore = false

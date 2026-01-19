@@ -17,16 +17,11 @@ public final class AuthCoordinator: AuthCoordinatorProtocol {
     
     public init() {
         self.diContainer = AuthDIContainer()
-        print("AuthCoordinator created")
     }
     
     public func setNavigationController(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
         navigationController.navigationBar.isHidden = true
-    }
-    
-    deinit {
-        print("🗑️ AuthCoordinator deallocated")
     }
     
     public func start() {

@@ -15,8 +15,6 @@ public final class FirebaseAuthRepository: AuthRepositoryProtocol {
     
     public init(googleSignInService: GoogleSignInService) {
         self.googleSignInService = googleSignInService
-        
-        print("name - \(Auth.auth().currentUser?.displayName ?? "no name")")
     }
     
     public var currentUser: AuthDomain.User? {
