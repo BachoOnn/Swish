@@ -16,10 +16,11 @@ struct FavoriteTeamCardView: View {
             Image(team.name)
                 .resizable()
                 .scaledToFill()
+                .frame(width: 60, height: 60)
             
         }
         .padding()
-        .frame(width: 80, height: 80)
+        .frame(width: 70, height: 70)
         .background(
             Circle()
                 .fill(Color(.systemBackground))
