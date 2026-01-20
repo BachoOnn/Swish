@@ -14,7 +14,7 @@ struct TeamView: View {
     
     var body: some View {
         ZStack {
-            GradientBackground()
+            GradientBackground(team: viewModel.team.name)
             
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 16) {
