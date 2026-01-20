@@ -114,7 +114,7 @@ public final class MainDIContainer {
             authRepository: authRepository,
             persistenceRepository: persistenceRepository
         )
-        return ProfileViewModel(coordinator: coordinator, getProfileUseCase: useCase)
+        return ProfileViewModel(coordinator: coordinator, getProfileUseCase: useCase, getTeamFavoritesUseCase: makeGetTeamFavoritesUseCase())
     }
     
     public func makeDiscoverViewModel() -> DiscoverViewModel {

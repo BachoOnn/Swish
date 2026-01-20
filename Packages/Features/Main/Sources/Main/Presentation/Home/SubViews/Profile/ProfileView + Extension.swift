@@ -113,10 +113,16 @@ extension ProfileView {
         
         VStack(alignment: .leading, spacing: 80) {
             
-            HStack {
+            VStack(alignment: .leading) {
                 Text("MY TEAMS")
                 
-                Spacer()
+                ScrollView(.horizontal) {
+                    LazyHStack {
+                        ForEach(viewModel.favoriteTeams, id: \.id) { team in
+                            FavoriteTeamCardView(team: team)
+                        }
+                    }
+                }
             }
             
             HStack {
