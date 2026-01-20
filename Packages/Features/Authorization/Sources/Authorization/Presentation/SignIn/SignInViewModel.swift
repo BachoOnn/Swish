@@ -60,7 +60,7 @@ public final class SignInViewModel: ObservableObject {
         state = .loading
         
         do {
-            let user = try await signInUseCase.execute(email: email, password: password)
+            _ = try await signInUseCase.execute(email: email, password: password)
             state = .success
             coordinator?.didSignIn()
         } catch {
@@ -72,7 +72,7 @@ public final class SignInViewModel: ObservableObject {
         state = .loading
         
         do {
-            let user = try await googleSignInUseCase.execute()
+            _ = try await googleSignInUseCase.execute()
             state = .success
             coordinator?.didSignIn()
         } catch {

@@ -58,7 +58,7 @@ public final class SignUpViewModel: ObservableObject {
         state = .loading
         
         do {
-            let user = try await signUpUseCase.execute(
+            _ = try await signUpUseCase.execute(
                 email: email,
                 password: password,
                 confirmPassword: confirmPassword,
