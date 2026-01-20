@@ -67,6 +67,7 @@ final class InitialCoordinator {
         let newsRepository = NewsRepository()
         let teamsRepository = TeamsRepository()
         let playersRepository = PlayersRepository()
+        let favoritesRepository = FavoritesRepository()
         
         let mainDIContainer = MainDIContainer(
             authRepository: authRepository,
@@ -74,7 +75,8 @@ final class InitialCoordinator {
             gameRepository: gameRepository,
             newsRepository: newsRepository,
             teamsRepository: teamsRepository,
-            playersRepository: playersRepository
+            playersRepository: playersRepository,
+            favoritesRepository: favoritesRepository
         )
         
         self.mainDIContainer = mainDIContainer

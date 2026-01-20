@@ -7,6 +7,7 @@
 
 import Combine
 import TeamDomain
+import FavoritesDomain
 
 @MainActor
 public final class TeamViewModel: ObservableObject {
@@ -18,17 +19,18 @@ public final class TeamViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private let getTeamStatsUseCase: DefaultGetTeamStatsUseCase
+    private let getTeamFavoritesUseCase: DefaultGetTeamFavoritesUseCase
     
-    public init(team: Team, getTeamStatsUseCase: DefaultGetTeamStatsUseCase) {
+    public init(team: Team, getTeamStatsUseCase: DefaultGetTeamStatsUseCase, getTeamFavoritesUseCase: DefaultGetTeamFavoritesUseCase) {
         self.team = team
         self.getTeamStatsUseCase = getTeamStatsUseCase
+        self.getTeamFavoritesUseCase = getTeamFavoritesUseCase
+        self.isFavorite = getTeamFavoritesUseCase.executeCheck(team: team)
     }
     
     func toggleFavorite() {
-        // TODO: add userdefaults service here than and check like this :
-        // isFavorite = favoritesService.isFavorite(team: Team)
-        
-        isFavorite.toggle()
+        getTeamFavoritesUseCase.executeSave(team: team)
+        isFavorite = getTeamFavoritesUseCase.executeCheck(team: team)
     }
     
     func fetchTeamStats() async {
