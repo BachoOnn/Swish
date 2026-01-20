@@ -14,7 +14,7 @@ struct PlayerView: View {
     
     var body: some View {
         ZStack {
-            GradientBackground()
+            GradientBackground(team: viewModel.player.team.name)
             
             VStack {
                 headerSection
