@@ -13,20 +13,24 @@ struct ProfileView: View {
     @StateObject var viewModel: ProfileViewModel
     
     var body: some View {
-        VStack(spacing: 0) {
-            
-            headerSection
-            
-            ScrollView {
-                VStack(spacing: 20) {
-                    imageSection
-                    
-                    subscriptionSection
-                    
-                    favoritesSection
+        
+        ZStack {
+            GradientBackground(team: viewModel.favTeam)
+            VStack(spacing: 0) {
+                
+                headerSection
+                
+                ScrollView {
+                    VStack(spacing: 20) {
+                        imageSection
+                        
+                        subscriptionSection
+                        
+                        favoritesSection
+                    }
                 }
+                .scrollIndicators(.hidden)
             }
-            .scrollIndicators(.hidden)
         }
         .toolbar(.hidden, for: .navigationBar)
         .onAppear {

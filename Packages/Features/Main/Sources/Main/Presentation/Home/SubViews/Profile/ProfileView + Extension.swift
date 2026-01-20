@@ -12,7 +12,7 @@ extension ProfileView {
     
     var headerSection: some View {
         ZStack {
-            Color(.systemBackground)
+            Color(.clear)
             HStack {
                 BackButton {
                     viewModel.navigateBack()

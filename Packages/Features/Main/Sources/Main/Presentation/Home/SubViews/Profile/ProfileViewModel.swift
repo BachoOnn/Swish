@@ -71,4 +71,13 @@ public final class ProfileViewModel: ObservableObject {
         self.userEmail = data.email
         self.userName = data.name
     }
+    
+    // MARK: -  Computed properties
+    
+    var favTeam: String {
+        guard let name = favoriteTeams.first?.name else {
+            return ""
+        }
+        return name
+    }
 }
