@@ -26,7 +26,6 @@ public final class ProfileViewModel: ObservableObject {
         self.getProfileUseCase = getProfileUseCase
         self.getTeamFavoritesUseCase = getTeamFavoritesUseCase
         loadUserData()
-        loadFavoriteTeams()
     }
     
     // MARK: - Navigation
@@ -37,6 +36,10 @@ public final class ProfileViewModel: ObservableObject {
     
     func signOut() {
         coordinator?.signOut()
+    }
+    
+    func goTeamDetails(team: Team) {
+        coordinator?.navigateToTeam(team)
     }
     
     // MARK: - Actions

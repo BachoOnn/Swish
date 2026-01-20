@@ -12,21 +12,14 @@ struct FavoriteTeamCardView: View {
     let team: Team
     
     var body: some View {
-        VStack(spacing: 5) {
+        ZStack {
             Image(team.name)
                 .resizable()
-                .scaledToFit()
-                .frame(width: 50, height: 50)
+                .scaledToFill()
             
-            Text(team.name)
-                .font(.caption)
-                .fontWeight(.bold)
-                .foregroundColor(.primary)
-                .multilineTextAlignment(.center)
-                .lineLimit(1)
         }
-        .padding(10)
-        .frame(width: 100, height: 100)
+        .padding()
+        .frame(width: 80, height: 80)
         .background(
             Circle()
                 .fill(Color(.systemBackground))

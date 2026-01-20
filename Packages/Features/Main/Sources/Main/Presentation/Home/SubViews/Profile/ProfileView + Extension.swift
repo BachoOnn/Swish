@@ -111,7 +111,7 @@ extension ProfileView {
     
     var favoritesSection: some View {
         
-        VStack(alignment: .leading, spacing: 80) {
+        VStack(alignment: .leading, spacing: 40) {
             
             VStack(alignment: .leading) {
                 Text("MY TEAMS")
@@ -120,6 +120,9 @@ extension ProfileView {
                     LazyHStack {
                         ForEach(viewModel.favoriteTeams, id: \.id) { team in
                             FavoriteTeamCardView(team: team)
+                                .onTapGesture {
+                                    viewModel.goTeamDetails(team: team)
+                                }
                         }
                     }
                 }
