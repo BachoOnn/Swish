@@ -154,7 +154,6 @@ Temporary Items
 *.xcuserstate
 
 ## Firebase
-GoogleService-Info.plist
 .firebaserc
 .firebase/
 
