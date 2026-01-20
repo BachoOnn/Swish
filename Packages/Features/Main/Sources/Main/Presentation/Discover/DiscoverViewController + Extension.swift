@@ -33,7 +33,7 @@ extension DiscoverViewController {
             self?.openWebsite(urlString: "https://www.nba.com/standings")
         }
         let askBtn = UIButton.makeMenuCard(title: "Ask SWISH", imageName: "basketball.fill") { [weak self] in
-            self?.openWebsite(urlString: "")
+            self?.openWebsite(urlString: "https://www.blitznba.com/")
         }
         let playersBtn = UIButton.makeMenuCard(title: "Players", imageName: "figure.basketball") { [weak self] in
             self?.openWebsite(urlString: "https://www.nba.com/players")
