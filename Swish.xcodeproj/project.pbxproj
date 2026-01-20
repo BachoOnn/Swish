@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9D4D5BBE2F1AF2DA0026877F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4D5BBD2F1AF2AE0026877F /* Config.swift */; };
 		9D4D5EAF2F1B09CA0026877F /* MyNetworkManager in Frameworks */ = {isa = PBXBuildFile; productRef = 9D4D5EAE2F1B09CA0026877F /* MyNetworkManager */; };
 		9D4D5EDF2F1BF11C0026877F /* APIService in Frameworks */ = {isa = PBXBuildFile; productRef = 9D4D5EDE2F1BF11C0026877F /* APIService */; };
 		9D646F082F172CFE00A706B6 /* PersistanceService in Frameworks */ = {isa = PBXBuildFile; productRef = 9D646F072F172CFE00A706B6 /* PersistanceService */; };
@@ -17,8 +16,6 @@
 
 /* Begin PBXFileReference section */
 		9D4D5BBB2F1AE3D00026877F /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
-		9D4D5BBC2F1AE6170026877F /* Secrets.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text; path = Secrets.xcconfig.example; sourceTree = "<group>"; };
-		9D4D5BBD2F1AF2AE0026877F /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		9D8F48582F0E87000014AB14 /* Swish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -90,8 +87,6 @@
 		9D4D5BBA2F1AE1570026877F /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				9D4D5BBD2F1AF2AE0026877F /* Config.swift */,
-				9D4D5BBC2F1AE6170026877F /* Secrets.xcconfig.example */,
 				9D4D5BBB2F1AE3D00026877F /* Secrets.xcconfig */,
 			);
 			path = Config;
@@ -206,7 +201,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D4D5BBE2F1AF2DA0026877F /* Config.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -160,9 +160,9 @@ GoogleService-Info.plist
 
 ## API Keys & Sensitive Configuration 
 Config/Secrets.xcconfig
-Config/*.xcconfig
+Config/.xcconfig
 !Config/Secrets.xcconfig.example
-*.xcconfig
+.xcconfig
 !*.xcconfig.example
 
 ## Secrets & Environment
