@@ -13,13 +13,19 @@ let package = Package(
     ],
     
     dependencies: [
-        .package(path: "../../Domain/AuthDomain")
+        .package(path: "../../Domain/AuthDomain"),
+        .package(path: "../../Domain/TeamDomain"),
+        .package(path: "../../Domain/PlayerDomain"),
+        .package(path: "../../Domain/FavoritesDomain")
     ],
     targets: [
         .target(
             name: "PersistanceService",
             dependencies: [
-                "AuthDomain"
+                "AuthDomain",
+                "TeamDomain",
+                "PlayerDomain",
+                "FavoritesDomain"
             ]
         ),
         

@@ -40,6 +40,7 @@
 				Data/FirebaseService,
 				Data/PersistanceService,
 				Domain/AuthDomain,
+				Domain/FavoritesDomain,
 				Domain/GameDomain,
 				Domain/NewsDomain,
 				Domain/PlayerDomain,

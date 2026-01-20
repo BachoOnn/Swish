@@ -111,18 +111,36 @@ extension ProfileView {
     
     var favoritesSection: some View {
         
-        VStack(alignment: .leading, spacing: 80) {
+        VStack(alignment: .leading, spacing: 40) {
             
-            HStack {
+            VStack(alignment: .leading) {
                 Text("MY TEAMS")
                 
-                Spacer()
+                ScrollView(.horizontal) {
+                    LazyHStack(spacing: 10) {
+                        ForEach(viewModel.favoriteTeams, id: \.id) { team in
+                            FavoriteTeamCardView(team: team)
+                                .onTapGesture {
+                                    viewModel.goTeamDetails(team: team)
+                                }
+                        }
+                    }
+                }
             }
             
-            HStack {
+            VStack(alignment: .leading) {
                 Text("MY PLAYERS")
                 
-                Spacer()
+                ScrollView(.horizontal) {
+                    LazyHStack(spacing: 10) {
+                        ForEach(viewModel.favoritePlayers, id: \.id) { player in
+                            FavoritePlayerCardView(player: player)
+                                .onTapGesture {
+                                    viewModel.goPlayerDetails(player: player)
+                                }
+                        }
+                    }
+                }
             }
             
         }

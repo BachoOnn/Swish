@@ -29,5 +29,9 @@ struct ProfileView: View {
             .scrollIndicators(.hidden)
         }
         .toolbar(.hidden, for: .navigationBar)
+        .onAppear {
+            viewModel.loadFavoriteTeams()
+            viewModel.loadFavoritePlayers()
+        }
     }
 }

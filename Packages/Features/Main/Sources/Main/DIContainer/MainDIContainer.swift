@@ -11,6 +11,7 @@ import GameDomain
 import NewsDomain
 import TeamDomain
 import PlayerDomain
+import FavoritesDomain
 
 @MainActor
 public final class MainDIContainer {
@@ -22,6 +23,7 @@ public final class MainDIContainer {
     private let newsRepository: NewsRepositoryProtocol
     private let teamsRepository: TeamsRepositoryProtocol
     private let playersRepository: PlayersRepositoryProtocol
+    private let favoritesRepository: FavoritesRepositoryProtocol
     
     public init(
         authRepository: AuthRepositoryProtocol,
@@ -29,7 +31,8 @@ public final class MainDIContainer {
         gameRepository: GamesRepositoryProtocol,
         newsRepository: NewsRepositoryProtocol,
         teamsRepository: TeamsRepositoryProtocol,
-        playersRepository: PlayersRepositoryProtocol
+        playersRepository: PlayersRepositoryProtocol,
+        favoritesRepository: FavoritesRepositoryProtocol
     ) {
         self.authRepository = authRepository
         self.persistenceRepository = persistenceRepository
@@ -37,6 +40,7 @@ public final class MainDIContainer {
         self.newsRepository = newsRepository
         self.teamsRepository = teamsRepository
         self.playersRepository = playersRepository
+        self.favoritesRepository = favoritesRepository
         self.coordinator = MainCoordinator()
     }
     
@@ -83,6 +87,14 @@ public final class MainDIContainer {
         DefaultGetPlayerStatsUseCase(playersRepository: playersRepository)
     }
     
+    private func makeGetTeamFavoritesUseCase() -> DefaultGetTeamFavoritesUseCase {
+        DefaultGetTeamFavoritesUseCase(favoritesRepository: favoritesRepository)
+    }
+    
+    private func makeGetPlayerFavoritesUseCase() -> DefaultGetPlayerFavoritesUseCase {
+        DefaultGetPlayerFavoritesUseCase(favoritesRepository: favoritesRepository)
+    }
+    
     // MARK: - ViewModels
     
     public func makeRootViewModel() -> RootViewModel {
@@ -102,7 +114,7 @@ public final class MainDIContainer {
             authRepository: authRepository,
             persistenceRepository: persistenceRepository
         )
-        return ProfileViewModel(coordinator: coordinator, getProfileUseCase: useCase)
+        return ProfileViewModel(coordinator: coordinator, getProfileUseCase: useCase, getTeamFavoritesUseCase: makeGetTeamFavoritesUseCase(), getPlayerFavoritesUseCase: makeGetPlayerFavoritesUseCase())
     }
     
     public func makeDiscoverViewModel() -> DiscoverViewModel {
@@ -114,11 +126,11 @@ public final class MainDIContainer {
     }
     
     public func makePlayerViewModel(player: PlayerDomain.Player) -> PlayerViewModel {
-        PlayerViewModel(player: player, getPlayerStatsUseCase: makeGetPlayersStatsUseCase())
+        PlayerViewModel(player: player, getPlayerStatsUseCase: makeGetPlayersStatsUseCase(), getPlayerFavoritesUseCase: makeGetPlayerFavoritesUseCase())
     }
     
     public func makeTeamViewModel(team: TeamDomain.Team) -> TeamViewModel {
-        TeamViewModel(team: team, getTeamStatsUseCase: makeGetTeamStatsUseCase())
+        TeamViewModel(team: team, getTeamStatsUseCase: makeGetTeamStatsUseCase(), getTeamFavoritesUseCase: makeGetTeamFavoritesUseCase())
     }
     
     public func makeGameDetailsViewModel(game: Game) -> GameDetailsViewModel {

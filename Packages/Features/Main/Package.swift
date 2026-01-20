@@ -18,7 +18,8 @@ let package = Package(
         .package(path: "../../Domain/GameDomain"),
         .package(path: "../../Domain/NewsDomain"),
         .package(path: "../../Domain/TeamDomain"),
-        .package(path: "../../Domain/PlayerDomain")
+        .package(path: "../../Domain/PlayerDomain"),
+        .package(path: "../../Domain/FavoritesDomain")
     ],
     targets: [
         .target(
@@ -30,7 +31,8 @@ let package = Package(
                 "GameDomain",
                 "NewsDomain",
                 "TeamDomain",
-                "PlayerDomain"
+                "PlayerDomain",
+                "FavoritesDomain"
             ]
         ),
     ]
