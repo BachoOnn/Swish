@@ -117,7 +117,7 @@ extension ProfileView {
                 Text("MY TEAMS")
                 
                 ScrollView(.horizontal) {
-                    LazyHStack {
+                    LazyHStack(spacing: 10) {
                         ForEach(viewModel.favoriteTeams, id: \.id) { team in
                             FavoriteTeamCardView(team: team)
                                 .onTapGesture {
@@ -128,10 +128,19 @@ extension ProfileView {
                 }
             }
             
-            HStack {
+            VStack(alignment: .leading) {
                 Text("MY PLAYERS")
                 
-                Spacer()
+                ScrollView(.horizontal) {
+                    LazyHStack(spacing: 10) {
+                        ForEach(viewModel.favoritePlayers, id: \.id) { player in
+                            FavoritePlayerCardView(player: player)
+                                .onTapGesture {
+                                    viewModel.goPlayerDetails(player: player)
+                                }
+                        }
+                    }
+                }
             }
             
         }

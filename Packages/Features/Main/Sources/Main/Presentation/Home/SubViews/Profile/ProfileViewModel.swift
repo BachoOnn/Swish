@@ -8,6 +8,7 @@
 import Combine
 import AuthDomain
 import TeamDomain
+import PlayerDomain
 import FavoritesDomain
 
 @MainActor
@@ -16,15 +17,18 @@ public final class ProfileViewModel: ObservableObject {
     private weak var coordinator: MainCoordinator?
     private let getProfileUseCase: DefaultGetProfileUseCase
     private let getTeamFavoritesUseCase: DefaultGetTeamFavoritesUseCase
+    private let getPlayerFavoritesUseCase: DefaultGetPlayerFavoritesUseCase
     
     @Published var userEmail: String = ""
     @Published var userName: String = ""
     @Published var favoriteTeams: [Team] = []
+    @Published var favoritePlayers: [Player] = []
     
-    public init(coordinator: MainCoordinator, getProfileUseCase: DefaultGetProfileUseCase, getTeamFavoritesUseCase: DefaultGetTeamFavoritesUseCase) {
+    public init(coordinator: MainCoordinator, getProfileUseCase: DefaultGetProfileUseCase, getTeamFavoritesUseCase: DefaultGetTeamFavoritesUseCase, getPlayerFavoritesUseCase: DefaultGetPlayerFavoritesUseCase) {
         self.coordinator = coordinator
         self.getProfileUseCase = getProfileUseCase
         self.getTeamFavoritesUseCase = getTeamFavoritesUseCase
+        self.getPlayerFavoritesUseCase = getPlayerFavoritesUseCase
         loadUserData()
     }
     
@@ -42,6 +46,10 @@ public final class ProfileViewModel: ObservableObject {
         coordinator?.navigateToTeam(team)
     }
     
+    func goPlayerDetails(player: Player) {
+        coordinator?.navigateToPlayer(player)
+    }
+    
     // MARK: - Actions
     
     func subscribe() {
@@ -53,9 +61,8 @@ public final class ProfileViewModel: ObservableObject {
         favoriteTeams = getTeamFavoritesUseCase.executeGet()
     }
     
-    func addFavoritePlayer() {
-        // TODO: Add favorite player
-        print("Add favorite player tapped")
+    func loadFavoritePlayers() {
+        favoritePlayers = getPlayerFavoritesUseCase.executeGet()
     }
     
     // MARK: - Private Methods

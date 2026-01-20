@@ -31,6 +31,7 @@ struct ProfileView: View {
         .toolbar(.hidden, for: .navigationBar)
         .onAppear {
             viewModel.loadFavoriteTeams()
+            viewModel.loadFavoritePlayers()
         }
     }
 }
