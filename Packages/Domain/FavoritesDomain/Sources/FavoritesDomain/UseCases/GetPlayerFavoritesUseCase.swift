@@ -21,15 +21,15 @@ public struct DefaultGetPlayerFavoritesUseCase: GetPlayerFavoritesUseCase {
         self.favoritesRepository = favoritesRepository
     }
     
-    func executeSave(player: PlayerDomain.Player) {
+    public func executeSave(player: PlayerDomain.Player) {
         _ = favoritesRepository.togglePlayerFavorite(player: player)
     }
     
-    func executeCheck(player: PlayerDomain.Player) -> Bool {
+    public func executeCheck(player: PlayerDomain.Player) -> Bool {
         favoritesRepository.isFavoritePlayer(player: player)
     }
     
-    func executeGet() -> [PlayerDomain.Player] {
+    public func executeGet() -> [PlayerDomain.Player] {
         favoritesRepository.getAllFavoritesPlayer()
     }
 }

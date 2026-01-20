@@ -91,6 +91,10 @@ public final class MainDIContainer {
         DefaultGetTeamFavoritesUseCase(favoritesRepository: favoritesRepository)
     }
     
+    private func makeGetPlayerFavoritesUseCase() -> DefaultGetPlayerFavoritesUseCase {
+        DefaultGetPlayerFavoritesUseCase(favoritesRepository: favoritesRepository)
+    }
+    
     // MARK: - ViewModels
     
     public func makeRootViewModel() -> RootViewModel {
@@ -122,7 +126,7 @@ public final class MainDIContainer {
     }
     
     public func makePlayerViewModel(player: PlayerDomain.Player) -> PlayerViewModel {
-        PlayerViewModel(player: player, getPlayerStatsUseCase: makeGetPlayersStatsUseCase())
+        PlayerViewModel(player: player, getPlayerStatsUseCase: makeGetPlayersStatsUseCase(), getPlayerFavoritesUseCase: makeGetPlayerFavoritesUseCase())
     }
     
     public func makeTeamViewModel(team: TeamDomain.Team) -> TeamViewModel {

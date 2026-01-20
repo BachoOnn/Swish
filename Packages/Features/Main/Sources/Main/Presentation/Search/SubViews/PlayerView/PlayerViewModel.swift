@@ -7,6 +7,7 @@
 
 import Combine
 import PlayerDomain
+import FavoritesDomain
 
 @MainActor
 public final class PlayerViewModel: ObservableObject {
@@ -19,17 +20,18 @@ public final class PlayerViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private let getPlayerStatsUseCase: DefaultGetPlayerStatsUseCase
+    private let getPlayerFavoritesUseCase: DefaultGetPlayerFavoritesUseCase
     
-    public init(player: Player, getPlayerStatsUseCase: DefaultGetPlayerStatsUseCase) {
+    public init(player: Player, getPlayerStatsUseCase: DefaultGetPlayerStatsUseCase, getPlayerFavoritesUseCase: DefaultGetPlayerFavoritesUseCase) {
         self.player = player
         self.getPlayerStatsUseCase = getPlayerStatsUseCase
+        self.getPlayerFavoritesUseCase = getPlayerFavoritesUseCase
+        self.isFavorite = getPlayerFavoritesUseCase.executeCheck(player: player)
     }
     
     func toggleFavorite() {
-        // TODO: add userdefaults service here than and check like this :
-        // isFavorite = favoritesService.isFavorite(player: Player)
-        
-        isFavorite.toggle()
+        getPlayerFavoritesUseCase.executeSave(player: player)
+        isFavorite = getPlayerFavoritesUseCase.executeCheck(player: player)
     }
     
     func fetchPlayerStats() async {
