@@ -21,7 +21,11 @@ struct StatsView: View {
             } else if viewModel.playerStats != nil {
                 mainStatsContent
             } else {
-                Text("No statistics available.")
+                VStack {
+                    Text("No statistics available.")
+                        .padding(.top, 40)
+                    Spacer()
+                }
             }
         }
         .task {

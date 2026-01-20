@@ -167,6 +167,9 @@ final class GameScoreHeaderView: UIView {
             statusLabel.text = "FINAL"
         } else if game.isUpcoming {
             statusLabel.text = game.formattedTime
+        } else if game.isLive {
+            statusLabel.text = game.status
+            statusLabel.textColor = .red
         }
     }
 }
