@@ -19,6 +19,18 @@ public final class GamesViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
+    @Published var selection: Date? = .now
+    @Published var title: String = Calendar.monthAndYear(from: .now)
+    @Published var focusedWeek: Week = .current
+    @Published var calendarType: CalendarType = .week
+    @Published var isDragging: Bool = false
+    @Published var dragProgress: CGFloat = .zero
+    @Published var initialDragOffset: CGFloat? = nil
+    @Published var verticalDragOffset: CGFloat = .zero
+    
+    // MARK: - Properties
+    private(set) var symbols = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
     // MARK: - Dependencies
     private weak var coordinator: MainCoordinator?
     private let getTodayGamesUseCase: DefaultGetTodayGamesUseCase
@@ -36,25 +48,18 @@ public final class GamesViewModel: ObservableObject {
     }
     
     // MARK: - Public Methods
-    func loadGames(for date: Date?) {
+    func onLoad() {
         Task {
-            await loadGamesAsync(for: date)
+            await self.loadGamesAsync(for: selection)
         }
     }
     
-    private func loadGamesAsync(for date: Date?) async {
-        guard let date = date else {
-            await loadTodaysGames()
-            return
-        }
-        
-        if Calendar.current.isDateInToday(date) {
-            await loadTodaysGames()
-        } else {
-            await loadGamesForDate(date)
-        }
+    func navigateToGameDetails(game: Game) {
+        coordinator?.navigateToGameDetails(game: game)
     }
-    
+}
+
+fileprivate extension GamesViewModel {
     private func loadTodaysGames() async {
         isLoading = true
         errorMessage = nil
@@ -85,7 +90,16 @@ public final class GamesViewModel: ObservableObject {
         isLoading = false
     }
     
-    func navigateToGameDetails(game: Game) {
-        coordinator?.navigateToGameDetails(game: game)
+    private func loadGamesAsync(for date: Date?) async {
+        guard let date = date else {
+            await loadTodaysGames()
+            return
+        }
+        
+        if Calendar.current.isDateInToday(date) {
+            await loadTodaysGames()
+        } else {
+            await loadGamesForDate(date)
+        }
     }
 }

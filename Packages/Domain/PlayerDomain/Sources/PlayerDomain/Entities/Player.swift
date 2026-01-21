@@ -25,14 +25,14 @@ public struct Player: Identifiable, Codable, Hashable {
         firstName: String,
         lastName: String,
         position: String,
-        height: String?,
-        weight: String?,
-        jerseyNumber: String?,
-        college: String?,
-        country: String?,
-        draftYear: Int?,
-        draftRound: Int?,
-        draftNumber: Int?,
+        height: String? = nil,
+        weight: String? = nil,
+        jerseyNumber: String? = nil,
+        college: String? = nil,
+        country: String? = nil,
+        draftYear: Int? = nil,
+        draftRound: Int? = nil,
+        draftNumber: Int? = nil,
         team: PlayerTeamInfo
     ) {
         self.id = id

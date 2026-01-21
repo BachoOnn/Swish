@@ -30,19 +30,19 @@ extension GamesView {
         ZStack(alignment: .top) {
             VStack {
                 HStack {
-                    Text(title).font(.title3.bold())
+                    Text(viewModel.title).font(.title3.bold())
                 }
                 .padding(.vertical, 13)
                 .padding(.horizontal)
                 
                 HStack {
-                    ForEach(symbols, id: \.self) { symbol in
+                    ForEach(viewModel.symbols, id: \.self) { symbol in
                         Text(symbol)
                             .fontWeight(.regular)
                             .frame(maxWidth: .infinity)
                             .foregroundStyle(.secondary)
                         
-                        if symbol != symbols.last {
+                        if symbol != viewModel.symbols.last {
                             Spacer()
                         }
                     }
@@ -50,32 +50,32 @@ extension GamesView {
                 .padding(.horizontal)
                 
                 VStack {
-                    switch calendarType {
+                    switch viewModel.calendarType {
                     case .week :
                         if #available(iOS 18.0, *) {
                             WeekCalendarView(
-                                $title,
-                                selection: $selection,
-                                focused: $focusedWeek,
-                                isDragging: isDragging
+                                $viewModel.title,
+                                selection: $viewModel.selection,
+                                focused: $viewModel.focusedWeek,
+                                isDragging: viewModel.isDragging
                             )
                         } else {
                         }
                     case .month:
                         if #available(iOS 18.0, *) {
                             MonthCalendarView(
-                                $title,
-                                selection: $selection,
-                                focused: $focusedWeek,
-                                isDragging: isDragging,
-                                dragProgress: dragProgress
+                                $viewModel.title,
+                                selection: $viewModel.selection,
+                                focused: $viewModel.focusedWeek,
+                                isDragging: viewModel.isDragging,
+                                dragProgress: viewModel.dragProgress
                             )
                         } else {
                         }
                     }
                 }
                 
-                .frame(height: Constants.dayHeight + verticalDragOffset)
+                .frame(height: Constants.dayHeight + viewModel.verticalDragOffset)
                 .clipped()
                 
                 if #available(iOS 18.0, *) {
@@ -91,55 +91,55 @@ extension GamesView {
                     .fill(Color(.systemBackground))
             )
             
-            .onChange(of: selection) { _, newValue in
+            .onChange(of: viewModel.selection) { _, newValue in
                 guard let newValue else { return }
                 
-                title = Calendar.monthAndYear(from: newValue)
+                viewModel.title = Calendar.monthAndYear(from: newValue)
             }
             
             .gesture(
                 DragGesture(minimumDistance: .zero)
                     .onChanged { value in
-                        isDragging = true
-                        calendarType = verticalDragOffset == 0 ? .week : .month
+                        viewModel.isDragging = true
+                        viewModel.calendarType = viewModel.verticalDragOffset == 0 ? .week : .month
                         
-                        if initialDragOffset == nil {
-                            initialDragOffset = verticalDragOffset
+                        if viewModel.initialDragOffset == nil {
+                            viewModel.initialDragOffset = viewModel.verticalDragOffset
                         }
                         
-                        verticalDragOffset = max(
+                        viewModel.verticalDragOffset = max(
                             .zero,
                             min(
-                                (initialDragOffset ?? 0) + value.translation.height,
+                                (viewModel.initialDragOffset ?? 0) + value.translation.height,
                                 Constants.monthHeight - Constants.dayHeight
                             )
                         )
                         
-                        dragProgress = verticalDragOffset / (Constants.monthHeight - Constants.dayHeight)
+                        viewModel.dragProgress = viewModel.verticalDragOffset / (Constants.monthHeight - Constants.dayHeight)
                     }
                     .onEnded { value in
-                        isDragging = false
-                        initialDragOffset = nil
+                        viewModel.isDragging = false
+                        viewModel.initialDragOffset = nil
                         
                         withAnimation {
-                            switch calendarType {
+                            switch viewModel.calendarType {
                             case .week:
-                                if verticalDragOffset > Constants.monthHeight/3 {
-                                    verticalDragOffset = Constants.monthHeight - Constants.dayHeight
+                                if viewModel.verticalDragOffset > Constants.monthHeight/3 {
+                                    viewModel.verticalDragOffset = Constants.monthHeight - Constants.dayHeight
                                 } else {
-                                    verticalDragOffset = 0
+                                    viewModel.verticalDragOffset = 0
                                 }
                             case .month:
-                                if verticalDragOffset < Constants.monthHeight/3 {
-                                    verticalDragOffset = 0
+                                if viewModel.verticalDragOffset < Constants.monthHeight/3 {
+                                    viewModel.verticalDragOffset = 0
                                 } else {
-                                    verticalDragOffset = Constants.monthHeight - Constants.dayHeight
+                                    viewModel.verticalDragOffset = Constants.monthHeight - Constants.dayHeight
                                 }
                             }
                             
-                            dragProgress = verticalDragOffset / (Constants.monthHeight - Constants.dayHeight)
+                            viewModel.dragProgress = viewModel.verticalDragOffset / (Constants.monthHeight - Constants.dayHeight)
                         } completion: {
-                            calendarType = verticalDragOffset == 0 ? .week : .month
+                            viewModel.calendarType = viewModel.verticalDragOffset == 0 ? .week : .month
                         }
                     }
             )

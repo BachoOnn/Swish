@@ -13,23 +13,12 @@ import Helpers
 struct GamesView: View {
     
     @StateObject var viewModel: GamesViewModel
-    
-    @State var selection: Date? = .now
-    @State var title: String = Calendar.monthAndYear(from: .now)
-    @State var focusedWeek: Week = .current
-    @State var calendarType: CalendarType = .week
-    @State var isDragging: Bool = false
-    @State var dragProgress: CGFloat = .zero
-    @State var initialDragOffset: CGFloat? = nil
-    @State var verticalDragOffset: CGFloat = .zero
-    
-    var symbols = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    
+        
     var body: some View {
         ZStack {
             GradientBackground()
             
-            VStack(spacing: 1) {
+            VStack(spacing: .zero) {
                 headerSection
                     .ignoresSafeArea()
                     .frame(height: 65)
@@ -39,9 +28,10 @@ struct GamesView: View {
                 if viewModel.isLoading {
                     CustomLoadingView(message: "Loading Games...")
                 } else if let errorMessage = viewModel.errorMessage {
-                    CustomErrorView(message: errorMessage) {
-                        viewModel.loadGames(for: selection)
-                    }
+                    CustomErrorView(
+                        message: errorMessage,
+                        retryAction: viewModel.onLoad
+                    )
                 } else if viewModel.games.isEmpty {
                         Text("No Game For This Day")
                         .padding(.top, 80)
@@ -52,11 +42,7 @@ struct GamesView: View {
                 Spacer()
             }
         }
-        .task {
-            viewModel.loadGames(for: selection)
-        }
-        .onChange(of: selection) { _, newValue in
-            viewModel.loadGames(for: newValue)
-        }
+        .onLoad(perform: viewModel.onLoad)
+        .onChange(of: viewModel.selection, viewModel.onLoad)
     }
 }
