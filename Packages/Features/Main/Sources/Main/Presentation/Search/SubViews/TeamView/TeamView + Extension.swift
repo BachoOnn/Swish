@@ -164,7 +164,7 @@ extension TeamView {
                     
                     CustomContainer(width: 110, height: 110) {
                         VStack(spacing: 10) {
-                            Text(String(format: "%.1f", stats.tov)) 
+                            Text(String(format: "%.1f", stats.tov))
                                 .font(.system(size: 26, weight: .regular))
                             
                             Text("TOV")
@@ -293,26 +293,10 @@ extension TeamView {
     }
     
     func errorSection(message: String) -> some View {
-        VStack(spacing: 16) {
-            Image(systemName: "exclamationmark.triangle")
-                .font(.system(size: 50))
-                .foregroundColor(.orange)
-            
-            Text("Failed to load stats")
-                .font(.headline)
-            
-            Text(message)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
-            
-            Button("Retry") {
-                Task {
-                    await viewModel.fetchTeamStats()
-                }
+        CustomErrorView(message: message) {
+            Task {
+                await viewModel.fetchTeamStats()
             }
-            .buttonStyle(.bordered)
         }
         .padding(.top, 40)
     }
@@ -332,12 +316,7 @@ extension TeamView {
     
     var loadingSection: some View {
         VStack(spacing: 16) {
-            CustomProgressView()
-                .padding()
-            
-            Text("Loading team statistics...")
-                .font(.subheadline)
-                .fontDesign(.monospaced)
+            CustomLoadingView(message: "Loading Team Statistics...")
         }
         .padding(.top, 40)
     }

@@ -37,9 +37,11 @@ struct GamesView: View {
                 calendarSection
                 
                 if viewModel.isLoading {
-                    loadingView
+                    CustomLoadingView(message: "Loading Games...")
                 } else if let errorMessage = viewModel.errorMessage {
-                    errorView(errorMessage)
+                    CustomErrorView(message: errorMessage) {
+                        viewModel.loadGames(for: selection)
+                    }
                 } else if viewModel.games.isEmpty {
                         Text("No Game For This Day")
                         .padding(.top, 80)
@@ -55,51 +57,6 @@ struct GamesView: View {
         }
         .onChange(of: selection) { _, newValue in
             viewModel.loadGames(for: newValue)
-        }
-    }
-    
-    private var loadingView: some View {
-        VStack {
-            Spacer()
-            CustomProgressView()
-            Text("Loading games...")
-                .font(.subheadline)
-                .fontDesign(.monospaced)
-                .padding(.top, 8)
-            Spacer()
-        }
-    }
-    
-    private func errorView(_ message: String) -> some View {
-        VStack(spacing: 16) {
-            Spacer()
-            Image(systemName: "exclamationmark.triangle.fill")
-                .font(.system(size: 50))
-                .foregroundColor(.orange)
-            
-            Text("Oops!")
-                .font(.title2.bold())
-            
-            Text(message)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 32)
-            
-            Button(action: {
-                viewModel.loadGames(for: selection)
-            }) {
-                Text("Try Again")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 32)
-                    .padding(.vertical, 12)
-                    .background(Color.blue)
-                    .cornerRadius(10)
-            }
-            .padding(.top, 8)
-            
-            Spacer()
         }
     }
 }

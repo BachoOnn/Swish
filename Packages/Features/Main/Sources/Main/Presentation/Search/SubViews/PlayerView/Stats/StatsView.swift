@@ -16,7 +16,7 @@ struct StatsView: View {
     var body: some View {
         ZStack {
             if viewModel.isLoadingStats {
-                ProgressView("Loading Stats...")
+                CustomLoadingView(message: "Loading Stats...")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if viewModel.playerStats != nil {
                 mainStatsContent

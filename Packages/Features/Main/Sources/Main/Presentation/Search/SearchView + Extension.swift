@@ -33,7 +33,7 @@ extension SearchView {
     var teamsListSection: some View {
         ZStack {
             if viewModel.isLoadingTeams {
-                loadingView(message: "Loading Teams...")
+                CustomLoadingView(message: "Loading Teams...")
             } else if viewModel.teams.isEmpty && !viewModel.searchText.isEmpty {
                 emptySearchView(searchText: viewModel.searchText, type: "Teams")
             } else if viewModel.teams.isEmpty {
@@ -68,7 +68,7 @@ extension SearchView {
                     message: "Enter a player's name to get started"
                 )
             } else if viewModel.isLoadingPlayers {
-                loadingView(message: "Searching Players...")
+                CustomLoadingView(message: "Searching Players...")
             } else if viewModel.players.isEmpty {
                 emptySearchView(searchText: viewModel.searchText, type: "Players")
             } else {
@@ -88,18 +88,6 @@ extension SearchView {
                             }
                     }
             }
-        }
-    }
-    
-    func loadingView(message: String) -> some View {
-        VStack {
-            CustomProgressView()
-            
-            Text(message)
-                .fontDesign(.monospaced)
-                .font(.subheadline)
-            
-            Spacer()
         }
     }
     

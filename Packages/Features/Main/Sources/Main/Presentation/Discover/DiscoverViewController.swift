@@ -65,7 +65,7 @@ final class DiscoverViewController: UIViewController {
             headerView.topAnchor.constraint(equalTo: view.topAnchor),
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 110),
+            headerView.heightAnchor.constraint(equalToConstant: 115),
             titleLabel1.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 20),
             titleLabel1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
         ])

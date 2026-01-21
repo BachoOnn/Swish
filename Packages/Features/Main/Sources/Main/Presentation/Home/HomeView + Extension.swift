@@ -12,15 +12,9 @@ extension HomeView {
     var gameCardSection: some View {
         VStack {
             if viewModel.isGamesLoading {
-                VStack(spacing: 26) {
-                    CustomProgressView()
-                    
-                    Text("Loading today's games...")
-                        .font(.subheadline)
-                        .fontDesign(.monospaced)
-                }
-                .frame(height: 200)
-                .padding(.vertical)
+                CustomLoadingView(message: "Loading Today's Games...")
+                    .frame(height: 200)
+                    .padding(.vertical)
             } else if viewModel.featuredGames.isEmpty {
                 VStack(spacing: 12) {
                     Image(systemName: "basketball.fill")
@@ -105,7 +99,6 @@ extension HomeView {
                 .frame(height: 200)
                 
             } else {
-                
                 LazyVStack(spacing: 0) {
                     ForEach(Array(viewModel.news.enumerated()), id: \.element.id) { index, news in
                         if let url = URL(string: news.links.web.href) {

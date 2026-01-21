@@ -32,10 +32,10 @@ public extension UIView {
         NSLayoutConstraint.activate([
             logoImageView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
             logoImageView.centerYAnchor.constraint(equalTo: container.centerYAnchor, constant: 20),
-            logoImageView.widthAnchor.constraint(equalToConstant: 30),
-            logoImageView.heightAnchor.constraint(equalToConstant: 30),
+            logoImageView.widthAnchor.constraint(equalToConstant: 25),
+            logoImageView.heightAnchor.constraint(equalToConstant: 25),
             
-            label.leadingAnchor.constraint(equalTo: logoImageView.trailingAnchor, constant: 12),
+            label.leadingAnchor.constraint(equalTo: logoImageView.trailingAnchor, constant: 8),
             label.centerYAnchor.constraint(equalTo: logoImageView.centerYAnchor),
             
             separator.leadingAnchor.constraint(equalTo: container.leadingAnchor),
