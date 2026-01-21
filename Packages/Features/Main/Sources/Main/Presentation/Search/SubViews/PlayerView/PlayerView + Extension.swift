@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Common
 
 extension PlayerView {
     var headerSection: some View {
@@ -29,8 +30,7 @@ extension PlayerView {
     
     var bioSection: some View {
         HStack {
-            Image(viewModel.player.team.abbreviation)  // TODO: use kingfisher here later
-                .resizable()
+            PlayerHeadshotView(fullName: viewModel.playerName)
                 .scaledToFit()
                 .frame(width: 200, height: 200)
                 .padding(.trailing)
