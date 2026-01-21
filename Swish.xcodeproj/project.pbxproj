@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D37A0F32F2122B800988422 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 9D37A0F22F2122B800988422 /* Kingfisher */; };
 		9D4D5EAF2F1B09CA0026877F /* MyNetworkManager in Frameworks */ = {isa = PBXBuildFile; productRef = 9D4D5EAE2F1B09CA0026877F /* MyNetworkManager */; };
 		9D4D5EDF2F1BF11C0026877F /* APIService in Frameworks */ = {isa = PBXBuildFile; productRef = 9D4D5EDE2F1BF11C0026877F /* APIService */; };
 		9D646F082F172CFE00A706B6 /* PersistanceService in Frameworks */ = {isa = PBXBuildFile; productRef = 9D646F072F172CFE00A706B6 /* PersistanceService */; };
@@ -73,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D37A0F32F2122B800988422 /* Kingfisher in Frameworks */,
 				9D9C92962F15E42E00D4E429 /* Authorization in Frameworks */,
 				9D9C92992F15E81000D4E429 /* Main in Frameworks */,
 				9D646F082F172CFE00A706B6 /* PersistanceService in Frameworks */,
@@ -144,6 +146,7 @@
 				9D646F072F172CFE00A706B6 /* PersistanceService */,
 				9D4D5EAE2F1B09CA0026877F /* MyNetworkManager */,
 				9D4D5EDE2F1BF11C0026877F /* APIService */,
+				9D37A0F22F2122B800988422 /* Kingfisher */,
 			);
 			productName = Swish;
 			productReference = 9D8F48582F0E87000014AB14 /* Swish.app */;
@@ -175,6 +178,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				9D4D5EAD2F1B09CA0026877F /* XCRemoteSwiftPackageReference "MyNetworkManager" */,
+				9D37A0F12F2122B800988422 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9D8F48592F0E87000014AB14 /* Products */;
@@ -408,6 +412,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9D37A0F12F2122B800988422 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.6.2;
+			};
+		};
 		9D4D5EAD2F1B09CA0026877F /* XCRemoteSwiftPackageReference "MyNetworkManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/BachoOnn/MyNetworkManager.git";
@@ -419,6 +431,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9D37A0F22F2122B800988422 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9D37A0F12F2122B800988422 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		9D4D5EAE2F1B09CA0026877F /* MyNetworkManager */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9D4D5EAD2F1B09CA0026877F /* XCRemoteSwiftPackageReference "MyNetworkManager" */;
