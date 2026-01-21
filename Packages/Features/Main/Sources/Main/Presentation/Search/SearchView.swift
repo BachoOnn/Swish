@@ -30,15 +30,7 @@ struct SearchView: View {
                     .padding(.bottom, 15)
             }
         }
-        .task(id: hasLoadedTeams) {
-            guard !hasLoadedTeams else { return }
-            await viewModel.loadTeams()
-            hasLoadedTeams = true
-        }
-        .refreshable {
-            Task {
-                await viewModel.loadTeams()
-            }
-        }
+        .onLoad(perform: viewModel.onLoad)
+        .refreshable { viewModel.onRefresh() }
     }
 }

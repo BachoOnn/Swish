@@ -36,7 +36,47 @@ public final class SearchViewModel: ObservableObject {
         self.coordinator = coordinator
         self.getTeamsUseCase = getTeamsUseCase
         self.getPlayersUseCase = getPlayersUseCase
-        setupSearchDebounce()
+        self.setupSearchDebounce()
+    }
+    
+    func navigateToPlayer(_ player: Player) {
+         coordinator?.navigateToPlayer(player)
+    }
+    
+    func navigateToTeam(_ team: Team) {
+        coordinator?.navigateToTeam(team)
+    }
+    
+    func onLoad() {
+        Task {
+            await self.loadTeams()
+        }
+    }
+    
+    func onRefresh() {
+        onLoad()
+    }
+    
+    deinit {
+        searchTask?.cancel()
+    }
+}
+
+fileprivate extension SearchViewModel {
+    func loadTeams() async {
+        isLoadingTeams = true
+        errorMessage = nil
+        
+        do {
+            let fetchedTeams = try await getTeamsUseCase.execute()
+            allTeams = fetchedTeams
+            teams = fetchedTeams
+        } catch {
+            errorMessage = error.localizedDescription
+            teams = []
+            allTeams = []
+        }
+        isLoadingTeams = false
     }
     
     private func setupSearchDebounce() {
@@ -89,7 +129,7 @@ public final class SearchViewModel: ObservableObject {
     private func searchPlayers(query: String) async {
         isLoadingPlayers = true
         errorMessage = nil
-                
+        
         do {
             try Task.checkCancellation()
             
@@ -107,31 +147,4 @@ public final class SearchViewModel: ObservableObject {
         isLoadingPlayers = false
     }
     
-    func navigateToPlayer(_ player: Player) {
-         coordinator?.navigateToPlayer(player)
-    }
-    
-    func navigateToTeam(_ team: Team) {
-        coordinator?.navigateToTeam(team)
-    }
-    
-    func loadTeams() async {
-        isLoadingTeams = true
-        errorMessage = nil
-        
-        do {
-            let fetchedTeams = try await getTeamsUseCase.execute()
-            allTeams = fetchedTeams
-            teams = fetchedTeams
-        } catch {
-            errorMessage = error.localizedDescription
-            teams = []
-            allTeams = []
-        }
-        isLoadingTeams = false
-    }
-    
-    deinit {
-        searchTask?.cancel()
-    }
 }
