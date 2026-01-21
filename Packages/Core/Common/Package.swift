@@ -10,10 +10,17 @@ let package = Package(
             name: "Common",
             targets: ["Common"]),
     ],
+    
+    dependencies: [
+        .package(url: "https://github.com/onevcat/Kingfisher.git", from: "8.6.2"),
+
+    ],
     targets: [
         .target(
             name: "Common",
-            dependencies: [],
+            dependencies: [
+                .product(name: "Kingfisher", package: "Kingfisher")
+            ],
             resources: [.process("Media.xcassets")]
         ),
     ]

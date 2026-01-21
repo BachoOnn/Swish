@@ -22,10 +22,14 @@ struct RemotePlayer: Codable {
 
 enum PlayerImageService {
     static func fetchCutoutURL(for fullName: String) async -> URL? {
-        let query = fullName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let urlString = "https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p=\(query)"
+        let sanitizedName = fullName.replacingOccurrences(of: "-", with: " ")
         
-        guard let url = URL(string: urlString) else { return nil }
+        var components = URLComponents(string: "https://www.thesportsdb.com/api/v1/json/3/searchplayers.php")
+        components?.queryItems = [
+            URLQueryItem(name: "p", value: sanitizedName)
+        ]
+        
+        guard let url = components?.url else { return nil }
         
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
