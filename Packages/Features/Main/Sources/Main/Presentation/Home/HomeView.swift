@@ -12,7 +12,6 @@ struct HomeView: View {
     
     @StateObject var viewModel: HomeViewModel
     @State var scrollID: Int?
-    @State private var hasLoadedOnce = false
     @State var selectedNewsURL: URL?
     
     var body: some View {
@@ -36,13 +35,12 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity)
             }
         }
-        .task(id: hasLoadedOnce) {
-            guard !hasLoadedOnce else { return }
-            async let games: () = viewModel.loadTodaysGames()
-            async let news: () = viewModel.loadNews()
-            
-            _ = await (games, news)
-            hasLoadedOnce = true
+        .onLoad {
+            Task {
+                async let games: () = viewModel.loadTodaysGames()
+                async let news: () = viewModel.loadNews()
+                _ = await (games, news)
+            }
         }
         .refreshable {
             Task {

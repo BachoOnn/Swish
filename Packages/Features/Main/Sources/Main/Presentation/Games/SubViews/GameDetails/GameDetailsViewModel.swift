@@ -10,7 +10,7 @@ import PlayerDomain
 import Combine
 
 @MainActor
-public final class GameDetailsViewModel: ObservableObject {
+public final class GameDetailsViewModel {
     
     // MARK: - Published Properties
     @Published var homeLineup: Lineup?
