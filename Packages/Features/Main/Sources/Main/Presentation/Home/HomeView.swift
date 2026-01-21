@@ -35,21 +35,8 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity)
             }
         }
-        .onLoad {
-            Task {
-                async let games: () = viewModel.loadTodaysGames()
-                async let news: () = viewModel.loadNews()
-                _ = await (games, news)
-            }
-        }
-        .refreshable {
-            Task {
-                async let games: () = viewModel.refreshGames()
-                async let news: () = viewModel.refreshNews()
-                
-                _ = await (games, news)
-            }
-        }
+        .onLoad(perform: viewModel.onLoad)
+        .refreshable { viewModel.refresh() }
         .sheet(item: $selectedNewsURL) { url in
             WebView(url)
         }

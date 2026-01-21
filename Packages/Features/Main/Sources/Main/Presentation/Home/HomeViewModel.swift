@@ -42,6 +42,25 @@ public final class HomeViewModel: ObservableObject {
         coordinator?.signOut()
     }
     
+    func onLoad() {
+        refresh()
+    }
+
+    func refresh() {
+        Task {
+            async let loadGames:() = self.loadTodaysGames()
+            async let loadNews:() = self.loadNews()
+            
+            _ = await (loadGames, loadNews)
+        }
+    }
+    
+    var featuredGames: [Game] {
+        Array(games.prefix(5))
+    }
+}
+
+fileprivate extension HomeViewModel {
     func loadTodaysGames() async {
         isGamesLoading = true
         
@@ -52,10 +71,6 @@ public final class HomeViewModel: ObservableObject {
         }
         
         isGamesLoading = false
-    }
-
-    var featuredGames: [Game] {
-        Array(games.prefix(5))
     }
     
     func loadNews() async {
@@ -68,13 +83,5 @@ public final class HomeViewModel: ObservableObject {
         }
         
         isNewsLoading = false
-    }
-    
-    func refreshGames() async {
-        await loadTodaysGames()
-    }
-    
-    func refreshNews() async {
-        await loadNews()
     }
 }
