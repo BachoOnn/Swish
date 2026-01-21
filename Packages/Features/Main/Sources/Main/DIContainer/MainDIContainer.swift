@@ -49,52 +49,6 @@ public final class MainDIContainer {
         persistenceRepository.clear()
     }
     
-    // MARK: - Usecases
-
-    private func makeGetTodayGamesUseCase() -> DefaultGetTodayGamesUseCase {
-        DefaultGetTodayGamesUseCase(gamesRepository: gameRepository)
-    }
-    
-    private func makeGetGamesUseCase() -> DefaultGetGamesUseCase {
-        DefaultGetGamesUseCase(gamesRepository: gameRepository)
-    }
-    
-    private func makeGetNewsUseCase() -> DefaultGetNewsUseCase {
-        DefaultGetNewsUseCase(newsRepository: newsRepository)
-    }
-    
-    private func makeGetLineupsUseCase() -> DefaultGetGameLineupUseCase {
-        DefaultGetGameLineupUseCase(gameRepository: gameRepository)
-    }
-    
-    private func makeGetBoxScoreUseCase() -> DefaultGetBoxScoreUseCase {
-        DefaultGetBoxScoreUseCase(gameRepository: gameRepository)
-    }
-    
-    private func makeGetTeamsUseCase() -> DefaultGetTeamsUseCase {
-        DefaultGetTeamsUseCase(teamsRepository: teamsRepository)
-    }
-    
-    private func makeGetTeamStatsUseCase() -> DefaultGetTeamStatsUseCase {
-        DefaultGetTeamStatsUseCase(teamRepository: teamsRepository)
-    }
-    
-    private func makeGetPlayersUseCase() -> DefaultGetPlayerUseCase {
-        DefaultGetPlayerUseCase(playersRepository: playersRepository)
-    }
-    
-    private func makeGetPlayersStatsUseCase() -> DefaultGetPlayerStatsUseCase {
-        DefaultGetPlayerStatsUseCase(playersRepository: playersRepository)
-    }
-    
-    private func makeGetTeamFavoritesUseCase() -> DefaultGetTeamFavoritesUseCase {
-        DefaultGetTeamFavoritesUseCase(favoritesRepository: favoritesRepository)
-    }
-    
-    private func makeGetPlayerFavoritesUseCase() -> DefaultGetPlayerFavoritesUseCase {
-        DefaultGetPlayerFavoritesUseCase(favoritesRepository: favoritesRepository)
-    }
-    
     // MARK: - ViewModels
     
     public func makeRootViewModel() -> RootViewModel {
@@ -102,19 +56,31 @@ public final class MainDIContainer {
     }
     
     public func makeHomeViewModel() -> HomeViewModel {
-        HomeViewModel(coordinator: coordinator, getTodayGamesUseCase: makeGetTodayGamesUseCase(), getNewsUseCase: makeGetNewsUseCase())
+        HomeViewModel(
+            coordinator: coordinator,
+            getTodayGamesUseCase: DefaultGetTodayGamesUseCase(gamesRepository: gameRepository),
+            getNewsUseCase: DefaultGetNewsUseCase(newsRepository: newsRepository)
+        )
     }
     
     public func makeGamesViewModel() -> GamesViewModel {
-        GamesViewModel(coordinator: coordinator, getTodayGamesUseCase: makeGetTodayGamesUseCase(), getGamesUseCase: makeGetGamesUseCase())
+        GamesViewModel(
+            coordinator: coordinator,
+            getTodayGamesUseCase: DefaultGetTodayGamesUseCase(gamesRepository: gameRepository),
+            getGamesUseCase: DefaultGetGamesUseCase(gamesRepository: gameRepository)
+        )
     }
     
     public func makeProfileViewModel() -> ProfileViewModel {
-        let useCase = DefaultGetProfileUseCase(
-            authRepository: authRepository,
-            persistenceRepository: persistenceRepository
+        ProfileViewModel(
+            coordinator: coordinator,
+            getProfileUseCase: DefaultGetProfileUseCase(
+                authRepository: authRepository,
+                persistenceRepository: persistenceRepository
+            ),
+            getTeamFavoritesUseCase: DefaultGetTeamFavoritesUseCase(favoritesRepository: favoritesRepository),
+            getPlayerFavoritesUseCase: DefaultGetPlayerFavoritesUseCase(favoritesRepository: favoritesRepository)
         )
-        return ProfileViewModel(coordinator: coordinator, getProfileUseCase: useCase, getTeamFavoritesUseCase: makeGetTeamFavoritesUseCase(), getPlayerFavoritesUseCase: makeGetPlayerFavoritesUseCase())
     }
     
     public func makeDiscoverViewModel() -> DiscoverViewModel {
@@ -122,18 +88,35 @@ public final class MainDIContainer {
     }
     
     public func makeSearchViewModel() -> SearchViewModel {
-        SearchViewModel(coordinator: coordinator, getTeamsUseCase: makeGetTeamsUseCase(), getPlayersUseCase: makeGetPlayersUseCase())
+        SearchViewModel(
+            coordinator: coordinator,
+            getTeamsUseCase: DefaultGetTeamsUseCase(teamsRepository: teamsRepository),
+            getPlayersUseCase: DefaultGetPlayerUseCase(playersRepository: playersRepository)
+        )
     }
     
     public func makePlayerViewModel(player: PlayerDomain.Player) -> PlayerViewModel {
-        PlayerViewModel(player: player, getPlayerStatsUseCase: makeGetPlayersStatsUseCase(), getPlayerFavoritesUseCase: makeGetPlayerFavoritesUseCase())
+        PlayerViewModel(
+            player: player,
+            getPlayerStatsUseCase: DefaultGetPlayerStatsUseCase(playersRepository: playersRepository),
+            getPlayerFavoritesUseCase: DefaultGetPlayerFavoritesUseCase(favoritesRepository: favoritesRepository)
+        )
     }
     
     public func makeTeamViewModel(team: TeamDomain.Team) -> TeamViewModel {
-        TeamViewModel(team: team, getTeamStatsUseCase: makeGetTeamStatsUseCase(), getTeamFavoritesUseCase: makeGetTeamFavoritesUseCase())
+        TeamViewModel(
+            team: team,
+            getTeamStatsUseCase: DefaultGetTeamStatsUseCase(teamRepository: teamsRepository),
+            getTeamFavoritesUseCase: DefaultGetTeamFavoritesUseCase(favoritesRepository: favoritesRepository)
+        )
     }
     
     public func makeGameDetailsViewModel(game: Game) -> GameDetailsViewModel {
-        GameDetailsViewModel(game: game, getLineupUseCase: makeGetLineupsUseCase(), getBoxScoreUseCase: makeGetBoxScoreUseCase(), coordinator: coordinator)
+        GameDetailsViewModel(
+            game: game,
+            getLineupUseCase: DefaultGetGameLineupUseCase(gameRepository: gameRepository),
+            getBoxScoreUseCase: DefaultGetBoxScoreUseCase(gameRepository: gameRepository),
+            coordinator: coordinator
+        )
     }
 }
