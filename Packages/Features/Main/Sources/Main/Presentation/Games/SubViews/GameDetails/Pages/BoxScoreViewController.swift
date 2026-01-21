@@ -17,8 +17,8 @@ class BoxScoreViewController: UIViewController {
     
     // MARK: - UI Components
     
-    private let boxScoreTableView: BoxScoreTableView = {
-        let view = BoxScoreTableView()
+    private let boxScoreTableView: BoxScoreTableViewController = {
+        let view = BoxScoreTableViewController()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
