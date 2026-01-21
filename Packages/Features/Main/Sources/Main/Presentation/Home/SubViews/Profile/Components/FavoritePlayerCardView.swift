@@ -7,20 +7,21 @@
 
 import SwiftUI
 import PlayerDomain
+import Common
 
 struct FavoritePlayerCardView: View {
     let player: Player
     
     var body: some View {
         ZStack {
-            Image(player.team.abbreviation) // TODO: change to kingfisher
-                .resizable()
+            PlayerHeadshotView(fullName: "\(player.firstName) \(player.lastName)")
                 .scaledToFit()
-                .frame(width: 60, height: 60)
+                .padding()
+                .frame(width: 80, height: 80)
             
         }
         .padding()
-        .frame(width: 70, height: 70)
+        .frame(width: 80, height: 80)
         .background(
             Circle()
                 .fill(Color(.systemBackground))

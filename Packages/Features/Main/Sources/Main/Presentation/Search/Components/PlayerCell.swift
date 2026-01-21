@@ -95,9 +95,10 @@ final class PlayerCell: UIView {
     
     // MARK: - Configuration
     func configure(with player: Player) {
-        playerImageView.image = UIImage(named: "LAL", in: .common, with: .none)
+        let fullName = "\(player.firstName) \(player.lastName)"
+        playerImageView.setNBAHeadshot(for: fullName)
         
-        playerNameLabel.text = "\(player.firstName) \(player.lastName)"
+        playerNameLabel.text = fullName
         
         if player.jerseyNumber != nil {
             positionLabel.text = "\(player.position) • #\(player.jerseyNumber ?? "N/A")"

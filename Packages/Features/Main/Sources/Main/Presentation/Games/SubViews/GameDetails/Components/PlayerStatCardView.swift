@@ -23,9 +23,8 @@ final class PlayerStatCardView: UIView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 30
+        imageView.layer.cornerRadius = 20
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .systemGray
         return imageView
     }()
     
@@ -80,16 +79,16 @@ final class PlayerStatCardView: UIView {
             
             playerImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             playerImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            playerImageView.widthAnchor.constraint(equalToConstant: 60),
-            playerImageView.heightAnchor.constraint(equalToConstant: 60),
+            playerImageView.widthAnchor.constraint(equalToConstant: 50),
+            playerImageView.heightAnchor.constraint(equalToConstant: 50),
             
             nameLabel.topAnchor.constraint(equalTo: playerImageView.topAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: playerImageView.trailingAnchor, constant: 12),
             
-            teamInfoLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
+            teamInfoLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
             teamInfoLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             
-            statsStackView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 5),
+            statsStackView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 10),
             statsStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
             statsStackView.widthAnchor.constraint(equalToConstant: 150)
         ])
@@ -100,7 +99,7 @@ final class PlayerStatCardView: UIView {
         
         let valueLabel = UILabel()
         valueLabel.text = value
-        valueLabel.font = .systemFont(ofSize: 24, weight: .bold)
+        valueLabel.font = .systemFont(ofSize: 20, weight: .bold)
         valueLabel.textColor = .label
         valueLabel.textAlignment = .center
         valueLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -119,7 +118,7 @@ final class PlayerStatCardView: UIView {
             valueLabel.topAnchor.constraint(equalTo: container.topAnchor),
             valueLabel.centerXAnchor.constraint(equalTo: container.centerXAnchor),
             
-            titleLabel.topAnchor.constraint(equalTo: valueLabel.bottomAnchor, constant: 4),
+            titleLabel.topAnchor.constraint(equalTo: valueLabel.bottomAnchor, constant: 2),
             titleLabel.centerXAnchor.constraint(equalTo: container.centerXAnchor),
             titleLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor)
         ])
@@ -129,7 +128,7 @@ final class PlayerStatCardView: UIView {
     
     // MARK: - Configuration
     func configure(with stats: PlayerStats) {
-        playerImageView.image = UIImage(systemName: "person.circle.fill")
+        playerImageView.setNBAHeadshot(for: stats.player.fullName)
         nameLabel.text = stats.player.fullName
         let jerseyNumber: String = stats.player.jerseyNumber ?? "N/A"
         
