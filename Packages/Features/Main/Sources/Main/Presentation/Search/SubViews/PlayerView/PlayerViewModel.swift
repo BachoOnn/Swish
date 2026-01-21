@@ -34,17 +34,10 @@ public final class PlayerViewModel: ObservableObject {
         isFavorite = getPlayerFavoritesUseCase.executeCheck(player: player)
     }
     
-    func fetchPlayerStats() async {
-        isLoadingStats = true
-        errorMessage = nil
-        
-        do {
-            playerStats = try await getPlayerStatsUseCase.execute(id: player.id)
-        } catch {
-            errorMessage = error.localizedDescription
+    func onLoad() {
+        Task {
+            await self.fetchPlayerStats()
         }
-        
-        isLoadingStats = false
     }
     
     var playerName: String {
@@ -63,4 +56,20 @@ public final class PlayerViewModel: ObservableObject {
         player.team.name
     }
 
+}
+
+
+fileprivate extension PlayerViewModel {
+    func fetchPlayerStats() async {
+        isLoadingStats = true
+        errorMessage = nil
+        
+        do {
+            playerStats = try await getPlayerStatsUseCase.execute(id: player.id)
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+        
+        isLoadingStats = false
+    }
 }

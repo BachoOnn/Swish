@@ -28,8 +28,6 @@ struct StatsView: View {
                 }
             }
         }
-        .task {
-            await viewModel.fetchPlayerStats()
-        }
+        .onLoad(perform: viewModel.onLoad)
     }
 }
