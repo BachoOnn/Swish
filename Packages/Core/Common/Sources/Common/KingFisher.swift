@@ -54,6 +54,10 @@ public struct PlayerHeadshotView: View {
     public var body: some View {
         KFImage(url)
             .placeholder { ProgressView() }
+            .onFailureView({
+                Image(systemName: "person.fill")
+                    .font(.title)
+            })
             .resizable()
             .scaledToFit()
             .task(id: fullName) {
@@ -69,7 +73,18 @@ public extension UIImageView {
         
         Task {
             let url = await PlayerImageService.fetchCutoutURL(for: fullName)
-            self.kf.setImage(with: url, options: [.transition(.fade(0.3))])
+            
+            self.kf.setImage(
+                with: url,
+                placeholder: UIProgressView() as? Placeholder,
+                options: [.transition(.fade(0.3))],
+                completionHandler: { result in
+                    if case .failure = result {
+                        self.image = UIImage(systemName: "person.fill")
+                        self.tintColor = .gray
+                    }
+                }
+            )
         }
     }
 }
