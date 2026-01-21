@@ -208,7 +208,6 @@ extension StatsView {
                 .padding(.horizontal)
             }
         }
-        
     }
 }
 

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Common
+import Helpers
 
 struct TeamView: View {
     
@@ -41,8 +42,6 @@ struct TeamView: View {
                 }
             }
         }
-        .task {
-            await viewModel.fetchTeamStats()
-        }
+        .onLoad(perform: viewModel.onLoad)
     }
 }

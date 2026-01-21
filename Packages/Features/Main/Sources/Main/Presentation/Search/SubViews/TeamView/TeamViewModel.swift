@@ -33,10 +33,18 @@ public final class TeamViewModel: ObservableObject {
         isFavorite = getTeamFavoritesUseCase.executeCheck(team: team)
     }
     
+    func onLoad() {
+        Task {
+            await self.fetchTeamStats()
+        }
+    }
+}
+
+fileprivate extension TeamViewModel {
     func fetchTeamStats() async {
         isLoadingStats = true
         errorMessage = nil
-    
+        
         do {
             stats = try await getTeamStatsUseCase.execute(teamsID: team.id)
         } catch {

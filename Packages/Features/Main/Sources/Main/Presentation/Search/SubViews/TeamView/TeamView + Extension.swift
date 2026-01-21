@@ -293,11 +293,10 @@ extension TeamView {
     }
     
     func errorSection(message: String) -> some View {
-        CustomErrorView(message: message) {
-            Task {
-                await viewModel.fetchTeamStats()
-            }
-        }
+        CustomErrorView(
+            message: message,
+            retryAction: viewModel.onLoad
+        )
         .padding(.top, 40)
     }
     
