@@ -134,6 +134,6 @@ public final class MainDIContainer {
     }
     
     public func makeGameDetailsViewModel(game: Game) -> GameDetailsViewModel {
-        GameDetailsViewModel(game: game, getLineupUseCase: makeGetLineupsUseCase(), getBoxScoreUseCase: makeGetBoxScoreUseCase())
+        GameDetailsViewModel(game: game, getLineupUseCase: makeGetLineupsUseCase(), getBoxScoreUseCase: makeGetBoxScoreUseCase(), coordinator: coordinator)
     }
 }

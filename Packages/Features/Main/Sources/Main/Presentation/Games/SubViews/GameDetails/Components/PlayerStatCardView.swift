@@ -11,12 +11,17 @@ import GameDomain
 
 final class PlayerStatCardView: UIView {
     
+    // MARK: - Properties
+    var pressAction: (() -> Void)?
+    
     // MARK: - UI Components
-    private let containerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "game")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    
+    private let actionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor(named: "game")
+        button.layer.cornerRadius = 12
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private let playerImageView: UIImageView = {
@@ -24,6 +29,7 @@ final class PlayerStatCardView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 20
+        imageView.isUserInteractionEnabled = false // Allows touch to pass through to button
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -32,6 +38,7 @@ final class PlayerStatCardView: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .semibold)
         label.textColor = .label
+        label.isUserInteractionEnabled = false
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -40,6 +47,7 @@ final class PlayerStatCardView: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12, weight: .regular)
         label.textColor = .lightGray
+        label.isUserInteractionEnabled = false
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -49,6 +57,7 @@ final class PlayerStatCardView: UIView {
         stack.axis = .horizontal
         stack.distribution = .fillEqually
         stack.spacing = 10
+        stack.isUserInteractionEnabled = false
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -57,6 +66,7 @@ final class PlayerStatCardView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        setupActions()
     }
     
     required init?(coder: NSCoder) {
@@ -65,20 +75,20 @@ final class PlayerStatCardView: UIView {
     
     // MARK: - Setup
     private func setupUI() {
-        addSubview(containerView)
-        containerView.addSubview(playerImageView)
-        containerView.addSubview(nameLabel)
-        containerView.addSubview(teamInfoLabel)
-        containerView.addSubview(statsStackView)
+        addSubview(actionButton)
+        actionButton.addSubview(playerImageView)
+        actionButton.addSubview(nameLabel)
+        actionButton.addSubview(teamInfoLabel)
+        actionButton.addSubview(statsStackView)
         
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: topAnchor),
-            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            actionButton.topAnchor.constraint(equalTo: topAnchor),
+            actionButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+            actionButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            actionButton.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            playerImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            playerImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            playerImageView.leadingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: 16),
+            playerImageView.centerYAnchor.constraint(equalTo: actionButton.centerYAnchor),
             playerImageView.widthAnchor.constraint(equalToConstant: 50),
             playerImageView.heightAnchor.constraint(equalToConstant: 50),
             
@@ -88,14 +98,24 @@ final class PlayerStatCardView: UIView {
             teamInfoLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
             teamInfoLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             
-            statsStackView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 10),
-            statsStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
+            statsStackView.centerYAnchor.constraint(equalTo: actionButton.centerYAnchor, constant: 10),
+            statsStackView.trailingAnchor.constraint(equalTo: actionButton.trailingAnchor, constant: -10),
             statsStackView.widthAnchor.constraint(equalToConstant: 150)
         ])
     }
     
+    private func setupActions() {
+        actionButton.removeTarget(nil, action: nil, for: .allEvents)
+        actionButton.addTarget(self, action: #selector(handleTap), for: .touchUpInside)
+    }
+    
+    @objc private func handleTap() {
+        pressAction?()
+    }
+    
     private func createStatView(value: String, label: String) -> UIView {
         let container = UIView()
+        container.isUserInteractionEnabled = false
         
         let valueLabel = UILabel()
         valueLabel.text = value

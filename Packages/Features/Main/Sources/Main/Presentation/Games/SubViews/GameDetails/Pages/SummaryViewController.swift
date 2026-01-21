@@ -7,6 +7,7 @@
 
 import UIKit
 import GameDomain
+import PlayerDomain
 import Combine
 
 class SummaryViewController: UIViewController {
@@ -135,6 +136,9 @@ class SummaryViewController: UIViewController {
     func configure(with game: Game, viewModel: GameDetailsViewModel) {
         self.viewModel = viewModel
         quarterScoresView.configure(with: game)
+        topPerformersView.onPlayerTap = { [weak self] player in
+            self?.viewModel?.goPlayersDetails(from: player)
+        }
     }
     
     private func loadData() {

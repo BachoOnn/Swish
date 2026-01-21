@@ -11,6 +11,8 @@ import GameDomain
 
 final class TopPerformersView: UIView {
     
+    var onPlayerTap: ((PlayerStats) -> Void)?
+    
     // MARK: - UI Components
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -143,11 +145,14 @@ final class TopPerformersView: UIView {
         hideLoading()
         playerCardsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
-        guard !players.isEmpty else { return }
-        
         players.forEach { stats in
             let cardView = PlayerStatCardView()
             cardView.configure(with: stats)
+            
+            cardView.pressAction = { [weak self] in
+                self?.onPlayerTap?(stats)
+            }
+            
             cardView.translatesAutoresizingMaskIntoConstraints = false
             cardView.heightAnchor.constraint(equalToConstant: 90).isActive = true
             playerCardsStackView.addArrangedSubview(cardView)
