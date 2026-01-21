@@ -30,22 +30,22 @@ extension DiscoverViewController {
     
     func setupGrid() {
         let standingsBtn = UIButton.makeMenuCard(title: "Standings", imageName: "chart.bar") { [weak self] in
-            self?.openWebsite(urlString: "https://www.nba.com/standings")
+            self?.openWebsite(.standings)
         }
         let askBtn = UIButton.makeMenuCard(title: "Ask SWISH", imageName: "basketball.fill") { [weak self] in
-            self?.openWebsite(urlString: "https://www.blitznba.com/")
+            self?.openWebsite(.askSwish)
         }
         let playersBtn = UIButton.makeMenuCard(title: "Players", imageName: "figure.basketball") { [weak self] in
-            self?.openWebsite(urlString: "https://www.nba.com/players")
+            self?.openWebsite(.players)
         }
         let teamsBtn = UIButton.makeMenuCard(title: "Teams", imageName: "person.2.fill") { [weak self] in
-            self?.openWebsite(urlString: "https://www.nba.com/teams")
+            self?.openWebsite(.teams)
         }
         let statsBtn = UIButton.makeMenuCard(title: "Stats Leader", imageName: "chart.bar.xaxis") { [weak self] in
-            self?.openWebsite(urlString: "https://www.nba.com/stats/leaders")
+            self?.openWebsite(.statsLeader)
         }
         let allStarBtn = UIButton.makeMenuCard(title: "All-Star Voting", imageName: "star.leadinghalf.filled") { [weak self] in
-            self?.openWebsite(urlString: "https://vote.nba.com/en")
+            self?.openWebsite(.allStarVoting)
         }
         
         let row1 = UIStackView.makeHorizontalRow(leftView: standingsBtn, rightView: askBtn)
@@ -74,16 +74,16 @@ extension DiscoverViewController {
     
     func setupAffiliateLeagues() {
         let balBtn = UIButton.makeLeagueCard(title: "BAL", imageName: "bal") { [weak self] in
-            self?.openWebsite(urlString: "https://bal.nba.com/")
+            self?.openWebsite(.bal)
         }
         let wnbaBtn = UIButton.makeLeagueCard(title: "WNBA", imageName: "wnba") { [weak self] in
-            self?.openWebsite(urlString: "https://www.wnba.com/")
+            self?.openWebsite(.wnba)
         }
         let nba2kBtn = UIButton.makeLeagueCard(title: "NBA 2K", imageName: "nba2k") { [weak self] in
-            self?.openWebsite(urlString: "https://nba2kleague.com/")
+            self?.openWebsite(.nba2k)
         }
         let nbaGBtn = UIButton.makeLeagueCard(title: "G League", imageName: "gLeague") { [weak self] in
-            self?.openWebsite(urlString: "https://gleague.nba.com/")
+            self?.openWebsite(.gLeague)
         }
         
         [balBtn, wnbaBtn, nba2kBtn, nbaGBtn].forEach {
@@ -104,8 +104,8 @@ extension DiscoverViewController {
         ])
     }
     
-    func openWebsite(urlString: String) {
-        guard let url = URL(string: urlString) else { return }
+    func openWebsite(_ link: DiscoverViewModel.NBALink) {
+        guard let url = link.url else { return }
         
         let safariVC = SFSafariViewController(url: url)
         safariVC.modalPresentationStyle = .pageSheet

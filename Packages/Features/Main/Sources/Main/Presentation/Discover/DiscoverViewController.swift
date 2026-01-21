@@ -71,7 +71,3 @@ final class DiscoverViewController: UIViewController {
         ])
     }
 }
-
-#Preview {
-    DiscoverViewController(viewModel: DiscoverViewModel())
-}
