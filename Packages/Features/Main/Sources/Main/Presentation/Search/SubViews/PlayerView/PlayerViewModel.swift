@@ -40,7 +40,6 @@ public final class PlayerViewModel: ObservableObject {
         
         do {
             playerStats = try await getPlayerStatsUseCase.execute(id: player.id)
-            print("Stats fetched successfully: \(playerStats?.pts ?? 0)") 
         } catch {
             errorMessage = error.localizedDescription
         }
