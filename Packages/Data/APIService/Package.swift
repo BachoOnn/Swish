@@ -16,7 +16,9 @@ let package = Package(
         .package(path: "../../Domain/TeamDomain"),
         .package(path: "../../Domain/PlayerDomain"),
         .package(path: "../../Core/Helpers"),
-        .package(path: "../../Config/Config")
+        .package(path: "../../Config/Config"),
+        .package(url: "https://github.com/BachoOnn/MyNetworkManager.git", from: "1.1.4")
+
     ],
     targets: [
         .target(
@@ -27,7 +29,8 @@ let package = Package(
                 "TeamDomain",
                 "PlayerDomain",
                 "Helpers",
-                "Config"
+                "Config",
+                .product(name: "MyNetworkManager", package: "MyNetworkManager")
             ]
         ),
     ]
