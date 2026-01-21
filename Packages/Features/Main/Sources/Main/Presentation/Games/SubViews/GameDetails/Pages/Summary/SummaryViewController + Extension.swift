@@ -1,65 +1,14 @@
 //
-//  SummaryViewController.swift
+//  SummaryViewController + Extension.swift
 //  Main
 //
-//  Created by Bacho on 18.01.26.
+//  Created by Bacho on 22.01.26.
 //
 
 import UIKit
-import GameDomain
-import PlayerDomain
-import Combine
 
-class SummaryViewController: UIViewController {
-    
-    // MARK: - Properties
-    weak var viewModel: GameDetailsViewModel?
-    private var cancellables = Set<AnyCancellable>()
-    
-    // MARK: - UI Components
-    
-    private let scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = false
-        return scrollView
-    }()
-    
-    private let contentStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 20
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
-    
-    private let quarterScoresView: QuarterScoresView = {
-        let view = QuarterScoresView()
-        view.layer.cornerRadius = 10
-        view.clipsToBounds = true
-        return view
-    }()
-    
-    private let startersView: StartersView = {
-        let view = StartersView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let topPerformersView: TopPerformersView = {
-        let view = TopPerformersView()
-        return view
-    }()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupUI()
-        topPerformersView.showLoading()
-        setupBindings()
-        loadData()
-    }
-    
-    private func setupUI() {
+extension SummaryViewController {
+    func setupUI() {
         view.backgroundColor = .clear
         
         view.addSubview(scrollView)
@@ -83,7 +32,7 @@ class SummaryViewController: UIViewController {
         contentStackView.addArrangedSubview(topPerformersView)
     }
     
-    private func setupBindings() {
+    func setupBindings() {
         guard let viewModel = viewModel else { return }
         
         viewModel.$isLoadingLineups
@@ -131,23 +80,5 @@ class SummaryViewController: UIViewController {
                 self?.topPerformersView.configure(with: Array(topPerformers))
             }
             .store(in: &cancellables)
-    }
-    
-    func configure(with game: Game, viewModel: GameDetailsViewModel) {
-        self.viewModel = viewModel
-        quarterScoresView.configure(with: game)
-        topPerformersView.onPlayerTap = { [weak self] player in
-            self?.viewModel?.goPlayersDetails(from: player)
-        }
-    }
-    
-    private func loadData() {
-        guard let viewModel = viewModel else { return }
-        Task {
-            async let lineup: () = viewModel.loadLineups()
-            async let boxScore: () = viewModel.loadBoxScore()
-            
-            _ = await (lineup, boxScore)
-        }
     }
 }

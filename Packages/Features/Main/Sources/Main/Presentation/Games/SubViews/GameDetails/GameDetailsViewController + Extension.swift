@@ -78,7 +78,10 @@ extension GameDetailsViewController {
         
         if index == 0 {
             let summaryVC = SummaryViewController()
-            summaryVC.configure(with: viewModel.currentGame, viewModel: viewModel)
+            summaryVC.configure(
+                with: viewModel.currentGame,
+                viewModel: viewModel
+            )
             newVC = summaryVC
         } else {
             let boxScoreVC = BoxScoreViewController()

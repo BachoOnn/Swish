@@ -91,6 +91,23 @@ public final class GameDetailsViewModel {
     
     // MARK: - Methods
     
+    func onSummaryLoad() {
+        Task {
+            async let lineup: () = self.loadLineups()
+            async let boxScore: () = self.loadBoxScore()
+            
+            _ = await (lineup, boxScore)
+        }
+    }
+    
+    func onBoxScoreLoad() {
+        Task {
+            await self.loadBoxScore()
+        }
+    }
+}
+
+fileprivate extension GameDetailsViewModel {
     func loadLineups() async {
         guard !isLoadingLineups else { return }
         
@@ -121,7 +138,7 @@ public final class GameDetailsViewModel {
                 .sorted { $0.pts > $1.pts }
             
             awayTeamStats = allStats.filter { $0.team.id == game.visitorTeam.id }
-                .sorted { $0.pts > $1.pts }  
+                .sorted { $0.pts > $1.pts }
             
         } catch {
             errorMessage = "Failed to load box score: \(error.localizedDescription)"
@@ -129,4 +146,5 @@ public final class GameDetailsViewModel {
         
         isLoadingBoxScore = false
     }
+    
 }

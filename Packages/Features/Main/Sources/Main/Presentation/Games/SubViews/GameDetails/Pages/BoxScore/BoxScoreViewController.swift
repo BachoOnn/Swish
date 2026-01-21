@@ -9,7 +9,7 @@ import UIKit
 import GameDomain
 import Combine
 
-class BoxScoreViewController: UIViewController {
+final class BoxScoreViewController: UIViewController {
     
     // MARK: - Properties
     weak var viewModel: GameDetailsViewModel?
@@ -80,8 +80,6 @@ class BoxScoreViewController: UIViewController {
     private func loadData() {
         guard let viewModel = viewModel else { return }
         
-        Task {
-            await viewModel.loadBoxScore()
-        }
+        DispatchQueue.main.async(execute: viewModel.onBoxScoreLoad)
     }
 }
