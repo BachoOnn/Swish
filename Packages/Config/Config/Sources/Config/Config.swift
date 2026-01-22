@@ -11,6 +11,7 @@ public protocol Config {
     var DEBUG: Bool { get }
     var BALLDONTLIE_API_KEY: String { get }
     var BALLDONTLIE_BASE_URL: String { get }
+    var ESPN_NEWS_URL: String { get }
 }
 
 extension Bundle: Config {
@@ -25,5 +26,9 @@ extension Bundle: Config {
     
     public var BALLDONTLIE_BASE_URL: String {
         object(forInfoDictionaryKey: "BALLDONTLIE_BASE_URL") as! String
+    }
+    
+    public var ESPN_NEWS_URL: String {
+        object(forInfoDictionaryKey: "ESPN_NEWS_URL") as! String
     }
 }

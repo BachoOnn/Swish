@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ESPN_NEWS_URL</key>
+	<string>$(ESPN_NEWS_URL)</string>
 	<key>BALLDONTLIE_BASE_URL</key>
 	<string>$(BALLDONTLIE_BASE_URL)</string>
 	<key>BALLDONTLIE_API_KEY</key>
