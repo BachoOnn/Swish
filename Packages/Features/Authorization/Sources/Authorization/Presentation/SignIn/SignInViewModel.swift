@@ -16,6 +16,8 @@ public final class SignInViewModel: ObservableObject {
     @Published var state: LoadingState = .idle
     @Published var showError = false
     @Published var errorMessage = ""
+    @Published var email = ""
+    @Published var password = ""
     
     // MARK: - Dependencies
     private let signInUseCase: DefaultSignInUseCase
