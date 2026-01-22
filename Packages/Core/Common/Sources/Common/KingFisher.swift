@@ -40,6 +40,7 @@ enum PlayerImageService {
                 .strCutout
                 .flatMap { URL(string: $0) }
         } catch {
+            print("Error \(fullName): \(error)")
             return nil
         }
     }
@@ -67,7 +68,7 @@ public struct PlayerHeadshotView: View {
                     .scaledToFill()
             })
             .resizable()
-            .cacheMemoryOnly()
+            .fade(duration: 0.3)
             .scaledToFit()
             .task(id: fullName) {
                 self.url = await PlayerImageService.fetchCutoutURL(for: fullName)
@@ -85,10 +86,14 @@ public extension UIImageView {
             
             self.kf.setImage(
                 with: url,
-                placeholder: UIProgressView() as? Placeholder,
-                options: [.transition(.fade(0.3))],
+                placeholder: nil,
+                options: [
+                    .transition(.fade(0.3)),
+                    .cacheOriginalImage
+                ],
                 completionHandler: { result in
-                    if case .failure = result {
+                    if case .failure(let error) = result {
+                        print(error.localizedDescription)
                         self.image = UIImage(named: defaultImage)
                         self.tintColor = .gray
                     }
