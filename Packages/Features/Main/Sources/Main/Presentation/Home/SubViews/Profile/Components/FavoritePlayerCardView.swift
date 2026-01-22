@@ -14,7 +14,7 @@ struct FavoritePlayerCardView: View {
     
     var body: some View {
         ZStack {
-            PlayerHeadshotView(fullName: "\(player.firstName) \(player.lastName)")
+            PlayerHeadshotView(fullName: "\(player.firstName) \(player.lastName)", defaultImage: "player1")
                 .scaledToFit()
                 .padding()
                 .frame(width: 80, height: 80)

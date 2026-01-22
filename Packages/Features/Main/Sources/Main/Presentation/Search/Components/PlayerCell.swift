@@ -96,7 +96,10 @@ final class PlayerCell: UIView {
     // MARK: - Configuration
     func configure(with player: Player) {
         let fullName = "\(player.firstName) \(player.lastName)"
-        playerImageView.setNBAHeadshot(for: fullName)
+        playerImageView.setNBAHeadshot(
+            for: fullName,
+            defaultImage: "player1"
+        )
         
         playerNameLabel.text = fullName
         

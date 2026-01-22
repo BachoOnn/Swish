@@ -148,7 +148,10 @@ final class PlayerStatCardView: UIView {
     
     // MARK: - Configuration
     func configure(with stats: PlayerStats) {
-        playerImageView.setNBAHeadshot(for: stats.player.fullName)
+        playerImageView.setNBAHeadshot(
+            for: stats.player.fullName,
+            defaultImage: "player1"
+        )
         nameLabel.text = stats.player.fullName
         let jerseyNumber: String = stats.player.jerseyNumber ?? "N/A"
         

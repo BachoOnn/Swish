@@ -47,16 +47,24 @@ enum PlayerImageService {
 
 public struct PlayerHeadshotView: View {
     let fullName: String
+    let defaultImage: String
     @State private var url: URL?
     
-    public init(fullName: String) { self.fullName = fullName }
+    public init(
+        fullName: String,
+        defaultImage: String
+    ) {
+        self.fullName = fullName
+        self.defaultImage = defaultImage
+    }
     
     public var body: some View {
         KFImage(url)
             .placeholder { ProgressView() }
             .onFailureView({
-                Image(systemName: "person.fill")
-                    .font(.title)
+                Image(defaultImage)
+                    .resizable()
+                    .scaledToFill()
             })
             .resizable()
             .scaledToFit()
@@ -68,7 +76,7 @@ public struct PlayerHeadshotView: View {
 
 public extension UIImageView {
     @MainActor
-    func setNBAHeadshot(for fullName: String) {
+    func setNBAHeadshot(for fullName: String, defaultImage: String) {
         self.kf.indicatorType = .activity
         
         Task {
@@ -80,7 +88,7 @@ public extension UIImageView {
                 options: [.transition(.fade(0.3))],
                 completionHandler: { result in
                     if case .failure = result {
-                        self.image = UIImage(systemName: "person.fill")
+                        self.image = UIImage(named: defaultImage)
                         self.tintColor = .gray
                     }
                 }

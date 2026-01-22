@@ -30,9 +30,9 @@ extension PlayerView {
     
     var bioSection: some View {
         HStack {
-            PlayerHeadshotView(fullName: viewModel.playerName)
+            PlayerHeadshotView(fullName: viewModel.playerName, defaultImage: "player2")
                 .scaledToFit()
-                .frame(width: 200, height: 200)
+                .frame(width: 150, height: 150)
                 .padding(.trailing)
             
             
