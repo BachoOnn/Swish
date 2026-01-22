@@ -19,7 +19,7 @@ extension ProfileSectionView {
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Height")
                                 .font(.system(size: 18))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                             
                             HStack(spacing: 20) {
                                 Text((playerData.height ?? "0-0").heightInCentimeters())
@@ -38,7 +38,7 @@ extension ProfileSectionView {
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Weight")
                                 .font(.system(size: 18))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                             
                             HStack(spacing: 20) {
                                 Text((playerData.weight ?? "0").weightInKilograms())
@@ -61,7 +61,7 @@ extension ProfileSectionView {
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Country")
                                 .font(.system(size: 18))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                                 .padding(.trailing, 80)
                             
                             HStack(spacing: 20) {
@@ -77,7 +77,7 @@ extension ProfileSectionView {
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Position")
                                 .font(.system(size: 18))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                                 .padding(.trailing, 80)
                             
                             HStack(spacing: 20) {
@@ -104,7 +104,7 @@ extension ProfileSectionView {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Jersey Number")
                                 .font(.system(size: 16))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                             
                             Text("#\(playerData.jerseyNumber ?? "0")")
                                 .font(.system(size: 24, weight: .semibold))
@@ -122,7 +122,7 @@ extension ProfileSectionView {
                         HStack {
                             Text("College")
                                 .font(.system(size: 16))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                                 .frame(width: 100, alignment: .leading)
                             
                             Text(playerData.college ?? "N/A")
@@ -130,11 +130,12 @@ extension ProfileSectionView {
                         }
                         
                         Divider()
+                            .overlay(.primary)
                         
                         HStack {
                             Text("Draft Year")
                                 .font(.system(size: 16))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                                 .frame(width: 100, alignment: .leading)
                             
                             Text("\(playerData.draftYear ?? 0)")
@@ -142,11 +143,12 @@ extension ProfileSectionView {
                         }
                         
                         Divider()
-                        
+                            .overlay(.primary)
+
                         HStack {
                             Text("Draft Pick")
                                 .font(.system(size: 16))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                                 .frame(width: 100, alignment: .leading)
                             
                             if let round = playerData.draftRound,
@@ -160,11 +162,12 @@ extension ProfileSectionView {
                         }
                         
                         Divider()
-                        
+                            .overlay(.primary)
+
                         HStack {
                             Text("Experience")
                                 .font(.system(size: 16))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                                 .frame(width: 100, alignment: .leading)
                             
                             if let draftYear = playerData.draftYear {

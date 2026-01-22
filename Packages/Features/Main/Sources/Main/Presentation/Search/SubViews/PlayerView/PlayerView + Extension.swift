@@ -46,8 +46,8 @@ extension PlayerView {
                     
                     Text(viewModel.position)
                 }
-                .font(.system(size: 14))
-                .foregroundStyle(.gray)
+                .font(.system(size: 14, weight: .black))
+                .foregroundStyle(.secondary)
                 
                 Image(viewModel.team)
                     .resizable()
