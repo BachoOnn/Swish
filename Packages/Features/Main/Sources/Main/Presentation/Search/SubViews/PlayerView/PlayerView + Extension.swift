@@ -33,7 +33,7 @@ extension PlayerView {
             PlayerHeadshotView(fullName: viewModel.playerName, defaultImage: "player2")
                 .scaledToFit()
                 .frame(width: 150, height: 150)
-                .padding(.trailing)
+                .padding(.horizontal)
             
             
             VStack(alignment: .leading, spacing: 10) {

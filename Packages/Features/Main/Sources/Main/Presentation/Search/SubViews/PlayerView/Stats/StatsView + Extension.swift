@@ -10,7 +10,7 @@ import Common
 
 extension StatsView {
     var mainStatsContent: some View {
-        ScrollView(showsIndicators: false) {
+        ScrollView {
             VStack {
                 HStack {
                     Text("On Court")
@@ -208,6 +208,7 @@ extension StatsView {
                 .padding(.horizontal)
             }
         }
+        .scrollIndicators(.hidden)
     }
 }
 

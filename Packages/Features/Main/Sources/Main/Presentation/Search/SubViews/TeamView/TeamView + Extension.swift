@@ -187,7 +187,7 @@ extension TeamView {
             }
             .padding(.horizontal)
             
-            ScrollView(.horizontal, showsIndicators: false) {
+            ScrollView(.horizontal) {
                 HStack(spacing: 16) {
                     CustomContainer(width: 200, height: 250) {
                         CustomChart(
@@ -239,6 +239,7 @@ extension TeamView {
                 }
                 .padding(.horizontal)
             }
+            .scrollIndicators(.hidden)
         }
     }
     

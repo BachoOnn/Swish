@@ -26,7 +26,7 @@ extension HomeView {
                 }
                 .frame(height: 200)
             } else {
-                ScrollView(.horizontal, showsIndicators: false) {
+                ScrollView(.horizontal) {
                     LazyHStack(spacing: 0) {
                         ForEach(Array(viewModel.featuredGames.enumerated()), id: \.element.id) { index, game in
                             GameCardView(game: game)
@@ -45,6 +45,7 @@ extension HomeView {
                     }
                     .scrollTargetLayout()
                 }
+                .scrollIndicators(.hidden)
                 .scrollPosition(id: $scrollID)
                 .scrollTargetBehavior(.paging)
                 

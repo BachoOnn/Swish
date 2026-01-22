@@ -126,6 +126,7 @@ extension ProfileView {
                         }
                     }
                 }
+                .contentMargins(5, for: .scrollContent)
             }
             
             VStack(alignment: .leading) {
@@ -141,6 +142,7 @@ extension ProfileView {
                         }
                     }
                 }
+                .contentMargins(5, for: .scrollContent)
             }
             
         }

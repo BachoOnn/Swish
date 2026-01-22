@@ -17,7 +17,7 @@ struct TeamView: View {
         ZStack {
             GradientBackground(team: viewModel.team.name)
             
-            ScrollView(showsIndicators: false) {
+            ScrollView {
                 VStack(spacing: 16) {
                     headerSection
                     teamInfoSection
@@ -41,6 +41,7 @@ struct TeamView: View {
                     }
                 }
             }
+            .scrollIndicators(.hidden)
         }
         .onLoad(perform: viewModel.onLoad)
     }

@@ -13,12 +13,13 @@ struct ProfileSectionView: View {
     let playerData: Player
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
+        ScrollView {
             VStack {
                 upperSection
 
                 bioSection
             }
         }
+        .scrollIndicators(.hidden)
     }
 }

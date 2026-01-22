@@ -24,11 +24,11 @@ struct FavoritePlayerCardView: View {
         .frame(width: 80, height: 80)
         .background(
             Circle()
-                .fill(Color(.systemBackground))
+                .fill(Color(.systemBackground.withAlphaComponent(0.3)))
         )
         .overlay(
             Circle()
-                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+                .stroke(Color.primary.opacity(0.1), lineWidth: 2)
         )
     }
 }

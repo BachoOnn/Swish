@@ -67,6 +67,7 @@ public struct PlayerHeadshotView: View {
                     .scaledToFill()
             })
             .resizable()
+            .cacheMemoryOnly()
             .scaledToFit()
             .task(id: fullName) {
                 self.url = await PlayerImageService.fetchCutoutURL(for: fullName)
