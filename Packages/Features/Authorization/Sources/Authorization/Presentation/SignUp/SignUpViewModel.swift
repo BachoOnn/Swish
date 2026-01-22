@@ -16,6 +16,11 @@ public final class SignUpViewModel: ObservableObject {
     @Published var state: LoadingState = .idle
     @Published var showError = false
     @Published var errorMessage = ""
+    @Published var firstName = ""
+    @Published var lastName = ""
+    @Published var email = ""
+    @Published var password = ""
+    @Published var confirmPassword = ""
     
     // MARK: - Dependencies
     private let signUpUseCase: DefaultSignUpUseCase
@@ -51,7 +56,7 @@ public final class SignUpViewModel: ObservableObject {
     
     // MARK: - Actions
     func goSingInPage() {
-        coordinator?.pop()
+        coordinator?.showSignIn()
     }
     
     func signUp(email: String, password: String, confirmPassword: String, firstName: String, lastName: String) async {
