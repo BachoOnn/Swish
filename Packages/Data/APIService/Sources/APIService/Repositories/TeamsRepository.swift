@@ -40,4 +40,10 @@ public final class TeamsRepository: TeamsRepositoryProtocol {
         }
         return firstTeamData.stats.toDomain()
     }
+    
+    public func fetchRosters(teamId: Int) async throws -> [Roster] {
+        let url = "\(baseURL)/players/active?team_ids[]=\(teamId)"
+        let response: RosterResponseDTO = try await networkManager.get(urlString: url, headers: headers)
+        return response.data.map { $0.toDomain() }
+    }
 }

@@ -106,8 +106,10 @@ public final class MainDIContainer {
     public func makeTeamViewModel(team: TeamDomain.Team) -> TeamViewModel {
         TeamViewModel(
             team: team,
+            coordinator: coordinator,
             getTeamStatsUseCase: DefaultGetTeamStatsUseCase(teamRepository: teamsRepository),
-            getTeamFavoritesUseCase: DefaultGetTeamFavoritesUseCase(favoritesRepository: favoritesRepository)
+            getTeamFavoritesUseCase: DefaultGetTeamFavoritesUseCase(favoritesRepository: favoritesRepository),
+            getRostersUseCase: DefaultGetRostersUseCase(teamRepository: teamsRepository)
         )
     }
     
