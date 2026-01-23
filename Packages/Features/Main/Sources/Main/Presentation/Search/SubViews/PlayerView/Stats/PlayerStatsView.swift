@@ -9,7 +9,7 @@ import SwiftUI
 import Common
 import Helpers
 
-struct StatsView: View {
+struct PlayerStatsView: View {
     
     @ObservedObject var viewModel: PlayerViewModel
     

@@ -46,24 +46,7 @@ public final class GameDetailsViewModel {
     // MARK: - Navigation
     
     func goPlayersDetails(from stats: PlayerStats) {
-        let playerDomainPlayer = PlayerDomain.Player(
-            id: stats.player.id,
-            firstName: stats.player.firstName,
-            lastName: stats.player.lastName,
-            position: stats.player.position,
-            jerseyNumber: stats.player.jerseyNumber,
-            team: PlayerDomain.PlayerTeamInfo(
-                id: stats.team.id,
-                conference: stats.team.conference,
-                division: stats.team.division,
-                city: stats.team.city,
-                name: stats.team.name,
-                fullName: stats.team.fullName,
-                abbreviation: stats.team.abbreviation
-            )
-        )
-        
-        coordinator?.navigateToPlayer(playerDomainPlayer)
+        coordinator?.navigateToPlayer(stats.toPlayer())
     }
     
     // MARK: - Computed Properties

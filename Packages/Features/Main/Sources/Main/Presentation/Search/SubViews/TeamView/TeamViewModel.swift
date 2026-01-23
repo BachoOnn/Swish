@@ -12,19 +12,38 @@ import FavoritesDomain
 @MainActor
 public final class TeamViewModel: ObservableObject {
     
+    // MARK: - Team properties
     @Published var team: Team
     @Published var isFavorite: Bool = false
+    @Published var selectedSide: TeamPickerSide = .Stats
+    
+    // MARK: - Stats properties
     @Published var stats: TeamSeasonStats?
     @Published var isLoadingStats: Bool = false
     @Published var errorMessage: String?
     
+    // MARK: - Rosters properties
+    @Published var roster: [Roster] = []
+    @Published var isLoadingRoster: Bool = false
+    @Published var rosterErrorMessage: String?
+    
+    private weak var coordinator: MainCoordinator?
     private let getTeamStatsUseCase: DefaultGetTeamStatsUseCase
     private let getTeamFavoritesUseCase: DefaultGetTeamFavoritesUseCase
+    private let getRostersUseCase: DefaultGetRostersUseCase
     
-    public init(team: Team, getTeamStatsUseCase: DefaultGetTeamStatsUseCase, getTeamFavoritesUseCase: DefaultGetTeamFavoritesUseCase) {
+    public init(
+        team: Team,
+        coordinator: MainCoordinator,
+        getTeamStatsUseCase: DefaultGetTeamStatsUseCase,
+        getTeamFavoritesUseCase: DefaultGetTeamFavoritesUseCase,
+        getRostersUseCase: DefaultGetRostersUseCase
+    ) {
         self.team = team
+        self.coordinator = coordinator
         self.getTeamStatsUseCase = getTeamStatsUseCase
         self.getTeamFavoritesUseCase = getTeamFavoritesUseCase
+        self.getRostersUseCase = getRostersUseCase
         self.isFavorite = getTeamFavoritesUseCase.executeCheck(team: team)
     }
     
@@ -33,10 +52,21 @@ public final class TeamViewModel: ObservableObject {
         isFavorite = getTeamFavoritesUseCase.executeCheck(team: team)
     }
     
-    func onLoad() {
+    func onStatsLoad() {
         Task {
             await self.fetchTeamStats()
         }
+    }
+    
+    func onRostersLoad() {
+        Task {
+            await self.fetchTeamRoster()
+        }
+    }
+    
+    func navigateToPlayer(_ roster: Roster) {
+        let player = roster.toPlayer()
+        coordinator?.navigateToPlayer(player)
     }
 }
 
@@ -52,5 +82,18 @@ fileprivate extension TeamViewModel {
         }
         
         isLoadingStats = false
+    }
+    
+    func fetchTeamRoster() async {
+        isLoadingRoster = true
+        rosterErrorMessage = nil
+        
+        do {
+            roster = try await getRostersUseCase.execute(teamId: team.id)
+        } catch {
+            rosterErrorMessage = error.localizedDescription
+        }
+        
+        isLoadingRoster = false
     }
 }

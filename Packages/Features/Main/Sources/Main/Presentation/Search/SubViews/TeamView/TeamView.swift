@@ -17,32 +17,13 @@ struct TeamView: View {
         ZStack {
             GradientBackground(team: viewModel.team.name)
             
-            ScrollView {
-                VStack(spacing: 16) {
-                    headerSection
-                    teamInfoSection
-                    
-                    if viewModel.isLoadingStats {
-                        loadingSection
-                        
-                    } else if let stats = viewModel.stats {
-                        
-                        recordSection(stats: stats)
-                        keyStatsSection(stats: stats)
-                        shootingChartsSection(stats: stats)
-                        leagueRankingsSection(stats: stats)
-                        
-                    } else if let error = viewModel.errorMessage {
-                        
-                        errorSection(message: error)
-                        
-                    } else {
-                        placeholderSection
-                    }
-                }
+            VStack {
+                headerSection
+                
+                teamInfoSection
+                
+                pickerSection
             }
-            .scrollIndicators(.hidden)
         }
-        .onLoad(perform: viewModel.onLoad)
     }
 }

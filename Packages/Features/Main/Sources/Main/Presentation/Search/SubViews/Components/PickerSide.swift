@@ -14,3 +14,7 @@ enum SearchPickerSide: String, CaseIterable {
     case Teams
     case Players
 }
+enum TeamPickerSide: String, CaseIterable {
+    case Stats
+    case Roster
+}

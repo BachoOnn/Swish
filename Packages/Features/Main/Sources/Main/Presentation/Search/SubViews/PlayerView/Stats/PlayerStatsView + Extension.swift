@@ -1,5 +1,5 @@
 //
-//  StatsView + Extension.swift
+//  PlayerStatsView + Extension.swift
 //  Main
 //
 //  Created by Bacho on 20.01.26.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Common
 
-extension StatsView {
+extension PlayerStatsView {
     var mainStatsContent: some View {
         ScrollView {
             VStack {
