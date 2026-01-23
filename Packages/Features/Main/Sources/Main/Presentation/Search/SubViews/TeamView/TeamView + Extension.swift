@@ -42,12 +42,12 @@ extension TeamView {
             
             HStack(spacing: 20) {
                 HStack(spacing: 6) {
-                    Image(systemName: "mappin.circle.fill")
+                    Image(systemName: "mappin.and.ellipse.circle.fill")
                         .font(.system(size: 14))
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                     Text("\(viewModel.team.conference) • \(viewModel.team.division)")
-                        .font(.system(size: 15))
-                        .foregroundStyle(.gray)
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(.secondary)
                 }
             }
         }
@@ -64,7 +64,7 @@ extension TeamView {
                     
                     Text("Wins")
                         .font(.system(size: 14))
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                 }
             }
             
@@ -76,7 +76,7 @@ extension TeamView {
                     
                     Text("Losses")
                         .font(.system(size: 14))
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                 }
             }
             
@@ -87,7 +87,7 @@ extension TeamView {
                     
                     Text("Win %")
                         .font(.system(size: 14))
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                 }
             }
         }
@@ -112,7 +112,7 @@ extension TeamView {
                             
                             Text("PPG")
                                 .font(.system(size: 14))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                         }
                     }
                     
@@ -123,7 +123,7 @@ extension TeamView {
                             
                             Text("RPG")
                                 .font(.system(size: 14))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                         }
                     }
                     
@@ -134,7 +134,7 @@ extension TeamView {
                             
                             Text("APG")
                                 .font(.system(size: 14))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -147,7 +147,7 @@ extension TeamView {
                             
                             Text("SPG")
                                 .font(.system(size: 14))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                         }
                     }
                     
@@ -158,7 +158,7 @@ extension TeamView {
                             
                             Text("BPG")
                                 .font(.system(size: 14))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                         }
                     }
                     
@@ -169,7 +169,7 @@ extension TeamView {
                             
                             Text("TOV")
                                 .font(.system(size: 14))
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -196,7 +196,7 @@ extension TeamView {
                                 ChartData(
                                     category: "2-Points",
                                     value: (stats.fgm - stats.fg3m) * 2,
-                                    color: .gray
+                                    color: .secondary
                                 ),
                                 ChartData(
                                     category: "3-Points",
@@ -206,7 +206,7 @@ extension TeamView {
                                 ChartData(
                                     category: "Free Throws",
                                     value: stats.ftm,
-                                    color: .gray.opacity(0.5)
+                                    color: .secondary.opacity(0.5)
                                 )
                             ],
                             text: "Points Per Game"
@@ -217,7 +217,7 @@ extension TeamView {
                         CustomGaugeChart(
                             title: "Field Goal %",
                             value: stats.fgPct,
-                            color: .gray
+                            color: .secondary
                         )
                     }
                     
@@ -233,7 +233,7 @@ extension TeamView {
                         CustomGaugeChart(
                             title: "Free Throw %",
                             value: stats.ftPct,
-                            color: .gray.opacity(0.3)
+                            color: .secondary.opacity(0.3)
                         )
                     }
                 }
@@ -305,7 +305,7 @@ extension TeamView {
         VStack(spacing: 16) {
             Image(systemName: "chart.bar")
                 .font(.system(size: 50))
-                .foregroundColor(.gray)
+                .foregroundColor(.secondary)
             
             Text("No stats available")
                 .font(.headline)
