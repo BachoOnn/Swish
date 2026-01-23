@@ -11,6 +11,7 @@ protocol GetTeamFavoritesUseCase {
     func executeSave(team: TeamDomain.Team)
     func executeCheck(team: TeamDomain.Team) -> Bool
     func executeGet() -> [TeamDomain.Team]
+    func executeClear()
 }
 
 public struct DefaultGetTeamFavoritesUseCase: GetTeamFavoritesUseCase {
@@ -30,5 +31,9 @@ public struct DefaultGetTeamFavoritesUseCase: GetTeamFavoritesUseCase {
     
     public func executeGet() -> [TeamDomain.Team] {
         favoritesRepository.getAllFavoritesTeam()
+    }
+    
+    public func executeClear() {
+        favoritesRepository.clearAllTeams()
     }
 }

@@ -37,5 +37,9 @@ struct ProfileView: View {
             viewModel.loadFavoriteTeams()
             viewModel.loadFavoritePlayers()
         }
+        .onChange(of: viewModel.didFavoritesChanged) { _, _ in
+            viewModel.loadFavoriteTeams()
+            viewModel.loadFavoritePlayers()
+        }
     }
 }

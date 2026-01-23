@@ -44,6 +44,10 @@ public final class FavoritesRepository: FavoritesRepositoryProtocol {
         loadFavoriteTeams()
     }
     
+    public func clearAllTeams() {
+        favoriteTeamData.removeAll()
+    }
+    
     // Players:
     public func togglePlayerFavorite(player: PlayerDomain.Player) {
         var favorites = loadFavoritePlayers()
@@ -63,6 +67,10 @@ public final class FavoritesRepository: FavoritesRepositoryProtocol {
     
     public func getAllFavoritesPlayer() -> [PlayerDomain.Player] {
         loadFavoritePlayers()
+    }
+    
+    public func clearAllPlayers() {
+        favoritePlayerData.removeAll()
     }
     
     private func loadFavoriteTeams() -> [TeamDomain.Team] {

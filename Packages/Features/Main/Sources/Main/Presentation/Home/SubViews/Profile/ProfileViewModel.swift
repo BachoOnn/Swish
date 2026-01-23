@@ -23,6 +23,7 @@ public final class ProfileViewModel: ObservableObject {
     @Published var userName: String = ""
     @Published var favoriteTeams: [Team] = []
     @Published var favoritePlayers: [Player] = []
+    @Published var didFavoritesChanged: Bool = false
     
     public init(coordinator: MainCoordinator, getProfileUseCase: DefaultGetProfileUseCase, getTeamFavoritesUseCase: DefaultGetTeamFavoritesUseCase, getPlayerFavoritesUseCase: DefaultGetPlayerFavoritesUseCase) {
         self.coordinator = coordinator
@@ -63,6 +64,20 @@ public final class ProfileViewModel: ObservableObject {
     
     func loadFavoritePlayers() {
         favoritePlayers = getPlayerFavoritesUseCase.executeGet()
+    }
+    
+    func clearTeams() {
+        didFavoritesChanged = false
+        getTeamFavoritesUseCase.executeClear()
+        favoriteTeams.removeAll()
+        didFavoritesChanged = true
+    }
+    
+    func clearPlayers() {
+        didFavoritesChanged = false
+        getPlayerFavoritesUseCase.executeClear()
+        favoritePlayers.removeAll()
+        didFavoritesChanged = true
     }
     
     // MARK: - Private Methods

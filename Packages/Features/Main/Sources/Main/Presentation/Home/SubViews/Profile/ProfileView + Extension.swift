@@ -114,23 +114,52 @@ extension ProfileView {
         VStack(alignment: .leading, spacing: 40) {
             
             VStack(alignment: .leading) {
-                Text("MY TEAMS")
-                
-                ScrollView(.horizontal) {
-                    LazyHStack(spacing: 10) {
-                        ForEach(viewModel.favoriteTeams, id: \.id) { team in
-                            FavoriteTeamCardView(team: team)
-                                .onTapGesture {
-                                    viewModel.goTeamDetails(team: team)
-                                }
-                        }
+                HStack {
+                    Text("MY TEAMS")
+                        .font(.title2)
+                    
+                    Spacer()
+                    
+                    Button {
+                        viewModel.clearTeams()
+                    } label: {
+                        Text("Clear All")
+                            .foregroundStyle(.red)
+                            .font(.body)
                     }
                 }
-                .contentMargins(5, for: .scrollContent)
+                VStack {
+                    ScrollView(.horizontal) {
+                        LazyHStack(spacing: 10) {
+                            ForEach(viewModel.favoriteTeams, id: \.id) { team in
+                                FavoriteTeamCardView(team: team)
+                                    .onTapGesture {
+                                        viewModel.goTeamDetails(team: team)
+                                    }
+                            }
+                        }
+                    }
+                    .contentMargins(5, for: .scrollContent)
+                }
             }
             
             VStack(alignment: .leading) {
-                Text("MY PLAYERS")
+                
+                HStack {
+                    Text("MY PLAYERS")
+                        .font(.title2)
+                    
+                    Spacer()
+                    
+                    Button {
+                        viewModel.clearPlayers()
+                    } label: {
+                        Text("Clear All")
+                            .foregroundStyle(.red)
+                            .font(.body)
+                    }
+                    
+                }
                 
                 ScrollView(.horizontal) {
                     LazyHStack(spacing: 10) {
@@ -144,7 +173,6 @@ extension ProfileView {
                 }
                 .contentMargins(5, for: .scrollContent)
             }
-            
         }
         .padding(.horizontal)
     }
