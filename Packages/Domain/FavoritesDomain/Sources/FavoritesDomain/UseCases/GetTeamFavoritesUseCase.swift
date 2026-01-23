@@ -23,7 +23,7 @@ public struct DefaultGetTeamFavoritesUseCase: GetTeamFavoritesUseCase {
     }
     
     public func executeSave(team: TeamDomain.Team) {
-        _ = favoritesRepository.toggleTeamFavorite(team: team)
+        favoritesRepository.toggleTeamFavorite(team: team)
     }
     public func executeCheck(team: TeamDomain.Team) -> Bool {
         favoritesRepository.isFavoriteTeam(team: team)
