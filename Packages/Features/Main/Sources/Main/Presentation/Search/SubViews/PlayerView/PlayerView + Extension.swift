@@ -14,8 +14,8 @@ extension PlayerView {
             
             Spacer()
             
-            Text("Add Favorites")
-                .font(.headline)
+            Text("Add To Favorites")
+                .font(.caption)
             Button {
                 viewModel.toggleFavorite()
             } label: {
