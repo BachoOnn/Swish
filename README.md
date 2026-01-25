@@ -406,7 +406,7 @@ Open `Swish.xcodeproj`, select your device, and press `Cmd + R`.
 
 ## 🙏 Credits
 
-Built with 🏀 by **Bacho**
+Built with 🏀 by **Bacho Oniani**
 
 Special thanks to **BallDontLie**, **ESPN**, **TheSportsDB**, and **Firebase**.
 
