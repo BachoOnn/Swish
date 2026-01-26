@@ -6,7 +6,7 @@ Whether you're a die-hard basketball fan or just keeping up with the league, Swi
 
 <p align="center">
   <a href="https://developer.apple.com/swift/">
-    <img src="https://img.shields.io/badge/Swift-5.9-FA7343.svg?style=flat&logo=swift" alt="Swift 5.9">
+    <img src="https://img.shields.io/badge/Swift-5.10-FA7343.svg?style=flat&logo=swift" alt="Swift 5.10">
   </a>
   <a href="https://developer.apple.com/ios/">
     <img src="https://img.shields.io/badge/iOS-18.0+-007AFF.svg?style=flat&logo=apple" alt="iOS 18.0+">
@@ -335,7 +335,7 @@ All API keys and endpoints are secured in `.xcconfig` files and accessed through
 - Repository Pattern for data abstraction
 
 **Technologies**
-- Swift 5.9+ with async/await
+- Swift 5.10+ with async/await
 - SwiftUI + UIKit hybrid
 - Combine for reactive programming
 - Firebase Authentication
@@ -375,7 +375,7 @@ Swish prioritizes a polished, delightful user experience through custom-built UI
 |-----------|---------|
 | iOS | 18.0+ |
 | Xcode | 15.0+ |
-| Swift | 5.9+ |
+| Swift | 5.10+ |
 
 ---
 
